@@ -1,0 +1,30 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="boton">BOTON</button>
+</body>
+
+
+
+
+<script type="module">
+
+//IMPORTS
+import {nextSlide} from "/js/slides-control.js"
+
+//ELEMENTOS
+  const boton =  document.getElementById("boton")
+  
+//EVENTOS
+  boton.addEventListener("click", nextSlide )
+    
+</script>
+
+
+
+
+</html>
