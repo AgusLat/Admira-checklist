@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Menú principal</title>
+  <link rel="stylesheet" href="styles/nav-menu.css">
+</head>
+
+<body>
+    <main>
+
+        <div class="contenido">
+            <h1>CHECKLIST OFICINA</h1>
+            <p>Selecciona una opción del menú.</p>
+            <nav class="navMenu" id="menu"></nav>
+        </div>
+    </main>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+    import { slidesSantaRosa } from "./slides/slides.js"
+
+ 
+    // --- 1. Configuración Firebase (misma que index) ---
+    const firebaseConfig = {
+      apiKey: "AIzaSyAqt1J5qs-wdCBjr1asU89URxVRzLPSVTY",
+      authDomain: "reservas-1b21a.firebaseapp.com",
+      projectId: "reservas-1b21a",
+      storageBucket: "reservas-1b21a.firebasestorage.app",
+      messagingSenderId: "751886584630",
+      appId: "1:751886584630:web:4f8cad44fc0ce4a24b0197",
+      measurementId: "G-JJ8LV8LYM6"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // --- 2. Verificar sesión ---
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = "index.html";
+        return;
+      }
+
+      // --- 3. Construir menú según parámetro ---
+      const oficina = new URLSearchParams(window.location.search).get("oficina") || "general";
+      const menu = document.getElementById("menu");
+
+      let opciones=[];
+
+
+      switch (oficina) {
+          case "santa-rosa":
+              
+              const titulos= Object.keys(slidesSantaRosa)
+              
+            opciones = 
+                titulos.map((titulo) => ({seccion: titulo, href: `slides.html?seccion=${titulo}`}))
+            
+            break;
+      
+        default:
+            break;
+      }
+
+      // Render del menú
+      menu.innerHTML = `
+        <ul>
+          ${opciones.map(opt => `<li><a href="${opt.href}">${opt.seccion}</a></li>`).join('')}
+        </ul>
+
+        <a class="logoutBtn" href="#logout">Cerrar sesión</a>
+      `;
+
+
+      // --- 4. Logout ---
+      document.querySelector('a[href="#logout"]').addEventListener('click', async () => {
+        await signOut(auth);
+        localStorage.clear();
+        window.location.href = "index.html";
+      });
+    });
+  </script>
+</body>
+</html>

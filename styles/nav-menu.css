@@ -1,0 +1,65 @@
+body{
+    width: 100%;
+    margin: 0px;
+    background-color: #689840;
+
+}
+
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100dvh;
+    width: 100vw;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.contenedor{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    height: 50%;
+}
+
+.contenedor h1{
+    color: white;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+
+.navMenu{
+    display: flex;
+    flex-direction: column;
+}
+
+.navMenu ul{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    list-style:none;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+    padding-inline-start: 0px;
+    width: 100%;
+}
+
+.navMenu li{
+    width: 90%;
+    background-color: green;
+    padding: 0.5rem 2rem;
+    text-align: center;
+}
+
+.navMenu li a{
+    color: white;
+    text-decoration: none;
+
+}
+
+.logoutBtn{
+    text-align: center;
+}
