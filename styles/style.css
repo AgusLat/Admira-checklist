@@ -1,0 +1,64 @@
+.slide { 
+    display: none; 
+    text-align: center; 
+    padding: 1.5rem; 
+    max-width: 800px; 
+}
+
+.slide.active { 
+    display: block; 
+}
+
+img { 
+    max-width: 100%; 
+    border-radius: 12px; 
+    margin-top: 1rem; 
+}
+
+.buttons { 
+    display: flex; 
+    justify-content: center; 
+    gap: 1rem; 
+    margin-top: 1rem; 
+}
+
+button { 
+    color: white; 
+    border: none; 
+    padding: .8rem 1.2rem; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    font-weight: 600; 
+}
+
+.loginBtn{
+    background: #16a34a; 
+}
+
+.continuaBtn{
+    background: #22c55e; 
+}
+
+.atrasBtn{
+    background: rgb(10, 115, 190);
+}
+
+.continuaBtn:hover { 
+    background: #16a34a; 
+}
+
+.atrasBtn:hover{
+    background: rgb(10, 80, 129);
+}
+
+button.issue, .skipBtn {
+    background: #ef4444; 
+}
+
+button.issue:hover, .skipBtn:hover { 
+    background: #dc2626; 
+}
+
+h1, h2 { 
+    margin: 0.5rem 0; 
+}

@@ -1,4 +1,4 @@
-<html lang="en">
+<!-- <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,9 +7,6 @@
 <body>
     <button id="boton">BOTON</button>
 </body>
-
-
-
 
 <script type="module">
 
@@ -24,7 +21,27 @@ import {nextSlide} from "/js/slides-control.js"
     
 </script>
 
+</html> -->
 
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checklist</title>
+  <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+   <div id="slides" ></div> 
 
+<script type="module">
+import {renderSlides} from './js/slides-control.js'
 
+//ELEMENTOS
+const container = document.getElementById('slides');
+
+//RENDERIZA LAS SLIDES
+renderSlides(container)
+
+</script>
+</body>
 </html>
