@@ -1,14 +1,86 @@
-.slide { 
-    display: none; 
+body { 
+    font-family: sans-serif; 
+    background: #689840; 
+    color: #fff; 
     text-align: center; 
-    padding: 1.5rem; 
-    max-width: 800px; 
+    padding: 20px; }
+
+.slide img { 
+    max-width: 100%; 
+    border-radius: 10px; 
+    margin-top: 10px;
 }
 
-.slide.active { 
-    display: block; 
+button { 
+    margin: 5px; 
+    padding: 10px 20px; 
+    border-radius: 8px; 
+    border: none; 
+    cursor: pointer; 
 }
 
+#prevBtn{
+    background-color: rgb(7, 87, 235);
+}
+
+#nextBtn, #sendIssueBtn, #finishBtn{
+    background-color: green;
+}
+
+#issueBtn, #cancelIssueBtn{
+    background-color: rgb(184, 19, 19);
+}
+
+/*INCIDENCIA*/
+#issueModal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 999;
+  justify-content: center;
+  align-items: center;
+}
+#issueContent {
+  background: #222222;
+  padding: 25px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  text-align: left;
+  color: #fff;
+}
+
+#issueContent h3 {
+  text-align: center;
+  margin-top: 0;
+}
+
+#issueContent textarea {
+  width: 100%;
+  border-radius: 6px;
+  padding: 10px;
+  border: none;
+  resize: none;
+  background: #333;
+  color: #fff;
+}
+
+#issueContent input[type="file"] {
+    color: #ccc;
+    width: 100%;
+    margin: 10px 0;
+}
+
+#issueContent button {
+    margin: 5px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+/*ç!*/
 img { 
     max-width: 100%; 
     border-radius: 12px; 
@@ -29,36 +101,4 @@ button {
     border-radius: 8px; 
     cursor: pointer; 
     font-weight: 600; 
-}
-
-.loginBtn{
-    background: #16a34a; 
-}
-
-.continuaBtn{
-    background: #22c55e; 
-}
-
-.atrasBtn{
-    background: rgb(10, 115, 190);
-}
-
-.continuaBtn:hover { 
-    background: #16a34a; 
-}
-
-.atrasBtn:hover{
-    background: rgb(10, 80, 129);
-}
-
-button.issue, .skipBtn {
-    background: #ef4444; 
-}
-
-button.issue:hover, .skipBtn:hover { 
-    background: #dc2626; 
-}
-
-h1, h2 { 
-    margin: 0.5rem 0; 
 }
