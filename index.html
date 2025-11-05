@@ -20,20 +20,12 @@
     </main>
 
   <script type="module">
+    import { firebaseConfig } from "./firebase/firebaseConfig.js"
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
     // --- 1. Configuración Firebase ---
-    const firebaseConfig = {
-      apiKey: "AIzaSyAqt1J5qs-wdCBjr1asU89URxVRzLPSVTY",
-      authDomain: "reservas-1b21a.firebaseapp.com",
-      projectId: "reservas-1b21a",
-      storageBucket: "reservas-1b21a.firebasestorage.app",
-      messagingSenderId: "751886584630",
-      appId: "1:751886584630:web:4f8cad44fc0ce4a24b0197",
-      measurementId: "G-JJ8LV8LYM6"
-    };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
@@ -78,19 +70,19 @@
       }
     });
 
-    // // --- 4. Manejo de sesión activa ---
-    // onAuthStateChanged(auth, async (user) => {
-    //   if (!user) return;
-    //   const autorizado = await esUsuarioAutorizado(user.email);
-    //   if (autorizado) {
-    //     const oficina = new URLSearchParams(window.location.search).get("oficina") 
-    //                 || localStorage.getItem("oficinaParametro") 
-    //                 || "general";
-    //     window.location.href = `nav-menu.html?oficina=${encodeURIComponent(oficina)}`;
-    //   } else {
-    //     signOut(auth);
-    //   }
-    // });
+     // --- 4. Manejo de sesión activa ---
+     onAuthStateChanged(auth, async (user) => {
+       if (!user) return;
+       const autorizado = await esUsuarioAutorizado(user.email);
+       if (autorizado) {
+         const oficina = new URLSearchParams(window.location.search).get("oficina") 
+                     || localStorage.getItem("oficinaParametro") 
+                     || "general";
+         window.location.href = `nav-menu.html?oficina=${encodeURIComponent(oficina)}`;
+       } else {
+         signOut(auth);
+       }
+     });
   </script>
 </body>
 </html>
