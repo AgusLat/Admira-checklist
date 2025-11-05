@@ -20,7 +20,7 @@
     import { firebaseConfig } from "./firebase/firebaseConfig.js"
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-    import { slidesSantaRosa, slidesStore, } from "./slides/slides.js"
+    import { slidesSantaRosa, slidesStore, slidesPlanetaTerminator, slidesPlanetaNave} from "./slides/slides.js"
 
  
     // --- 1. Configuración Firebase (misma que index) ---
@@ -43,16 +43,33 @@
 
 
       switch (oficina) {
-          case "santa-rosa":
-              
-              const titulos= Object.keys(slidesSantaRosa)
-              
-            opciones = 
-                titulos.map((titulo) => ({seccion: titulo.toLocaleUpperCase(), href: `slides.html?seccion=${titulo}`}))
+        case "santa-rosa":
             
-            break;
+          opciones = Object.keys(slidesSantaRosa).map((titulo) => ({seccion: titulo.toLocaleUpperCase(), href: `slides.html?seccion=${titulo}`}))
+          
+          break;
+
+        case "store":
+                
+          opciones = Object.keys(slidesStore).map((titulo) => ({seccion: titulo.toLocaleUpperCase(), href: `slides.html?seccion=${titulo}`}))
+          console.log(opciones)
+          break;
+
+        case "planeta-terminator":
+                
+          opciones = Object.keys(slidesPlanetaTerminator).map((titulo) => ({seccion: titulo.toLocaleUpperCase(), href: `slides.html?seccion=${titulo}`}))
+          
+          break;
+        
+        case "planeta-nave":
+                
+          opciones = Object.keys(slidesPlanetaNave).map((titulo) => ({seccion: titulo.toLocaleUpperCase(), href: `slides.html?seccion=${titulo}`}))
+          
+          break;
       
         default:
+           opciones = [{seccion: 'OFICINA NO IDENTIFICADA', href:''}]
+        
             break;
       }
 
