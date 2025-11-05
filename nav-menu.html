@@ -35,60 +35,45 @@
         return;
       }
 
-      // --- 3. Construir menú según parámetro ---
-      const oficina = new URLSearchParams(window.location.search).get("oficina") || "general";
-      const menu = document.getElementById("menu");
 
-      let opciones=[];
+    // --- 3. Construir menú según parámetro ---
+    const oficina = new URLSearchParams(window.location.search).get("oficina") || "general";
+    const menu = document.getElementById("menu");
+    let opciones=[];
 
-
-      switch (oficina) {
-        case "santa-rosa":
-            
-          opciones = Object.keys(slidesSantaRosa).map((titulo) => ({seccion: titulo.toLocaleUpperCase(), href: `slides.html?seccion=${titulo}`}))
-          
+    switch (oficina) {
+      case "santa-rosa":
+        opciones = Object.keys(slidesSantaRosa).map((titulo) => ({seccion: titulo.toLocaleUpperCase(), href: `slides.html?seccion=${titulo}`}))
+        break;
+      case "store":   
+        opciones = Object.keys(slidesStore).map((titulo) => ({seccion: titulo.toLocaleUpperCase(), href: `slides.html?seccion=${titulo}`}))
+        break;
+      case "planeta-terminator":      
+        opciones = Object.keys(slidesPlanetaTerminator).map((titulo) => ({seccion: titulo.toLocaleUpperCase(), href: `slides.html?seccion=${titulo}`}))
+        break;
+      case "planeta-nave":    
+        opciones = Object.keys(slidesPlanetaNave).map((titulo) => ({seccion: titulo.toLocaleUpperCase(), href: `slides.html?seccion=${titulo}`}))
+        break;
+      default:
+         opciones = [{seccion: 'OFICINA NO IDENTIFICADA', href:''}]
           break;
+    }
 
-        case "store":
-                
-          opciones = Object.keys(slidesStore).map((titulo) => ({seccion: titulo.toLocaleUpperCase(), href: `slides.html?seccion=${titulo}`}))
-          console.log(opciones)
-          break;
-
-        case "planeta-terminator":
-                
-          opciones = Object.keys(slidesPlanetaTerminator).map((titulo) => ({seccion: titulo.toLocaleUpperCase(), href: `slides.html?seccion=${titulo}`}))
-          
-          break;
-        
-        case "planeta-nave":
-                
-          opciones = Object.keys(slidesPlanetaNave).map((titulo) => ({seccion: titulo.toLocaleUpperCase(), href: `slides.html?seccion=${titulo}`}))
-          
-          break;
-      
-        default:
-           opciones = [{seccion: 'OFICINA NO IDENTIFICADA', href:''}]
-        
-            break;
-      }
-
-      // Render del menú
-      menu.innerHTML = `
-        <ul>
-          ${opciones.map(opt => `<li><a href="${opt.href}">${opt.seccion}</a></li>`).join('')}
-        </ul>
-
-        <a class="logoutBtn" href="#logout">Cerrar sesión</a>
-      `;
+    // Render del menú
+    menu.innerHTML = `
+      <ul>
+        ${opciones.map(opt => `<li><a href="${opt.href}">${opt.seccion}</a></li>`).join('')}
+      </ul>
+      <a class="logoutBtn" href="#logout">Cerrar sesión</a>
+    `;
 
 
-      // --- 4. Logout ---
-      document.querySelector('a[href="#logout"]').addEventListener('click', async () => {
-        await signOut(auth);
-        localStorage.clear();
-        window.location.href = "index.html";
-      });
+    // --- 4. Logout ---
+    document.querySelector('a[href="#logout"]').addEventListener('click', async () => {
+      await signOut(auth);
+      localStorage.clear();
+      window.location.href = "index.html";
+    });
     });
   </script>
 </body>
