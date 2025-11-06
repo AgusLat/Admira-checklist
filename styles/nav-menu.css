@@ -14,7 +14,7 @@ main{
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-.contenedor{
+.contenido{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -24,7 +24,7 @@ main{
     height: 50%;
 }
 
-.contenedor h1{
+.contenido h1{
     color: white;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
@@ -33,6 +33,7 @@ main{
 .navMenu{
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .navMenu ul{
@@ -48,10 +49,17 @@ main{
 }
 
 .navMenu li{
-    width: 90%;
-    background-color: green;
+    width: 70%;
+    background-color: rgb(47, 125, 47);
     padding: 0.5rem 2rem;
     text-align: center;
+    border-radius: 5px;
+    box-shadow: 3px 3px 10px 0.5px rgba(59, 59, 59, 0.662);
+    outline: 1px solid rgba(0, 0, 0, 0.168);
+    font-weight: bold;
+
+
+
 }
 
 .navMenu li a{
@@ -62,4 +70,15 @@ main{
 
 .logoutBtn{
     text-align: center;
+    text-decoration: none;
+    background-color: aliceblue;
+    padding: 0.5rem 2rem;
+    width: 70%;
+    align-self: center;
+    color: #689840;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-top: 2rem;
+    box-shadow: 3px 3px 10px 0.5px rgba(59, 59, 59, 0.662);
+    
 }
