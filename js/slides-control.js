@@ -1,12 +1,23 @@
+import { reportIssue } from "./incidencias.js";
+
 // Variables
 let currentSlideIndex = 0;
 let slides = [];
 let container = null;
+let oficina = "";
+let seccion = "";
 
 // Renderizar slides
-export function renderSlides(containerElement, slideArray) {
-  container = containerElement;
+export function renderSlides(
+  containerElement,
+  slideArray,
+  nombreSeccion,
+  nombreOficina
+) {
+  oficina = nombreOficina;
+  seccion = nombreSeccion;
   slides = slideArray;
+  container = containerElement;
   showSlide(currentSlideIndex);
 }
 
@@ -77,15 +88,41 @@ function showSlide(index) {
       currentSlideIndex = 0;
       showSlide(currentSlideIndex);
     });
+
+  // === Incidencias ===
+  // ABRE MODAL
   if (document.getElementById("issueBtn"))
-    document.getElementById("issueBtn").addEventListener("click", openIssueModal);
+    document
+      .getElementById("issueBtn")
+      .addEventListener("click", openIssueModal);
+  // CIERRA MODAL
+  if (document.getElementById("cancelIssueBtn"))
+    document
+      .getElementById("cancelIssueBtn")
+      .addEventListener("click", closeIssueModal);
+  // ENVÍA INCIDENCIA
+  if (document.getElementById("sendIssueBtn"))
+    document.getElementById("sendIssueBtn").addEventListener("click", () => {
+      const issueDesc = document.getElementById("issueDesc").value.trim();
+      const issue = {
+        oficina: oficina,
+        seccion: seccion,
+        incidencia: issueDesc,
+        paso: currentSlideIndex + 1,
+        pasoDesc: slides[currentSlideIndex].desc,
+      };
+      reportIssue(issue);
+      closeIssueModal();
+    });
 }
 
 // === MODAL ===
 function openIssueModal() {
   const modal = document.getElementById("issueModal");
   const stepLabel = document.getElementById("issueStep");
-  stepLabel.innerText = `Paso ${currentSlideIndex + 1}: ${slides[currentSlideIndex].desc}`;
+  stepLabel.innerText = `Paso ${currentSlideIndex + 1}: ${
+    slides[currentSlideIndex].desc
+  }`;
   modal.style.display = "flex";
 }
 
@@ -96,12 +133,12 @@ function closeIssueModal() {
 }
 
 // Navegación
-function nextSlide() {
+export const nextSlide = () => {
   if (currentSlideIndex < slides.length - 1) {
     currentSlideIndex++;
     showSlide(currentSlideIndex);
   }
-}
+};
 
 function prevSlide() {
   if (currentSlideIndex > 0) {
@@ -117,42 +154,4 @@ function finishSlides() {
       <p>Has terminado todos los pasos de esta sala.</p>
     </div>
   `;
-}
-
-// Incidencias
-function reportIssue(text) {
-  const issueSlide = {
-    type: "issue",
-    title: "Reportar incidencia",
-    text: text
-  };
-
-  slides.splice(currentSlideIndex + 1, 0, issueSlide);
-  nextSlide();
-}
-
-function submitIssueForm(event) {
-  event.preventDefault();
-
-  const desc = document.getElementById("issueDesc").value.trim();
-  const fileInput = document.getElementById("issueFile");
-  const file = fileInput.files[0] || null;
-
-  if (!desc && !file) {
-    alert("Por favor, escribe una descripción Y/o adjunta una imagen.");
-    return;
-  }
-
-  const issue = {
-    text: slides[currentSlideIndex].text,
-    description: desc,
-    fileName: file ? file.name : null,
-    date: new Date().toISOString()
-  };
-
-  const saved = JSON.parse(localStorage.getItem("incidencias") || "[]");
-  saved.push(issue);
-  localStorage.setItem("incidencias", JSON.stringify(saved));
-
-  nextSlide();
 }
