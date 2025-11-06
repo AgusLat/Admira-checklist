@@ -41,10 +41,16 @@
       const seccion = new URLSearchParams(window.location.search).get(
         "seccion"
       );
+      const sitios = {
+        santarosa: slidesSantaRosa,
+        planetanave: slidesPlanetaNave,
+        planetaterminator: slidesPlanetaTerminator,
+        store: slidesStore,
+      };
 
       //ELEMENTOS
+      const slidesArray = Object.values(sitios[oficina][seccion]);      
       const container = document.getElementById("slides");
-      const slidesArray = Object.values(slidesSantaRosa.arcade);
 
       //RENDERIZA LAS SLIDES
       renderSlides(container, slidesArray);

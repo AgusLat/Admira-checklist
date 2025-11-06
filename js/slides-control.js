@@ -29,18 +29,18 @@ function showSlide(index) {
   }
 
   // --- OUTRO (FINAL) ---
-  else if (slide.type === "outro") {
-    html = `
-      <div class="slide outro">
-        <h2>${slide.desc}</h2>
-        ${slide.imgSrc ? `<img src="${slide.imgSrc}" alt="Final">` : ""}
-        <div class="buttons">
-          <button id="prevBtn">◀ Atrás</button>
-          <button id="nextBtn">Siguiente sección</button>
-        </div>
+else if (slide.type === "outro") {
+  html = `
+    <div class="slide outro">
+      <h2>${slide.desc}</h2>
+      ${slide.imgSrc ? `<img src="${slide.imgSrc}" alt="Final">` : ""}
+      <div class="buttons">
+        <button id="prevBtn">◀ Atrás</button>
+        <button id="nextSectionBtn">Siguiente sección ▶</button>
       </div>
-    `;
-  }
+    </div>
+  `;
+}
 
   // --- SLIDE NORMAL ---
   else {
@@ -71,29 +71,40 @@ function showSlide(index) {
     document.getElementById("prevBtn").addEventListener("click", prevSlide);
   if (document.getElementById("finishBtn"))
     document.getElementById("finishBtn").addEventListener("click", nextSlide);
-  if (document.getElementById("restartBtn"))
-    document.getElementById("restartBtn").addEventListener("click", () => {
-      // Volver a la introducción (slide 0)
-      currentSlideIndex = 0;
-      showSlide(currentSlideIndex);
-    });
   if (document.getElementById("issueBtn"))
     document.getElementById("issueBtn").addEventListener("click", openIssueModal);
+  
+  //navegar entre secciones
+  if (document.getElementById("nextSectionBtn")) {
+  document.getElementById("nextSectionBtn").addEventListener("click", () => {
+    const params = new URLSearchParams(window.location.search);
+    const oficina = params.get("oficina").toLowerCase();
+    const seccion = params.get("seccion").toLowerCase();
+
+    // Lista de zonas de cada oficina (ordenadas)
+    const zonasPorOficina = {
+      santarosa: ["sala360", "arcade", "cafeteria", "garaje"],
+      planetanave: ["entrada", "ascensor", "nave", "oficina"],
+      planetaterminator: ["entrada", "pantallas"],
+      store: ["metahuman", "recepcion"],
+    };
+
+    const zonas = zonasPorOficina[oficina];
+    const indiceActual = zonas.indexOf(seccion);
+    const siguiente = zonas[indiceActual + 1];
+
+    if (siguiente) {
+      // Ir a la siguiente zona de la misma oficina
+      window.location.href = `slides.html?oficina=${oficina}&seccion=${siguiente}`;
+    } else {
+      // Última zona → volver al menú principal
+      window.location.href = "index.html"; // Cambia por tu menú real
+    }
+  });
 }
 
-// === MODAL ===
-function openIssueModal() {
-  const modal = document.getElementById("issueModal");
-  const stepLabel = document.getElementById("issueStep");
-  stepLabel.innerText = `Paso ${currentSlideIndex + 1}: ${slides[currentSlideIndex].desc}`;
-  modal.style.display = "flex";
 }
 
-function closeIssueModal() {
-  document.getElementById("issueModal").style.display = "none";
-  document.getElementById("issueDesc").value = "";
-  document.getElementById("issueFile").value = "";
-}
 
 // Navegación
 function nextSlide() {
@@ -120,6 +131,19 @@ function finishSlides() {
 }
 
 // Incidencias
+// === MODAL ===
+function openIssueModal() {
+  const modal = document.getElementById("issueModal");
+  const stepLabel = document.getElementById("issueStep");
+  stepLabel.innerText = `Paso ${currentSlideIndex + 1}: ${slides[currentSlideIndex].desc}`;
+  modal.style.display = "flex";
+}
+/*
+function closeIssueModal() {
+  document.getElementById("issueModal").style.display = "none";
+  document.getElementById("issueDesc").value = "";
+  document.getElementById("issueFile").value = "";
+}
 function reportIssue(text) {
   const issueSlide = {
     type: "issue",
@@ -155,4 +179,5 @@ function submitIssueForm(event) {
   localStorage.setItem("incidencias", JSON.stringify(saved));
 
   nextSlide();
-}
+
+}*/

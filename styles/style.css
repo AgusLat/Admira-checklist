@@ -1,104 +1,166 @@
-body { 
-    font-family: sans-serif; 
-    background: #689840; 
-    color: #fff; 
-    text-align: center; 
-    padding: 20px; }
-
-.slide img { 
-    max-width: 100%; 
-    border-radius: 10px; 
-    margin-top: 10px;
+/* === RESET === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', system-ui, sans-serif;
 }
 
-button { 
-    margin: 5px; 
-    padding: 10px 20px; 
-    border-radius: 8px; 
-    border: none; 
-    cursor: pointer; 
+/* === BASE === */
+body {
+  background: linear-gradient(160deg, #689840, #446b2d);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding: 2rem 1rem;
 }
 
-#prevBtn{
-    background-color: rgb(7, 87, 235);
+/* === SLIDE CARD === */
+.slide {
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(6px);
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
-#nextBtn, #sendIssueBtn, #finishBtn{
-    background-color: green;
+.slide h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
-#issueBtn, #cancelIssueBtn{
-    background-color: rgb(184, 19, 19);
+.slide p {
+  font-size: 1.1rem;
+  line-height: 1.6;
 }
 
-/*INCIDENCIA*/
+.slide img {
+  max-width: 100%;
+  border-radius: 12px;
+  margin-top: 1.2rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* === BUTTONS === */
+.buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+button {
+  border: none;
+  border-radius: 10px;
+  padding: 0.8rem 1.4rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: #fff;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+#nextBtn,
+#finishBtn,
+#nextSectionBtn,
+#sendIssueBtn {
+  background-color: #2ecc71;
+}
+
+#prevBtn {
+  background-color: #3498db;
+}
+
+#issueBtn,
+#cancelIssueBtn {
+  background-color: #e74c3c;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+/* === MODAL DE INCIDENCIA === */
 #issueModal {
   display: none;
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.8);
+  background: rgba(0, 0, 0, 0.7);
   z-index: 999;
   justify-content: center;
   align-items: center;
 }
+
 #issueContent {
-  background: #222222;
-  padding: 25px;
+  background: #222;
   border-radius: 12px;
+  padding: 2rem;
   width: 90%;
   max-width: 400px;
-  text-align: left;
   color: #fff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 #issueContent h3 {
   text-align: center;
-  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #2ecc71;
 }
 
-#issueContent textarea {
+#issueContent textarea,
+#issueContent input[type="file"] {
   width: 100%;
-  border-radius: 6px;
-  padding: 10px;
+  border-radius: 8px;
   border: none;
-  resize: none;
+  padding: 0.8rem;
+  margin-top: 0.6rem;
   background: #333;
   color: #fff;
+  font-size: 0.9rem;
 }
 
-#issueContent input[type="file"] {
-    color: #ccc;
-    width: 100%;
-    margin: 10px 0;
+#issueContent textarea:focus {
+  outline: 2px solid #2ecc71;
 }
 
 #issueContent button {
-    margin: 5px;
-    padding: 10px 15px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
+  width: 48%;
+  font-size: 0.9rem;
+  padding: 0.8rem;
 }
 
-/*ç!*/
-img { 
-    max-width: 100%; 
-    border-radius: 12px; 
-    margin-top: 1rem; 
+/* === ANIMACIONES === */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.buttons { 
-    display: flex; 
-    justify-content: center; 
-    gap: 1rem; 
-    margin-top: 1rem; 
-}
-
-button { 
-    color: white; 
-    border: none; 
-    padding: .8rem 1.2rem; 
-    border-radius: 8px; 
-    cursor: pointer; 
-    font-weight: 600; 
+/* === RESPONSIVE === */
+@media (max-width: 600px) {
+  .slide {
+    padding: 1.5rem;
+  }
+  .slide h2 {
+    font-size: 1.5rem;
+  }
+  .slide p {
+    font-size: 1rem;
+  }
 }
