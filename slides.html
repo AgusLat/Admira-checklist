@@ -1,37 +1,53 @@
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Checklist</title>
-  <link rel="stylesheet" href="styles/style.css">
-</head>
-<body>
-   <div id="slides" ></div> 
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checklist</title>
+    <link rel="stylesheet" href="styles/style.css" />
+  </head>
+  <body>
+    <div id="slides"></div>
 
-   <div id="issueModal">
-    <div id="issueContent">
-      <h3>⚠ Reportar incidencia</h3>
-      <p id="issueStep"></p>
-      <textarea id="issueDesc" placeholder="Describe el problema..." rows="4"></textarea>
-      <input type="file" id="issueFile" accept="image/*">
-      <div style="text-align:center;">
-        <button id="cancelIssueBtn">Cancelar</button>
-        <button id="sendIssueBtn">Enviar</button>
-        
+    <div id="issueModal">
+      <div id="issueContent">
+        <h3>⚠ Reportar incidencia</h3>
+        <p id="issueStep"></p>
+        <textarea
+          id="issueDesc"
+          placeholder="Describe el problema..."
+          rows="4"
+        ></textarea>
+        <input type="file" id="issueFile" accept="image/*" />
+        <div style="text-align: center">
+          <button id="cancelIssueBtn">Cancelar</button>
+          <button id="sendIssueBtn">Enviar</button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <script type="module">
-  import {renderSlides} from './js/slides-control.js'
-  import {slidesSantaRosa} from './slides/slides.js'
+    <script type="module">
+      import { renderSlides } from "./js/slides-control.js";
+      import {
+        slidesSantaRosa,
+        slidesPlanetaNave,
+        slidesPlanetaTerminator,
+        slidesStore,
+      } from "./slides/slides.js";
 
-  //ELEMENTOS
-  const container = document.getElementById('slides');
-  const slidesArray = Object.values(slidesSantaRosa.arcade)
+      //PARAMS
+      const oficina = new URLSearchParams(window.location.search).get(
+        "oficina"
+      );
+      const seccion = new URLSearchParams(window.location.search).get(
+        "seccion"
+      );
 
-  //RENDERIZA LAS SLIDES
-  renderSlides(container, slidesArray)
-  </script>
-</body>
+      //ELEMENTOS
+      const container = document.getElementById("slides");
+      const slidesArray = Object.values(slidesSantaRosa.arcade);
+
+      //RENDERIZA LAS SLIDES
+      renderSlides(container, slidesArray);
+    </script>
+  </body>
 </html>
