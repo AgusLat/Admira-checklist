@@ -1,6 +1,8 @@
+import { openIssueModal } from "./modal.js";
+
 // Variables
-let currentSlideIndex = 0;
-let slides = [];
+export let currentSlideIndex = 0;
+export let slides = [];
 let container = null;
 
 // Renderizar slides
@@ -107,7 +109,7 @@ else if (slide.type === "outro") {
 
 
 // Navegación
-function nextSlide() {
+export function nextSlide() {
   if (currentSlideIndex < slides.length - 1) {
     currentSlideIndex++;
     showSlide(currentSlideIndex);
@@ -129,55 +131,3 @@ function finishSlides() {
     </div>
   `;
 }
-
-// Incidencias
-// === MODAL ===
-function openIssueModal() {
-  const modal = document.getElementById("issueModal");
-  const stepLabel = document.getElementById("issueStep");
-  stepLabel.innerText = `Paso ${currentSlideIndex + 1}: ${slides[currentSlideIndex].desc}`;
-  modal.style.display = "flex";
-}
-/*
-function closeIssueModal() {
-  document.getElementById("issueModal").style.display = "none";
-  document.getElementById("issueDesc").value = "";
-  document.getElementById("issueFile").value = "";
-}
-function reportIssue(text) {
-  const issueSlide = {
-    type: "issue",
-    title: "Reportar incidencia",
-    text: text
-  };
-
-  slides.splice(currentSlideIndex + 1, 0, issueSlide);
-  nextSlide();
-}
-
-function submitIssueForm(event) {
-  event.preventDefault();
-
-  const desc = document.getElementById("issueDesc").value.trim();
-  const fileInput = document.getElementById("issueFile");
-  const file = fileInput.files[0] || null;
-
-  if (!desc && !file) {
-    alert("Por favor, escribe una descripción Y/o adjunta una imagen.");
-    return;
-  }
-
-  const issue = {
-    text: slides[currentSlideIndex].text,
-    description: desc,
-    fileName: file ? file.name : null,
-    date: new Date().toISOString()
-  };
-
-  const saved = JSON.parse(localStorage.getItem("incidencias") || "[]");
-  saved.push(issue);
-  localStorage.setItem("incidencias", JSON.stringify(saved));
-
-  nextSlide();
-
-}*/

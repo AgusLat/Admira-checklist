@@ -26,7 +26,9 @@
     </div>
 
     <script type="module">
-      import { renderSlides } from "./js/slides-control.js";
+      import { renderSlides, currentSlideIndex, slides } from "./js/slides-control.js";
+      import { reportIssue } from "./js/incidencias.js";
+      import {openIssueModal, closeIssueModal} from "./js/modal.js"
       import {
         slidesSantaRosa,
         slidesPlanetaNave,
@@ -41,6 +43,10 @@
       const seccion = new URLSearchParams(window.location.search).get(
         "seccion"
       );
+
+
+      // const oficinaKey = oficina.replace(/-/g, "").toLowerCase();
+
       const sitios = {
         santarosa: slidesSantaRosa,
         planetanave: slidesPlanetaNave,
@@ -51,6 +57,33 @@
       //ELEMENTOS
       const slidesArray = Object.values(sitios[oficina][seccion]);      
       const container = document.getElementById("slides");
+      const cancelIssueBtn = document.getElementById("cancelIssueBtn");
+      const sendIssueBtn = document.getElementById("sendIssueBtn");
+
+
+
+
+      //EVENTOS
+
+      cancelIssueBtn.addEventListener("click", ()=>{
+      document.getElementById("issueModal").style.display = "none";
+      document.getElementById("issueDesc").value = "";
+      document.getElementById("issueFile").value = "";
+      })
+
+      sendIssueBtn.addEventListener("click",  () => {
+        const issueDesc = document.getElementById("issueDesc").value.trim();
+        const issue = {
+          oficina: oficina,
+          seccion: seccion,
+          incidencia: issueDesc,
+          paso: currentSlideIndex,
+          pasoDesc: slides[currentSlideIndex].desc,
+        };
+        reportIssue(issue);
+        closeIssueModal();} 
+    )
+
 
       //RENDERIZA LAS SLIDES
       renderSlides(container, slidesArray);

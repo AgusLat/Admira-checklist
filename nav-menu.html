@@ -50,7 +50,7 @@
         let opciones = [];
 
         switch (oficina) {
-          case "santa-rosa":
+          case "santarosa":
             opciones = Object.keys(slidesSantaRosa).map((titulo) => ({
               seccion: titulo.toLocaleUpperCase(),
               href: `slides.html?oficina=${oficina}&seccion=${titulo}`,
@@ -62,13 +62,13 @@
               href: `slides.html?oficina=${oficina}&seccion=${titulo}`,
             }));
             break;
-          case "planeta-terminator":
+          case "planetaterminator":
             opciones = Object.keys(slidesPlanetaTerminator).map((titulo) => ({
               seccion: titulo.toLocaleUpperCase(),
               href: `slides.html?oficina=${oficina}&seccion=${titulo}`,
             }));
             break;
-          case "planeta-nave":
+          case "planetanave":
             opciones = Object.keys(slidesPlanetaNave).map((titulo) => ({
               seccion: titulo.toLocaleUpperCase(),
               href: `slides.html?oficina=${oficina}&seccion=${titulo}`,
