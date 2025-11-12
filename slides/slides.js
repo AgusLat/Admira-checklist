@@ -6,8 +6,8 @@
     1: {desc: 'Encender el aire acondicionado de la sala 360 con el mando que hay en la estantería de Administración.', imgSrc: './img/santa-rosa/sala360/1.jpg' },
     2: {desc: 'Encender PC en forma de cubo de la sala de Administración. Esperar a que arranque e inicie el software de la sala 360.', imgSrc: './img/santa-rosa/sala360/2.jpg' },
     3: {desc: 'Encender los 5 proyectores con los mandos que hay bajo la mesa de la sala 360.', imgSrc: './img/santa-rosa/sala360/3.jpg' },
-    4: {desc: 'Encender el portátil de la sala 360. Entrar con la contraseña: “admira123”. Dejar abierta la página del control del showroom colocando la URL: 192.168.1.82 en el navegador.', imgSrc: './img/santa-rosa/sala360/portatil.jpg' },
-    5: {desc: 'Cerrar la puerta de administración.', imgSrc: './img/santa-rosa/sala360/puerta-administracion.jpg' },
+    4: {desc: 'Encender el portátil de la sala 360. Entrar con la contraseña: “admira123”. Dejar abierta la página del control del showroom colocando la URL: 192.168.1.82 en el navegador.'},
+    5: {desc: 'Cerrar la puerta de administración.'},
     6: { type: "outro", desc: "Zona completada."}
 
   },
@@ -37,13 +37,12 @@
     0: { type: "intro", desc: "Garaje"},
     1: { desc: 'Encender los aires acondicionados con los interruptores que se encuentran uno a cada lado de la pared del fondo.', imgSrc: './img/santa-rosa/garaje/aires.jpg' },
     2: { desc: 'Encender cada máquina Pinball Stern, Tiburón, Jurassic Park, Tortugas Ninja y Mandalorian con el botón en la parte inferior.', imgSrc: './img/santa-rosa/garaje/pinballs.jpg' },
-    3: { desc: 'Encender la cabina Arcade Jurassic Park con el botón lateral.', imgSrc: './img/santa-rosa/garaje/arcade-jurassic.jpg' },
-    4: { desc: 'Encender la mesa de Pong con el botón de la parte lateral inferior.', imgSrc: './img/santa-rosa/garaje/mesa-pong.jpg' },
-    5: { desc: 'Comprobar que el PC de Tiburón está encendido y emitiendo en la pantalla grande.', imgSrc: './img/santa-rosa/garaje/pc-tiburon.jpg' },
-    6: { desc: 'Comprobar que está encendido el PC y la pantalla trasera del Jeep.', imgSrc: './img/santa-rosa/garaje/jeep-pantalla.jpg' },
-    7: { desc: 'Cerrar las puertas de la furgoneta de las TNT si hace falta.', imgSrc: './img/santa-rosa/garaje/furgo-tnt.jpg' },
-    8: { desc: 'Cerrar las puertas de los cuartillos detrás de la furgoneta de las TNT.', imgSrc: './img/santa-rosa/garaje/cuartillos.jpg' },
-    9: { type: "outro", desc: "Zona completada."}
+    3: { desc: 'Encender la mesa de Pong con el botón de la parte lateral inferior.', imgSrc: './img/santa-rosa/garaje/mesa-pong.jpg' },
+    4: { desc: 'Comprobar que el PC de Tiburón está encendido y emitiendo en la pantalla grande.', imgSrc: './img/santa-rosa/garaje/pc-tiburon.jpg' },
+    5: { desc: 'Comprobar que está encendido el PC y la pantalla trasera del Jeep.', imgSrc: './img/santa-rosa/garaje/jeep-pantalla.jpg' },
+    6: { desc: 'Cerrar las puertas de la furgoneta de las TNT si hace falta.', imgSrc: './img/santa-rosa/garaje/furgo-tnt.jpg' },
+    7: { desc: 'Cerrar las puertas de los cuartillos detrás de la furgoneta de las TNT.', imgSrc: './img/santa-rosa/garaje/cuartillos.jpg' },
+    8: { type: "outro", desc: "Zona completada."}
   }
 };
 
@@ -61,9 +60,8 @@ export const slidesStore = {
   recepcion: {
     0: { type: "intro", desc: "Recepción"},
     1: { desc: "Encender la pantalla con el mando y poner música de los años 80 en YouTube.", imgSrc: "./img/store/recepcion/placeholder.jpg" },
-    2: { desc: "Encender el portátil (código 0007).", imgSrc: "./img/store/portatil/placeholder.jpg" },
-    3: { desc: "Iniciar la aplicación correspondiente (ROG Remix). ", imgSrc: "./img/store/portatil/placeholder.jpg" },
-    4: { type: "outro", desc: "Zona completada."}
+    2: { desc: "Encender el portátil (código 0007) e iniciar la aplicación correspondiente (ROG Remix). ", imgSrc: "./img/store/portatil/placeholder.jpg" },
+    3: { type: "outro", desc: "Zona completada."}
   }
 };
 
@@ -71,9 +69,9 @@ export const slidesStore = {
 export const slidesPlanetaTerminator = {
   entrada: {
     0: { type: "intro", desc: "Entrada"},
-    1: { desc: "No cerrar completamente la puerta, ya que luego resulta difícil abrirla.", imgSrc: "./img/planeta-terminator/entrada/placeholder.jpg" },
+    1: { desc: "No cerrar completamente la puerta, ya que luego resulta difícil abrirla." },
     2: { desc: "Subir las pías.", imgSrc: "./img/planeta-terminator/entrada/placeholder.jpg" },
-    3: { desc: "Encender el aire acondicionado.", imgSrc: "./img/planeta-terminator/entrada/placeholder.jpg" },
+    3: { desc: "Encender el aire acondicionado con el mando." },
     4: { type: "outro", desc: "Zona completada."}
   },
 
@@ -84,7 +82,7 @@ export const slidesPlanetaTerminator = {
     3: { desc: "Pantalla al lado de los terminators humanos, sala de reunión: abrir Admira y ponerlo en pantalla completa.", imgSrc: "./img/planeta-terminator/pantallas/placeholder.jpg" },
     4: { desc: "Pantallas de la zona de PC: Si no se encienden, usar el mando. la pantalla derecha corresponde al PC derecho, y la izquierda al PC izquierdo."+
                 "Iniciar sesión si es necesario con la clave: BitsandAtoms2025!", imgSrc: "./img/planeta-terminator/pantallas/placeholder.jpg" },
-    5: { desc: "Verificar que todas las puertas estén bien cerradas, girando la llave completamente hacia la derecha.", imgSrc: "./img/planeta-terminator/puertas/placeholder.jpg" },
+    5: { desc: "Verificar que todas las puertas estén bien cerradas, girando la llave completamente hacia la derecha." },
     6: { type: "outro", desc: "Zona completada."}
     }
 };
@@ -109,13 +107,13 @@ export const slidesPlanetaNave = {
     // Holograma
     4: { desc: "Asegurarse de que el PC del armario esté encendido.", imgSrc: "/checklist_img/placeholder.jpg" },
     5: { desc: "Subir el interruptor del holograma (debería estar siempre arriba).", imgSrc: "/checklist_img/placeholder.jpg" },
-    6: { desc: "La luz de la entrada debe estar apagada.", imgSrc: "/checklist_img/placeholder.jpg" },
+    6: { desc: "La luz de la entrada debe estar apagada."},
 
     // Póster de tinta digital
     7: { desc: "Si la pantalla está apagada, usar el mando del armario (identificado con etiqueta). Seleccionar el póster en 'recientes'.", imgSrc: "/checklist_img/placeholder.jpg" },
 
     // Puertas del ascensor
-    8: { desc: "Si las puertas del ascensor están abiertas, no tocar nada.", imgSrc: "/checklist_img/placeholder.jpg" },
+    8: { desc: "Si las puertas del ascensor están abiertas, no tocar nada."},
     9: { desc: "Si están cerradas: quitar la carcasa.", imgSrc: "/checklist_img/placeholder.jpg" },
     10: { desc: "Pulsar los 2 botones de las esquinas superiores al mismo tiempo.", imgSrc: "/checklist_img/placeholder.jpg" },
     11: { desc: "Luego presionar el botón del candado para cerrar por defecto.", imgSrc: "/checklist_img/placeholder.jpg" },
@@ -141,34 +139,33 @@ export const slidesPlanetaNave = {
     4: { desc: "Presionar dos veces las luces blancas para que se pongan azules. Solo la del baño (Hans Solo) se deja en blanca.", imgSrc: "./img/planeta-nave/nave/placeholder.jpg" },
 
     // Pantallas / Videos
-    5: { desc: "Si un video terminó, hacer clic con el mouse en la pantalla para reiniciar Admira.", imgSrc: "./img/planeta-nave/nave/placeholder.jpg" },
+    5: { desc: "Si un video terminó, hacer clic con el mouse en la pantalla para reiniciar Admira."},
 
     // PC de tres pantallas
-    6: { desc: "El PC de tres pantallas arranca solo con la luz. Revisar que no tenga errores visibles.", imgSrc: "./img/planeta-nave/nave/placeholder.jpg" },
+    6: { desc: "El PC de tres pantallas arranca solo con la luz. Revisar que no tenga errores visibles."},
 
     // Tablet
     7: { desc: "Si la tablet está apagada, tocar la pantalla.", imgSrc: "./img/planeta-nave/nave/placeholder.jpg" },
     8: { desc: "Si no responde, retirarla del soporte y encenderla. Para retirarla, abrir la carcasa, separar la tablet y encenderla.", imgSrc: "./img/planeta-nave/nave/placeholder.jpg" },
-    9: { desc: "Abrir Admira.", imgSrc: "./img/planeta-nave/nave/placeholder.jpg" },
+    9: { desc: "Abrir Admira en la tablet.", imgSrc: "./img/planeta-nave/nave/placeholder.jpg" },
 
     // Mesa reuniones
     10: { desc: "Encender el astronauta que hay encima de la mesa.", imgSrc: "./img/planeta-nave/nave/placeholder.jpg" },
 
     // Humo
-    11: { desc: "Activar la máquina de humo durante 20 segundos cuando llegue la visita.", imgSrc: "./img/planeta-nave/nave/placeholder.jpg" },
-    12: { desc: "Está sobre la entrada a la cantina. El mando está al lado del PC 1 (etiquetado 'Máquina Humo').", imgSrc: "./img/planeta-nave/nave/placeholder.jpg" },
+    11: { desc: "Activar la máquina de humo durante 20 segundos cuando llegue la visita. Está sobre la entrada a la cantina. El mando está al lado del PC 1 (etiquetado 'Máquina Humo').", imgSrc: "./img/planeta-nave/nave/placeholder.jpg" },
 
     // Cantina
-    13: { desc: "Apagar todas las luces blancas del techo.", imgSrc: "./img/planeta-nave/nave/placeholder.jpg" },
+    12: { desc: "Apagar todas las luces blancas del techo.", imgSrc: "./img/planeta-nave/nave/placeholder.jpg" },
 
     // R2D2
-    14: { desc: "Enchufar a la corriente.", imgSrc: "./img/planeta-nave/nave/placeholder.jpg" },
-    15: { desc: "Abrir su cabeza, presionar el botón y colocar de nuevo su cabeza.", imgSrc: "./img/planeta-nave/nave/placeholder.jpg" },
-    16: { desc: "Encender el mando de la play y presionar el botón R1 izquierdo. Una vez funcione, apagar el mando.", imgSrc: "./img/planeta-nave/nave/placeholder.jpg" },
+    13: { desc: "Enchufar R2D2 a la corriente."},
+    14: { desc: "Abrir su cabeza, presionar el botón y colocar de nuevo su cabeza.", imgSrc: "./img/planeta-nave/nave/placeholder.jpg" },
+    15: { desc: "Encender el mando de la play y presionar el botón R1 izquierdo. Una vez funcione, apagar el mando.", imgSrc: "./img/planeta-nave/nave/placeholder.jpg" },
 
     // Simulador
-    17: { desc: "Verificar que está enchufado en el armario izquierdo y subir su diferencial.", imgSrc: "./img/planeta-nave/nave/placeholder.jpg"},
-    18: { type: "outro", desc: "Zona completada."}
+    16: { desc: "Verificar que está enchufado en el armario izquierdo y subir su diferencial.", imgSrc: "./img/planeta-nave/nave/placeholder.jpg"},
+    17: { type: "outro", desc: "Zona completada."}
   },
 
   // === OFICINA (Despacho IT Crowd)===
@@ -178,23 +175,21 @@ export const slidesPlanetaNave = {
     2: { desc: "**Girar la rueda del televisor hasta que salgan “marcianitos”.", imgSrc: "./img/planeta-nave/oficina/placeholder.jpg" },
     3: { desc: "Encender el alargue que hay en la estantería del fondo.", imgSrc: "./img/planeta-nave/oficina/placeholder.jpg" },
     4: { desc: "A mano izquierda de la puerta, verás un teclado en la pared. Presionar el power.", imgSrc: "./img/planeta-nave/oficina/placeholder.jpg" },
-    5: { desc: "Debe estar cerrada. Si no lo está, entrar y usar el panel como el del ascensor para cerrarla. Para salir, hay un sensor (la puerta se abrirá sola).", imgSrc: "./img/planeta-nave/oficina/placeholder.jpg" },
-
-    // Cocina 
-    6: { desc: "Usualmente está desconectado, si no lo está: desenchufar el timbre para que no suene durante visitas importantes.", imgSrc: "./img/planeta-nave/oficina/placeholder.jpg" },
+    5: { desc: "La puerta debe estar cerrada. Si no lo está, entrar y usar el panel como el del ascensor para cerrarla. Para salir, hay un sensor (la puerta se abrirá sola)."},
 
     // Puertas
-    7: { desc: "**2 de las puertas son falsas.", imgSrc: "./img/planeta-nave/oficina/placeholder.jpg" },
-    8: { desc: "1 lleva al baño y otra a la cocina.", imgSrc: "./img/planeta-nave/oficina/placeholder.jpg" },
+    6: { desc: "**2 de las puertas son falsas. 1 lleva al baño y otra a la cocina.", imgSrc: "./img/planeta-nave/oficina/placeholder.jpg" },
+
+    // Cocina 
+    7: { desc: "En la cocina --> Usualmente está desconectado, si no lo está: desenchufar el timbre para que no suene durante visitas importantes.", imgSrc: "./img/planeta-nave/oficina/placeholder.jpg" },
 
     // Importante
-    9: { desc: "No tocar nada del decorado (es un escenario de una serie).", imgSrc: "./img/planeta-nave/oficina/placeholder.jpg" },
-    10: { desc: "Se puede usar el baño y tomar agua de la nevera (excepto las botellas de Star Wars).", imgSrc: "./img/planeta-nave/oficina/placeholder.jpg" },
+    8: { desc: "No tocar nada del decorado (es un escenario de una serie). Se puede usar el baño y tomar agua de la nevera (excepto las botellas de Star Wars).", imgSrc: "./img/planeta-nave/oficina/placeholder.jpg" },
 
     // Divoom
-    11: { desc: "Divoom PixelArt: verificar que se enciende y conecta al WiFi. Usar la app para lanzar contenido de Star Wars.", imgSrc: "./img/planeta-nave/oficina/placeholder.jpg" },
-    12: { desc: "Divoom Time Gate: encender y conectar al WiFi. Desde la app, lanzar el reloj 'Clock Face'.", imgSrc: "./img/planeta-nave/oficina/placeholder.jpg" },
-    13: { type: "outro", desc: "Zona completada."}
+    9: { desc: "Divoom PixelArt: verificar que se enciende y conecta al WiFi. Usar la app para lanzar contenido de Star Wars.", imgSrc: "./img/planeta-nave/oficina/placeholder.jpg" },
+    10: { desc: "Divoom Time Gate: encender y conectar al WiFi. Desde la app, lanzar el reloj 'Clock Face'.", imgSrc: "./img/planeta-nave/oficina/placeholder.jpg" },
+    11: { type: "outro", desc: "Zona completada."}
   },
 };
 
