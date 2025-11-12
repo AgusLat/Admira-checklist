@@ -51,6 +51,7 @@ else if (slide.type === "outro") {
         <h2>Paso ${index}</h2>
         <p>${slide.desc}</p>
         <img src="${slide.imgSrc}" alt="Paso ${index}">
+        </div>
         <div class="buttons">
           ${index > 0 ? `<button id="prevBtn">◀ Atrás</button>` : ""}
           ${
@@ -60,7 +61,6 @@ else if (slide.type === "outro") {
           }
           <button id="issueBtn">⚠ Incidencia</button>
         </div>
-      </div>
     `;
   }
 

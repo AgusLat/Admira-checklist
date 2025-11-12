@@ -19,6 +19,17 @@ body {
 }
 
 /* === SLIDE CARD === */
+
+.slides{
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+
 .slide {
   background: rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(6px);
@@ -41,6 +52,7 @@ body {
 .slide p {
   font-size: 1.1rem;
   line-height: 1.6;
+  text-align: left;
 }
 
 .slide img {
@@ -57,6 +69,7 @@ body {
   flex-wrap: wrap;
   gap: 1rem;
   margin-top: 1.5rem;
+  width: 100%;
 }
 
 button {
@@ -68,6 +81,7 @@ button {
   color: #fff;
   font-size: 1rem;
   transition: all 0.2s ease;
+  width: 45%;
 }
 
 #nextBtn,
