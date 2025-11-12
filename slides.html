@@ -26,6 +26,15 @@
     </div>
 
     <script type="module">
+      import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+      import { firebaseConfig } from "../firebase/firebaseConfig.js"; 
+      import {
+        getAuth,
+        onAuthStateChanged,
+        signOut,
+        signInAnonymously
+      } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
       import { renderSlides, currentSlideIndex, slides } from "./js/slides-control.js";
       import { reportIssue } from "./js/incidencias.js";
       import {openIssueModal, closeIssueModal} from "./js/modal.js"
@@ -36,6 +45,19 @@
         slidesStore,
       } from "./slides/slides.js";
 
+
+      //INICIAR FIIREBASE
+      if (!window.firebaseApp) {
+        window.firebaseApp = initializeApp(firebaseConfig);
+        window.db = getFirestore(window.firebaseApp);
+        window.firebaseAddDoc = addDoc;
+        window.firebaseCollection = collection;
+        window.firebaseGetDocs = getDocs;
+        window.firebaseAuth = getAuth(window.firebaseApp);
+  
+      }
+      
+
       //PARAMS
       const oficina = new URLSearchParams(window.location.search).get(
         "oficina"
@@ -44,9 +66,7 @@
         "seccion"
       );
 
-
-      // const oficinaKey = oficina.replace(/-/g, "").toLowerCase();
-
+      //VARIABLES
       const sitios = {
         santarosa: slidesSantaRosa,
         planetanave: slidesPlanetaNave,
@@ -64,7 +84,6 @@
 
 
       //EVENTOS
-
       cancelIssueBtn.addEventListener("click", ()=>{
       document.getElementById("issueModal").style.display = "none";
       document.getElementById("issueDesc").value = "";
