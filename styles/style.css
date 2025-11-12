@@ -1,64 +1,166 @@
-.slide { 
-    display: none; 
-    text-align: center; 
-    padding: 1.5rem; 
-    max-width: 800px; 
+/* === RESET === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', system-ui, sans-serif;
 }
 
-.slide.active { 
-    display: block; 
+/* === BASE === */
+body {
+  background: linear-gradient(160deg, #689840, #446b2d);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding: 2rem 1rem;
 }
 
-img { 
-    max-width: 100%; 
-    border-radius: 12px; 
-    margin-top: 1rem; 
+/* === SLIDE CARD === */
+.slide {
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(6px);
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
-.buttons { 
-    display: flex; 
-    justify-content: center; 
-    gap: 1rem; 
-    margin-top: 1rem; 
+.slide h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
-button { 
-    color: white; 
-    border: none; 
-    padding: .8rem 1.2rem; 
-    border-radius: 8px; 
-    cursor: pointer; 
-    font-weight: 600; 
+.slide p {
+  font-size: 1.1rem;
+  line-height: 1.6;
 }
 
-.loginBtn{
-    background: #16a34a; 
+.slide img {
+  max-width: 100%;
+  border-radius: 12px;
+  margin-top: 1.2rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
-.continuaBtn{
-    background: #22c55e; 
+/* === BUTTONS === */
+.buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
-.atrasBtn{
-    background: rgb(10, 115, 190);
+button {
+  border: none;
+  border-radius: 10px;
+  padding: 0.8rem 1.4rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: #fff;
+  font-size: 1rem;
+  transition: all 0.2s ease;
 }
 
-.continuaBtn:hover { 
-    background: #16a34a; 
+#nextBtn,
+#finishBtn,
+#nextSectionBtn,
+#sendIssueBtn {
+  background-color: #2ecc71;
 }
 
-.atrasBtn:hover{
-    background: rgb(10, 80, 129);
+#prevBtn {
+  background-color: #3498db;
 }
 
-button.issue, .skipBtn {
-    background: #ef4444; 
+#issueBtn,
+#cancelIssueBtn {
+  background-color: #e74c3c;
 }
 
-button.issue:hover, .skipBtn:hover { 
-    background: #dc2626; 
+button:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
 }
 
-h1, h2 { 
-    margin: 0.5rem 0; 
+/* === MODAL DE INCIDENCIA === */
+#issueModal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+  justify-content: center;
+  align-items: center;
+}
+
+#issueContent {
+  background: #222;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 400px;
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+#issueContent h3 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #2ecc71;
+}
+
+#issueContent textarea,
+#issueContent input[type="file"] {
+  width: 100%;
+  border-radius: 8px;
+  border: none;
+  padding: 0.8rem;
+  margin-top: 0.6rem;
+  background: #333;
+  color: #fff;
+  font-size: 0.9rem;
+}
+
+#issueContent textarea:focus {
+  outline: 2px solid #2ecc71;
+}
+
+#issueContent button {
+  width: 48%;
+  font-size: 0.9rem;
+  padding: 0.8rem;
+}
+
+/* === ANIMACIONES === */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 600px) {
+  .slide {
+    padding: 1.5rem;
+  }
+  .slide h2 {
+    font-size: 1.5rem;
+  }
+  .slide p {
+    font-size: 1rem;
+  }
 }
