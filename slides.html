@@ -26,18 +26,26 @@
     </div>
 
     <script type="module">
-      import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+
+
+ import { 
+        getFirestore, 
+        collection, 
+        addDoc, 
+        getDocs,
+        query,
+        where,
+        updateDoc
+      } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
       import { firebaseConfig } from "../firebase/firebaseConfig.js"; 
       import {
         getAuth,
         onAuthStateChanged,
-        signOut,
-        signInAnonymously
       } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
       import { renderSlides, currentSlideIndex, slides } from "./js/slides-control.js";
       import { reportIssue } from "./js/incidencias.js";
-      import {openIssueModal, closeIssueModal} from "./js/modal.js"
+      import { openIssueModal, closeIssueModal } from "./js/modal.js";
       import {
         slidesSantaRosa,
         slidesPlanetaNave,
@@ -45,28 +53,24 @@
         slidesStore,
       } from "./slides/slides.js";
 
-
-      //INICIAR FIIREBASE
+      // INICIAR FIREBASE
       if (!window.firebaseApp) {
         window.firebaseApp = initializeApp(firebaseConfig);
         window.db = getFirestore(window.firebaseApp);
         window.firebaseAddDoc = addDoc;
         window.firebaseCollection = collection;
         window.firebaseGetDocs = getDocs;
+        window.firebaseQuery = query;
+        window.firebaseWhere = where;
+        window.firebaseUpdateDoc = updateDoc;
         window.firebaseAuth = getAuth(window.firebaseApp);
-  
       }
-      
 
-      //PARAMS
-      const oficina = new URLSearchParams(window.location.search).get(
-        "oficina"
-      );
-      const seccion = new URLSearchParams(window.location.search).get(
-        "seccion"
-      );
+      // PARAMS
+      const oficina = new URLSearchParams(window.location.search).get("oficina");
+      const seccion = new URLSearchParams(window.location.search).get("seccion");
 
-      //VARIABLES
+      // VARIABLES
       const sitios = {
         santarosa: slidesSantaRosa,
         planetanave: slidesPlanetaNave,
@@ -74,24 +78,27 @@
         store: slidesStore,
       };
 
-      //ELEMENTOS
+      // ELEMENTOS
       const slidesArray = Object.values(sitios[oficina][seccion]);      
       const container = document.getElementById("slides");
       const cancelIssueBtn = document.getElementById("cancelIssueBtn");
       const sendIssueBtn = document.getElementById("sendIssueBtn");
 
+      // EVENTOS
+      cancelIssueBtn.addEventListener("click", () => {
+        document.getElementById("issueModal").style.display = "none";
+        document.getElementById("issueDesc").value = "";
+        document.getElementById("issueFile").value = "";
+      });
 
-
-
-      //EVENTOS
-      cancelIssueBtn.addEventListener("click", ()=>{
-      document.getElementById("issueModal").style.display = "none";
-      document.getElementById("issueDesc").value = "";
-      document.getElementById("issueFile").value = "";
-      })
-
-      sendIssueBtn.addEventListener("click",  () => {
+      sendIssueBtn.addEventListener("click", async () => {
         const issueDesc = document.getElementById("issueDesc").value.trim();
+        
+        if (!issueDesc) {
+          alert("Por favor, describe la incidencia antes de enviar.");
+          return;
+        }
+
         const issue = {
           oficina: oficina,
           seccion: seccion,
@@ -99,13 +106,14 @@
           paso: currentSlideIndex,
           pasoDesc: slides[currentSlideIndex].desc,
         };
-        reportIssue(issue);
-        closeIssueModal();} 
-    )
+        
+        await reportIssue(issue);
+        closeIssueModal();
+      });
 
-
-      //RENDERIZA LAS SLIDES
-      renderSlides(container, slidesArray);
+      // RENDERIZA LAS SLIDES (pasamos la sección actual)
+      renderSlides(container, slidesArray, seccion);
+    
     </script>
   </body>
 </html>

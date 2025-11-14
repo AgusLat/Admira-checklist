@@ -22,15 +22,45 @@
   <script type="module">
     import { firebaseConfig } from "./firebase/firebaseConfig.js"
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+    import { 
+      getAuth, 
+      signInWithPopup, 
+      GoogleAuthProvider, 
+      onAuthStateChanged, 
+      signOut 
+    } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+    import { 
+      getFirestore, 
+      doc, 
+      getDoc,
+      collection,
+      addDoc,
+      query,
+      where,
+      getDocs,
+      updateDoc
+    } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
     // --- 1. Configuración Firebase ---
-
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
     const db = getFirestore(app);
+
+    // Hacer disponible globalmente para otros módulos
+    if (!window.firebaseApp) {
+      window.firebaseApp = app;
+      window.db = db;
+      window.firebaseCollection = collection;
+      window.firebaseAddDoc = addDoc;
+      window.firebaseGetDocs = getDocs;
+      window.firebaseQuery = query;
+      window.firebaseWhere = where;
+      window.firebaseUpdateDoc = updateDoc;
+    }
+
+    // Importar la función de crear checklist
+    const { createChecklistDocument } = await import("./firebase/checklist-manager.js");
 
     // --- 2. Función de verificación ---
     async function esUsuarioAutorizado(email) {
@@ -55,15 +85,16 @@
           return;
         }
 
-        // Guardar email y redirigir
+        // Guardar email
         localStorage.setItem("userEmail", email);
 
         // Mantener el parámetro de la URL
         const params = new URLSearchParams(window.location.search);
-        const oficina = params.get("oficina");
+        const oficina = params.get("oficina") || "store";
         localStorage.setItem("oficinaParam", oficina);
 
-        window.location.href = `nav-menu.html?oficina=${encodeURIComponent(oficina)}`;
+        
+        
       } catch (error) {
         console.error("Error al iniciar sesión:", error);
         alert("Error al iniciar sesión");
@@ -73,16 +104,32 @@
      // --- 4. Manejo de sesión activa ---
      onAuthStateChanged(auth, async (user) => {
        if (!user) return;
+       
        const autorizado = await esUsuarioAutorizado(user.email);
        if (autorizado) {
          const oficina = new URLSearchParams(window.location.search).get("oficina") 
-                     || localStorage.getItem("oficinaParametro") 
-                     || "general";
+                     || localStorage.getItem("oficinaParam") 
+                     || "store";
+
+      // *** CREAR EL DOCUMENTO DE CHECKLIST ***
+      // Si ya hay sesión, verificar si hay un checklist activo
+        const checklistId = localStorage.getItem("currentChecklistId");
+        if (!checklistId) {
+        // No hay checklist activo, crear uno nuevo
+           try {
+             await createChecklistDocument(oficina, user.email);
+             console.log("✅ Checklist creado para sesión existente");
+           } catch (error) {
+             console.error("⚠️ Error al crear checklist:", error);
+           }
+         }
+         
          window.location.href = `nav-menu.html?oficina=${encodeURIComponent(oficina)}`;
        } else {
          signOut(auth);
        }
      });
+    
   </script>
 </body>
 </html>
