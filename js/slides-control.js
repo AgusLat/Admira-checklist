@@ -1,14 +1,18 @@
 import { openIssueModal } from "./modal.js";
+import { markStepAsOK, processPendingIncidencia, hasPendingIncidencia } from "./incidencias.js";
+import { completeChecklist, abortChecklist } from "../firebase/checklist-manager.js";
 
 // Variables
 export let currentSlideIndex = 0;
 export let slides = [];
 let container = null;
+let currentSeccion = null;
 
 // Renderizar slides
-export function renderSlides(containerElement, slideArray) {
+export function renderSlides(containerElement, slideArray, seccion) {
   container = containerElement;
   slides = slideArray;
+  currentSeccion = seccion;
   showSlide(currentSlideIndex);
 }
 
@@ -24,6 +28,7 @@ function showSlide(index) {
         <h2>${slide.desc}</h2>
         ${slide.imgSrc ? `<img src="${slide.imgSrc}" alt="Intro">` : ""}
         <div class="buttons">
+          <button id="backToMenuBtn" class="back-to-menu">🏠 Volver al Menú</button>
           <button id="nextBtn">Comenzar ▶</button>
         </div>
       </div>
@@ -31,18 +36,19 @@ function showSlide(index) {
   }
 
   // --- OUTRO (FINAL) ---
-else if (slide.type === "outro") {
-  html = `
-    <div class="slide outro">
-      <h2>${slide.desc}</h2>
-      ${slide.imgSrc ? `<img src="${slide.imgSrc}" alt="Final">` : ""}
-      <div class="buttons">
-        <button id="prevBtn">◀ Atrás</button>
-        <button id="nextSectionBtn">Siguiente sección ▶</button>
+  else if (slide.type === "outro") {
+    html = `
+      <div class="slide outro">
+        <h2>${slide.desc}</h2>
+        ${slide.imgSrc ? `<img src="${slide.imgSrc}" alt="Final">` : ""}
+        <div class="buttons">
+          <button id="backToMenuBtn" class="back-to-menu">🏠 Volver al Menú</button>
+          <button id="prevBtn">◀ Atrás</button>
+          <button id="nextSectionBtn">Siguiente sección ▶</button>
+        </div>
       </div>
-    </div>
-  `;
-}
+    `;
+  }
 
   // --- SLIDE NORMAL ---
   else {
@@ -50,9 +56,10 @@ else if (slide.type === "outro") {
       <div class="slide">
         <h2>Paso ${index}</h2>
         <p>${slide.desc}</p>
-        <img src="${slide.imgSrc}" alt="Paso ${index}">
+        ${slide.imgSrc ? `<img src="${slide.imgSrc}" alt="Paso ${index}">` : ""}
         </div>
         <div class="buttons">
+          <button id="backToMenuBtn" class="back-to-menu">🏠 Volver al Menú</button>
           ${index > 0 ? `<button id="prevBtn">◀ Atrás</button>` : ""}
           ${
             index < slides.length - 1
@@ -72,50 +79,71 @@ else if (slide.type === "outro") {
   if (document.getElementById("prevBtn"))
     document.getElementById("prevBtn").addEventListener("click", prevSlide);
   if (document.getElementById("finishBtn"))
-    document.getElementById("finishBtn").addEventListener("click", nextSlide);
+    document.getElementById("finishBtn").addEventListener("click", finishSlides);
   if (document.getElementById("issueBtn"))
     document.getElementById("issueBtn").addEventListener("click", openIssueModal);
+  if (document.getElementById("backToMenuBtn"))
+    document.getElementById("backToMenuBtn").addEventListener("click", backToMenu);
   
-  //navegar entre secciones
+  // Navegar entre secciones
   if (document.getElementById("nextSectionBtn")) {
-  document.getElementById("nextSectionBtn").addEventListener("click", () => {
-    const params = new URLSearchParams(window.location.search);
-    const oficina = params.get("oficina").toLowerCase();
-    const seccion = params.get("seccion").toLowerCase();
+    document.getElementById("nextSectionBtn").addEventListener("click", () => {
+      const params = new URLSearchParams(window.location.search);
+      const oficina = params.get("oficina").toLowerCase();
+      const seccion = params.get("seccion").toLowerCase();
 
-    // Lista de zonas de cada oficina (ordenadas)
-    const zonasPorOficina = {
-      santarosa: ["sala360", "arcade", "cafeteria", "garaje"],
-      planetanave: ["entrada", "ascensor", "nave", "oficina"],
-      planetaterminator: ["entrada", "pantallas"],
-      store: ["metahuman", "recepcion"],
-    };
+      // Lista de zonas de cada oficina (ordenadas)
+      const zonasPorOficina = {
+        santarosa: ["sala360", "arcade", "cafeteria", "garaje"],
+        planetanave: ["entrada", "ascensor", "nave", "oficina"],
+        planetaterminator: ["entrada", "pantallas"],
+        store: ["metahuman", "recepcion"],
+      };
 
-    const zonas = zonasPorOficina[oficina];
-    const indiceActual = zonas.indexOf(seccion);
-    const siguiente = zonas[indiceActual + 1];
+      const zonas = zonasPorOficina[oficina];
+      const indiceActual = zonas.indexOf(seccion);
+      const siguiente = zonas[indiceActual + 1];
 
-    if (siguiente) {
-      // Ir a la siguiente zona de la misma oficina
-      window.location.href = `slides.html?oficina=${oficina}&seccion=${siguiente}`;
-    } else {
-      // Última zona → volver al menú principal
-      window.location.href = "index.html"; // Cambia por tu menú real
-    }
-  });
-}
-
-}
-
-
-// Navegación
-export function nextSlide() {
-  if (currentSlideIndex < slides.length - 1) {
-    currentSlideIndex++;
-    showSlide(currentSlideIndex);
+      if (siguiente) {
+        // Ir a la siguiente zona de la misma oficina
+        window.location.href = `slides.html?oficina=${oficina}&seccion=${siguiente}`;
+      } else {
+        // Última zona → completar checklist y volver al menú principal
+        completeChecklist().then(() => {
+          window.location.href = `nav-menu.html?oficina=${oficina}`;
+        });
+      }
+    });
   }
 }
 
+// Navegación - Avanzar
+export async function nextSlide() {
+  try {
+    // Primero verificar si hay una incidencia pendiente del paso actual
+    const hadIncidencia = await processPendingIncidencia();
+    
+    // Si NO había incidencia, marcar el paso actual como OK
+    if (!hadIncidencia && currentSlideIndex > 0 && slides[currentSlideIndex].type !== "intro") {
+      await markStepAsOK(currentSeccion, currentSlideIndex);
+    }
+
+    // Avanzar al siguiente slide
+    if (currentSlideIndex < slides.length - 1) {
+      currentSlideIndex++;
+      showSlide(currentSlideIndex);
+    }
+  } catch (error) {
+    console.error("❌ Error en nextSlide:", error);
+    // Continuar de todas formas para no bloquear al usuario
+    if (currentSlideIndex < slides.length - 1) {
+      currentSlideIndex++;
+      showSlide(currentSlideIndex);
+    }
+  }
+}
+
+// Navegación - Retroceder
 function prevSlide() {
   if (currentSlideIndex > 0) {
     currentSlideIndex--;
@@ -123,11 +151,70 @@ function prevSlide() {
   }
 }
 
-function finishSlides() {
-  container.innerHTML = `
-    <div class="slide">
-      <h2>✅ Checklist completado</h2>
-      <p>Has terminado todos los pasos de esta sala.</p>
-    </div>
-  `;
+// Terminar checklist de la sección
+async function finishSlides() {
+  try {
+    // Procesar incidencia pendiente si existe
+    const hadIncidencia = await processPendingIncidencia();
+    
+    // Si NO había incidencia, marcar el último paso como OK
+    if (!hadIncidencia && slides[currentSlideIndex].type !== "outro") {
+      await markStepAsOK(currentSeccion, currentSlideIndex);
+    }
+
+    // Mostrar mensaje de finalización
+    container.innerHTML = `
+      <div class="slide">
+        <h2>✅ Sección completada</h2>
+        <p>Has terminado todos los pasos de <strong>${currentSeccion}</strong>.</p>
+        <div class="buttons">
+          <button id="backToMenuBtn">🏠 Volver al Menú</button>
+        </div>
+      </div>
+    `;
+
+    document.getElementById("backToMenuBtn").addEventListener("click", () => {
+      const params = new URLSearchParams(window.location.search);
+      const oficina = params.get("oficina");
+      window.location.href = `nav-menu.html?oficina=${oficina}`;
+    });
+  } catch (error) {
+    console.error("❌ Error al finalizar la sección:", error);
+  }
 }
+
+// Volver al menú (abortar checklist)
+async function backToMenu() {
+  const confirmar = confirm(
+    "¿Seguro que quieres volver al menú?\n\n" +
+    "Se guardará tu progreso actual y el checklist quedará marcado como incompleto."
+  );
+  
+  if (confirmar) {
+    try {
+      // Guardar el paso actual si hay progreso
+      if (currentSlideIndex > 0 && slides[currentSlideIndex].type !== "intro") {
+        const hadIncidencia = await processPendingIncidencia();
+        if (!hadIncidencia) {
+          await markStepAsOK(currentSeccion, currentSlideIndex);
+        }
+      }
+      
+      // Marcar checklist como incompleto
+      await abortChecklist();
+      
+      // Redirigir al menú
+      const params = new URLSearchParams(window.location.search);
+      const oficina = params.get("oficina");
+      window.location.href = `nav-menu.html?oficina=${oficina}`;
+    } catch (error) {
+      console.error("❌ Error al volver al menú:", error);
+      // Redirigir de todas formas
+      const params = new URLSearchParams(window.location.search);
+      const oficina = params.get("oficina");
+      window.location.href = `nav-menu.html?oficina=${oficina}`;
+    }
+  }
+}
+
+
