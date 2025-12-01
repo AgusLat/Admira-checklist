@@ -100,23 +100,23 @@ export const slidesPlanetaNave = {
   // === ENTRADA ===
   entrada: {
     0: { type: "intro", desc: "Entrada"},
-    1: { desc: "Subir todas las Pias, especialmente las grises (son las principales). Primero subir la Pia de Pantallas Altas y su gris para que se conecten a internet.", imgSrc: "/checklist_img/entrada_1.jpg" },
-    2: { desc: "Silenciar o apagar los teléfonos del armario para que no suenen.", imgSrc: "/checklist_img/placeholder.jpg" },
-    3: { desc: "Si no suena automático, reproducir música desde el Google Home del armario.", imgSrc: "/checklist_img/placeholder.jpg" },
+    1: { desc: "Subir todas las Pias, especialmente las grises (son las principales). Primero subir la Pia de Pantallas Altas y su gris para que se conecten a internet.", imgSrc: "/img/planeta-nave/entrada/entrada_1.jpg" },
+    2: { desc: "Silenciar o apagar los teléfonos del armario para que no suenen.", imgSrc: "/img/planeta-nave/entrada/entrada_2.jpg" },
+    3: { desc: "Si no suena automático, reproducir música desde el Google Home del armario.", imgSrc: "/img/planeta-nave/entrada/entrada_3.jpg" },
 
     // Holograma
-    4: { desc: "Asegurarse de que el PC del armario esté encendido.", imgSrc: "/checklist_img/entrada_4.jpg" },
-    5: { desc: "Subir el interruptor del holograma (debería estar siempre arriba).", imgSrc: "/checklist_img/entrada_5.jpg" },
+    4: { desc: "Asegurarse de que el PC del armario esté encendido.", imgSrc: "/img/planeta-nave/entrada/entrada_4.jpg" },
+    5: { desc: "Subir el interruptor del holograma (debería estar siempre arriba).", imgSrc: "/img/planeta-nave/entrada/entrada_5.jpg" },
     6: { desc: "La luz de la entrada debe estar apagada."},
 
     // Póster de tinta digital
-    7: { desc: "Si la pantalla está apagada, usar el mando del armario (identificado con etiqueta). Seleccionar el póster en 'recientes'.", imgSrc: "/checklist_img/placeholder.jpg" },
+    7: { desc: "Si la pantalla está apagada, usar el mando del armario (identificado con etiqueta). Seleccionar el póster en 'recientes'.", imgSrc: "/img/planeta-nave/entrada/entrada_7.jpg" },
 
     // Puertas del ascensor
     8: { desc: "Si las puertas del ascensor están abiertas, no tocar nada."},
-    9: { desc: "Si están cerradas: quitar la carcasa.", imgSrc: "/checklist_img/placeholder.jpg" },
-    10: { desc: "Pulsar los 2 botones de las esquinas superiores al mismo tiempo.", imgSrc: "/checklist_img/placeholder.jpg" },
-    11: { desc: "Luego presionar el botón del candado para cerrar por defecto.", imgSrc: "/checklist_img/placeholder.jpg" },
+    9: { desc: "Si están cerradas: quitar la carcasa.", imgSrc: "/img/planeta-nave/entrada/entrada_9.jpg" },
+    10: { desc: "Pulsar los 2 botones de las esquinas superiores al mismo tiempo.", imgSrc: "/img/planeta-nave/entrada/entrada_10.jpg" },
+    11: { desc: "Luego presionar el botón del candado para cerrar por defecto.", imgSrc: "/img/planeta-nave/entrada/entrada_11.jpg" },
     12: { type: "outro", desc: "Zona completada."}
   },
 

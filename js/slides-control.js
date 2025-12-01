@@ -1,5 +1,7 @@
+// js/slides-control.js - ACTUALIZADO
+
 import { openIssueModal } from "./modal.js";
-import { markStepAsOK, processPendingIncidencia, hasPendingIncidencia } from "./incidencias.js";
+import { markStepAsOK, processPendingIncidencia } from "./incidencias.js";
 import { completeChecklist, abortChecklist } from "../firebase/checklist-manager.js";
 
 // Variables
@@ -28,8 +30,8 @@ function showSlide(index) {
         <h2>${slide.desc}</h2>
         ${slide.imgSrc ? `<img src="${slide.imgSrc}" alt="Intro">` : ""}
         <div class="buttons">
-          <button id="backToMenuBtn" class="back-to-menu">🏠 Volver al Menú</button>
-          <button id="nextBtn">Comenzar ▶</button>
+        <button id="nextBtn" class="wideBtn">Comenzar ▶</button>
+        <button id="backToMenuBtn" class="back-to-menu">Volver al Menú</button>
         </div>
       </div>
     `;
@@ -42,9 +44,11 @@ function showSlide(index) {
         <h2>${slide.desc}</h2>
         ${slide.imgSrc ? `<img src="${slide.imgSrc}" alt="Final">` : ""}
         <div class="buttons">
-          <button id="backToMenuBtn" class="back-to-menu">🏠 Volver al Menú</button>
+          <div class="nav-buttons"> 
           <button id="prevBtn">◀ Atrás</button>
           <button id="nextSectionBtn">Siguiente sección ▶</button>
+          </div>
+          <button id="backToMenuBtn" class="back-to-menu">Volver al Menú</button>
         </div>
       </div>
     `;
@@ -59,13 +63,16 @@ function showSlide(index) {
         ${slide.imgSrc ? `<img src="${slide.imgSrc}" alt="Paso ${index}">` : ""}
         </div>
         <div class="buttons">
-          <button id="backToMenuBtn" class="back-to-menu">🏠 Volver al Menú</button>
-          ${index > 0 ? `<button id="prevBtn">◀ Atrás</button>` : ""}
-          ${
-            index < slides.length - 1
-              ? `<button id="nextBtn">Continuar ▶</button>`
-              : `<button id="finishBtn">✅ Terminar</button>`
-          }
+        <div class="nav-buttons">
+        ${index > 0 ? `<button id="prevBtn">◀ Atrás</button>` : ""}
+        ${
+          index < slides.length - 1
+            ? `<button id="nextBtn">Continuar ▶</button>`
+            : `<button id="finishBtn">✅ Terminar</button>`
+        }
+
+        </div>
+          <button id="backToMenuBtn" class="back-to-menu"> Volver al Menú</button>
           <button id="issueBtn">⚠ Incidencia</button>
         </div>
     `;
@@ -120,12 +127,17 @@ function showSlide(index) {
 // Navegación - Avanzar
 export async function nextSlide() {
   try {
-    // Primero verificar si hay una incidencia pendiente del paso actual
-    const hadIncidencia = await processPendingIncidencia();
-    
-    // Si NO había incidencia, marcar el paso actual como OK
-    if (!hadIncidencia && currentSlideIndex > 0 && slides[currentSlideIndex].type !== "intro") {
-      await markStepAsOK(currentSeccion, currentSlideIndex);
+    // SOLO guardar si NO es intro/outro
+    if (slides[currentSlideIndex].type !== "intro" && slides[currentSlideIndex].type !== "outro") {
+      // Primero verificar si hay una incidencia pendiente del paso actual
+      const hadIncidencia = await processPendingIncidencia();
+      
+      // Si NO había incidencia, marcar el paso actual como OK
+      // Pasar la descripción del paso actual
+      if (!hadIncidencia) {
+        const descripcionPaso = slides[currentSlideIndex].desc || "";
+        await markStepAsOK(currentSeccion, currentSlideIndex, descripcionPaso);
+      }
     }
 
     // Avanzar al siguiente slide
@@ -154,12 +166,16 @@ function prevSlide() {
 // Terminar checklist de la sección
 async function finishSlides() {
   try {
-    // Procesar incidencia pendiente si existe
-    const hadIncidencia = await processPendingIncidencia();
-    
-    // Si NO había incidencia, marcar el último paso como OK
-    if (!hadIncidencia && slides[currentSlideIndex].type !== "outro") {
-      await markStepAsOK(currentSeccion, currentSlideIndex);
+    // SOLO guardar si NO es intro/outro
+    if (slides[currentSlideIndex].type !== "intro" && slides[currentSlideIndex].type !== "outro") {
+      // Procesar incidencia pendiente si existe
+      const hadIncidencia = await processPendingIncidencia();
+      
+      // Si NO había incidencia, marcar el último paso como OK
+      if (!hadIncidencia) {
+        const descripcionPaso = slides[currentSlideIndex].desc || "";
+        await markStepAsOK(currentSeccion, currentSlideIndex, descripcionPaso);
+      }
     }
 
     // Mostrar mensaje de finalización
@@ -192,11 +208,13 @@ async function backToMenu() {
   
   if (confirmar) {
     try {
-      // Guardar el paso actual si hay progreso
-      if (currentSlideIndex > 0 && slides[currentSlideIndex].type !== "intro") {
+      // SOLO guardar si NO es intro/outro
+      if (slides[currentSlideIndex].type !== "intro" && slides[currentSlideIndex].type !== "outro") {
+        // Guardar el paso actual si hay progreso
         const hadIncidencia = await processPendingIncidencia();
         if (!hadIncidencia) {
-          await markStepAsOK(currentSeccion, currentSlideIndex);
+          const descripcionPaso = slides[currentSlideIndex].desc || "";
+          await markStepAsOK(currentSeccion, currentSlideIndex, descripcionPaso);
         }
       }
       
@@ -216,5 +234,3 @@ async function backToMenu() {
     }
   }
 }
-
-

@@ -1,3 +1,5 @@
+// js/incidencias.js - ACTUALIZADO
+
 import { updateChecklistStep } from "../firebase/checklist-manager.js";
 
 // Variable para almacenar temporalmente la incidencia antes de avanzar
@@ -9,27 +11,26 @@ let pendingIncidencia = null;
  */
 export const reportIssue = async (issue) => {
   try {
-   
     const descripcion = issue.incidencia.trim();
 
     if (!descripcion) {
-      console.warn("⚠️ No se proporcionó descripción de incidencia (issueDesc vacío)");
+      console.warn("⚠️ No se proporcionó descripción de incidencia");
       alert("Por favor, escribe una descripción de la incidencia.");
       return;
     }
 
-    console.log("📋 Incidencia reportada (texto):", descripcion);
-
+    console.log("📋 Incidencia reportada:", descripcion);
 
     // Guardar la incidencia como pendiente
     pendingIncidencia = {
       seccion: issue.seccion,
       paso: issue.paso,
-      descripcion: issue.incidencia
+      descripcionIncidencia: issue.incidencia,
+      descripcionPaso: issue.pasoDesc || ""
     };
 
   } catch (error) {
-    console.error("❌ Error al guardar la incidencia en Firestore:", error);
+    console.error("❌ Error al guardar la incidencia:", error);
     alert("Hubo un error al guardar la incidencia. Revisa la consola.");
   }
 };
@@ -38,10 +39,11 @@ export const reportIssue = async (issue) => {
  * Marca un paso como completado SIN incidencia
  * @param {string} seccion - Nombre de la sección
  * @param {number} paso - Índice del paso
+ * @param {string} descripcionPaso - Descripción del paso
  */
-export const markStepAsOK = async (seccion, paso) => {
+export const markStepAsOK = async (seccion, paso, descripcionPaso = "") => {
   try {
-    await updateChecklistStep(seccion, paso, "OK", false);
+    await updateChecklistStep(seccion, paso, "OK", false, descripcionPaso);
     console.log(`✅ Paso ${paso} de ${seccion} marcado como OK`);
   } catch (error) {
     console.error("❌ Error al marcar el paso como OK:", error);
@@ -59,8 +61,9 @@ export const processPendingIncidencia = async () => {
       await updateChecklistStep(
         pendingIncidencia.seccion,
         pendingIncidencia.paso,
-        pendingIncidencia.descripcion,
-        true
+        pendingIncidencia.descripcionIncidencia,
+        true,
+        pendingIncidencia.descripcionPaso
       );
       console.log(`⚠️ Incidencia procesada para paso ${pendingIncidencia.paso} de ${pendingIncidencia.seccion}`);
       pendingIncidencia = null;
@@ -80,4 +83,3 @@ export const processPendingIncidencia = async () => {
 export const hasPendingIncidencia = () => {
   return pendingIncidencia !== null;
 };
-

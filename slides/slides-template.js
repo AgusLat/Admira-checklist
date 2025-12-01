@@ -1,147 +1,55 @@
-// Template para generar el documento de checklist en Firebase
-// Cada paso tendrá: { completado: false, estado: null, incidencia: null }
+import {
+  slidesSantaRosa,
+  slidesStore,
+  slidesPlanetaTerminator,
+  slidesPlanetaNave
+} from "./slides.js";
 
+/**
+ * Genera el template del checklist basándose en las slides
+ * OMITE los pasos tipo "intro" y "outro"
+ */
 export const generateChecklistTemplate = (oficina) => {
-  const templates = {
-    santarosa: {
-      sala360: {
-        0: { completado: false, estado: null, incidencia: null },
-        1: { completado: false, estado: null, incidencia: null },
-        2: { completado: false, estado: null, incidencia: null },
-        3: { completado: false, estado: null, incidencia: null },
-        4: { completado: false, estado: null, incidencia: null },
-        5: { completado: false, estado: null, incidencia: null },
-        6: { completado: false, estado: null, incidencia: null }
-      },
-      arcade: {
-        0: { completado: false, estado: null, incidencia: null },
-        1: { completado: false, estado: null, incidencia: null },
-        2: { completado: false, estado: null, incidencia: null },
-        3: { completado: false, estado: null, incidencia: null },
-        4: { completado: false, estado: null, incidencia: null },
-        5: { completado: false, estado: null, incidencia: null },
-        6: { completado: false, estado: null, incidencia: null },
-        7: { completado: false, estado: null, incidencia: null },
-        8: { completado: false, estado: null, incidencia: null },
-        9: { completado: false, estado: null, incidencia: null },
-        10: { completado: false, estado: null, incidencia: null }
-      },
-      cafeteria: {
-        0: { completado: false, estado: null, incidencia: null },
-        1: { completado: false, estado: null, incidencia: null },
-        2: { completado: false, estado: null, incidencia: null },
-        3: { completado: false, estado: null, incidencia: null },
-        4: { completado: false, estado: null, incidencia: null },
-        5: { completado: false, estado: null, incidencia: null },
-        6: { completado: false, estado: null, incidencia: null }
-      },
-      garaje: {
-        0: { completado: false, estado: null, incidencia: null },
-        1: { completado: false, estado: null, incidencia: null },
-        2: { completado: false, estado: null, incidencia: null },
-        3: { completado: false, estado: null, incidencia: null },
-        4: { completado: false, estado: null, incidencia: null },
-        5: { completado: false, estado: null, incidencia: null },
-        6: { completado: false, estado: null, incidencia: null },
-        7: { completado: false, estado: null, incidencia: null },
-        8: { completado: false, estado: null, incidencia: null }
-      }
-    },
-    store: {
-      metahuman: {
-        0: { completado: false, estado: null, incidencia: null },
-        1: { completado: false, estado: null, incidencia: null },
-        2: { completado: false, estado: null, incidencia: null },
-        3: { completado: false, estado: null, incidencia: null },
-        4: { completado: false, estado: null, incidencia: null },
-        5: { completado: false, estado: null, incidencia: null }
-      },
-      recepcion: {
-        0: { completado: false, estado: null, incidencia: null },
-        1: { completado: false, estado: null, incidencia: null },
-        2: { completado: false, estado: null, incidencia: null },
-        3: { completado: false, estado: null, incidencia: null }
-      }
-    },
-    planetaterminator: {
-      entrada: {
-        0: { completado: false, estado: null, incidencia: null },
-        1: { completado: false, estado: null, incidencia: null },
-        2: { completado: false, estado: null, incidencia: null },
-        3: { completado: false, estado: null, incidencia: null },
-        4: { completado: false, estado: null, incidencia: null }
-      },
-      pantallas: {
-        0: { completado: false, estado: null, incidencia: null },
-        1: { completado: false, estado: null, incidencia: null },
-        2: { completado: false, estado: null, incidencia: null },
-        3: { completado: false, estado: null, incidencia: null },
-        4: { completado: false, estado: null, incidencia: null },
-        5: { completado: false, estado: null, incidencia: null },
-        6: { completado: false, estado: null, incidencia: null }
-      }
-    },
-    planetanave: {
-      entrada: {
-        0: { completado: false, estado: null, incidencia: null },
-        1: { completado: false, estado: null, incidencia: null },
-        2: { completado: false, estado: null, incidencia: null },
-        3: { completado: false, estado: null, incidencia: null },
-        4: { completado: false, estado: null, incidencia: null },
-        5: { completado: false, estado: null, incidencia: null },
-        6: { completado: false, estado: null, incidencia: null },
-        7: { completado: false, estado: null, incidencia: null },
-        8: { completado: false, estado: null, incidencia: null },
-        9: { completado: false, estado: null, incidencia: null },
-        10: { completado: false, estado: null, incidencia: null },
-        11: { completado: false, estado: null, incidencia: null },
-        12: { completado: false, estado: null, incidencia: null }
-      },
-      ascensor: {
-        0: { completado: false, estado: null, incidencia: null },
-        1: { completado: false, estado: null, incidencia: null },
-        2: { completado: false, estado: null, incidencia: null },
-        3: { completado: false, estado: null, incidencia: null },
-        4: { completado: false, estado: null, incidencia: null }
-      },
-      nave: {
-        0: { completado: false, estado: null, incidencia: null },
-        1: { completado: false, estado: null, incidencia: null },
-        2: { completado: false, estado: null, incidencia: null },
-        3: { completado: false, estado: null, incidencia: null },
-        4: { completado: false, estado: null, incidencia: null },
-        5: { completado: false, estado: null, incidencia: null },
-        6: { completado: false, estado: null, incidencia: null },
-        7: { completado: false, estado: null, incidencia: null },
-        8: { completado: false, estado: null, incidencia: null },
-        9: { completado: false, estado: null, incidencia: null },
-        10: { completado: false, estado: null, incidencia: null },
-        11: { completado: false, estado: null, incidencia: null },
-        12: { completado: false, estado: null, incidencia: null },
-        13: { completado: false, estado: null, incidencia: null },
-        14: { completado: false, estado: null, incidencia: null },
-        15: { completado: false, estado: null, incidencia: null },
-        16: { completado: false, estado: null, incidencia: null },
-        17: { completado: false, estado: null, incidencia: null }
-      },
-      oficina: {
-        0: { completado: false, estado: null, incidencia: null },
-        1: { completado: false, estado: null, incidencia: null },
-        2: { completado: false, estado: null, incidencia: null },
-        3: { completado: false, estado: null, incidencia: null },
-        4: { completado: false, estado: null, incidencia: null },
-        5: { completado: false, estado: null, incidencia: null },
-        6: { completado: false, estado: null, incidencia: null },
-        7: { completado: false, estado: null, incidencia: null },
-        8: { completado: false, estado: null, incidencia: null },
-        9: { completado: false, estado: null, incidencia: null },
-        10: { completado: false, estado: null, incidencia: null },
-        11: { completado: false, estado: null, incidencia: null }
-      }
-    }
+  const slidesMap = {
+    santarosa: slidesSantaRosa,
+    store: slidesStore,
+    planetaterminator: slidesPlanetaTerminator,
+    planetanave: slidesPlanetaNave
   };
 
-  return templates[oficina] || null;
+  const oficinaNormalizada = oficina.toLowerCase();
+  const slidesOficina = slidesMap[oficinaNormalizada];
+
+  if (!slidesOficina) {
+    console.error(`No se encontraron slides para la oficina: ${oficina}`);
+    return null;
+  }
+
+  const template = {};
+
+  // Iterar por cada sección (ej: sala360, arcade, etc.)
+  for (const [seccionNombre, seccionSlides] of Object.entries(slidesOficina)) {
+    template[seccionNombre] = {};
+
+    // Iterar por cada slide de la sección
+    for (const [indice, slide] of Object.entries(seccionSlides)) {
+      const idx = parseInt(indice);
+      
+      // OMITIR slides tipo "intro" y "outro"
+      if (slide.type === "intro" || slide.type === "outro") {
+        console.log(`⏭️  Omitiendo paso ${idx} de ${seccionNombre} (tipo: ${slide.type})`);
+        continue;
+      }
+
+      // Crear la entrada del template con la nueva estructura
+      template[seccionNombre][idx] = {
+        incidencia: null,
+        desc: slide.desc || "",
+        estado: "NO COMPLETADO"
+      };
+    }
+  }
+
+  console.log("✅ Template generado para", oficina, ":", template);
+  return template;
 };
-
-

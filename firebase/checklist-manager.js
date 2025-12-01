@@ -3,7 +3,6 @@ import { generateChecklistTemplate } from "../slides/slides-template.js";
 // Variable global para almacenar el ID del checklist actual
 let currentChecklistId = null;
 
-
 /**
  * Devuelve el nombre de la colección para una oficina
  * @param {string} oficina - Nombre de la oficina
@@ -12,21 +11,21 @@ const getChecklistCollectionName = (oficina) => {
   return `checklist_${oficina.toLowerCase()}`;
 };
 
-
 /**
  * Crea un nuevo documento de checklist en Firebase al hacer login
  * @param {string} oficina - Nombre de la oficina
  * @param {string} userEmail - Email del usuario
+ * @param {object} slidesData - Objeto con todas las slides de la oficina para obtener descripciones
  * @returns {Promise<string>} - ID del documento creado
  */
-export const createChecklistDocument = async (oficina, userEmail) => {
+export const createChecklistDocument = async (oficina, userEmail, slidesData = null) => {
   try {
     const db = window.db;
     const now = new Date();
     const collectionName = getChecklistCollectionName(oficina);
     const checklistId = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}_${now.getTime()}`;
     
-    const template = generateChecklistTemplate(oficina);
+    const template = generateChecklistTemplate(oficina, slidesData);
     
     if (!template) {
       throw new Error(`No se encontró template para la oficina: ${oficina}`);
@@ -38,21 +37,22 @@ export const createChecklistDocument = async (oficina, userEmail) => {
       usuario: userEmail,
       fechaInicio: now.toISOString(),
       fechaActualizacion: now.toISOString(),
-      estado: "en_progreso", // en_progreso, completado, incompleto
+      estado: "en_progreso",
       checklist: template
     };
 
-    
     const checklistRef = window.firebaseCollection(db, collectionName);
     await window.firebaseAddDoc(checklistRef, checklistData);
- 
 
-    // Guardar el ID y la coleccion en localStorage para usarlo durante la sesión
+    // Guardar el ID y la colección en localStorage
     localStorage.setItem("currentChecklistId", checklistId);
     localStorage.setItem("currentChecklistCollection", collectionName);
     currentChecklistId = checklistId;
 
     console.log("✅ Checklist creado con ID:", checklistId);
+    console.log("✅ Colección:", collectionName);
+    console.log("✅ Guardado en localStorage");
+    
     return checklistId;
   } catch (error) {
     console.error("❌ Error al crear el checklist:", error);
@@ -66,18 +66,37 @@ export const createChecklistDocument = async (oficina, userEmail) => {
  * @param {number} paso - Índice del paso
  * @param {string} estado - "OK" o descripción de incidencia
  * @param {boolean} tieneIncidencia - Si el paso tiene incidencia
+ * @param {string} descripcionPaso - Descripción del paso desde las slides
  */
-export const updateChecklistStep = async (seccion, paso, estado, tieneIncidencia = false) => {
+export const updateChecklistStep = async (seccion, paso, estado, tieneIncidencia = false, descripcionPaso = "") => {
   try {
     const checklistId = currentChecklistId || localStorage.getItem("currentChecklistId");
     const collectionName = localStorage.getItem("currentChecklistCollection");
     
+    // 🔍 DEBUG: Mostrar valores
+    // console.log("🔍 DEBUG updateChecklistStep:");
+    // console.log("  - checklistId:", checklistId);
+    // console.log("  - collectionName:", collectionName);
+    // console.log("  - seccion:", seccion);
+    // console.log("  - paso:", paso);
+    // console.log("  - estado:", estado);
+    // console.log("  - tieneIncidencia:", tieneIncidencia);
+    // console.log("  - descripcionPaso:", descripcionPaso);
+    
     if (!checklistId || !collectionName) {
-      console.error("No hay un checklist activo o no se conoce la colección");
+      console.error("❌ No hay un checklist activo o no se conoce la colección");
+      console.error("   localStorage.currentChecklistId:", localStorage.getItem("currentChecklistId"));
+      console.error("   localStorage.currentChecklistCollection:", localStorage.getItem("currentChecklistCollection"));
       return;
     }
 
     const db = window.db;
+    
+    if (!db) {
+      console.error("❌ window.db no está inicializado");
+      return;
+    }
+
     const checklistRef = window.firebaseCollection(db, collectionName);
     const q = window.firebaseQuery(
       checklistRef,
@@ -87,7 +106,7 @@ export const updateChecklistStep = async (seccion, paso, estado, tieneIncidencia
     const querySnapshot = await window.firebaseGetDocs(q);
     
     if (querySnapshot.empty) {
-      console.error("No se encontró el documento del checklist");
+      console.error("❌ No se encontró el documento del checklist");
       return;
     }
 
@@ -96,26 +115,30 @@ export const updateChecklistStep = async (seccion, paso, estado, tieneIncidencia
 
     // Actualizar el paso específico
     const updatedChecklist = { ...currentData.checklist };
-    if (updatedChecklist[seccion] && updatedChecklist[seccion][paso]) {
-      const currentStep = updatedChecklist[seccion][paso];
+    
+    if (!updatedChecklist[seccion]) {
+      console.error(`❌ La sección "${seccion}" no existe en el checklist`);
+      return;
+    }
+    
+    if (updatedChecklist[seccion][paso] === undefined) {
+      console.error(`❌ El paso ${paso} no existe en la sección "${seccion}"`);
+      return;
+    }
 
-      if (tieneIncidencia) {
-        // 📌 Caso con incidencia: solo texto en 'incidencia'
-        updatedChecklist[seccion][paso] = {
-          ...currentStep,
-          completado: false,
-          estado: null,
-          incidencia: estado        // ← aquí usamos el 3er parámetro como texto de incidencia
-        };
-      } else {
-        // ✅ Caso OK: sin incidencia
-        updatedChecklist[seccion][paso] = {
-          ...currentStep,
-          completado: true,
-          estado: estado,           // normalmente "OK"
-          incidencia: null
-        };
-      }
+    
+    if (tieneIncidencia) {
+      updatedChecklist[seccion][paso] = {
+        incidencia: estado, 
+        desc: descripcionPaso,
+        estado: "INCIDENCIA"
+      };
+    } else {
+      updatedChecklist[seccion][paso] = {
+        incidencia: null,
+        desc: descripcionPaso,
+        estado: "COMPLETADO"
+      };
     }
 
     // Actualizar el documento en Firebase
@@ -126,14 +149,13 @@ export const updateChecklistStep = async (seccion, paso, estado, tieneIncidencia
 
     console.log(
       `✅ Paso ${paso} de ${seccion} actualizado:`,
-      tieneIncidencia ? "INCIDENCIA (con texto en 'incidencia')" : estado
+      tieneIncidencia ? `INCIDENCIA: ${estado}` : "COMPLETADO"
     );
   } catch (error) {
     console.error("❌ Error al actualizar el paso del checklist:", error);
     throw error;
   }
 };
-
 
 /**
  * Marca el checklist como completado
@@ -144,7 +166,7 @@ export const completeChecklist = async () => {
     const collectionName = localStorage.getItem("currentChecklistCollection");
     
     if (!checklistId || !collectionName) {
-      console.error("No hay un checklist activo");
+      console.error("❌ No hay un checklist activo");
       return;
     }
 
@@ -158,7 +180,7 @@ export const completeChecklist = async () => {
     const querySnapshot = await window.firebaseGetDocs(q);
     
     if (querySnapshot.empty) {
-      console.error("No se encontró el documento del checklist");
+      console.error("❌ No se encontró el documento del checklist");
       return;
     }
 
@@ -172,7 +194,7 @@ export const completeChecklist = async () => {
 
     console.log("✅ Checklist marcado como completado");
     
-    // Limpiar el ID del localStorage
+    // Limpiar el localStorage
     localStorage.removeItem("currentChecklistId");
     localStorage.removeItem("currentChecklistCollection");
     currentChecklistId = null;
@@ -190,8 +212,8 @@ export const abortChecklist = async () => {
     const checklistId = currentChecklistId || localStorage.getItem("currentChecklistId");
     const collectionName = localStorage.getItem("currentChecklistCollection");
     
-    if (!checklistId) {
-      console.error("No hay un checklist activo");
+    if (!checklistId || !collectionName) {
+      console.error("❌ No hay un checklist activo");
       return;
     }
 
@@ -205,7 +227,7 @@ export const abortChecklist = async () => {
     const querySnapshot = await window.firebaseGetDocs(q);
     
     if (querySnapshot.empty) {
-      console.error("No se encontró el documento del checklist");
+      console.error("❌ No se encontró el documento del checklist");
       return;
     }
 
@@ -219,8 +241,9 @@ export const abortChecklist = async () => {
 
     console.log("⚠️ Checklist marcado como incompleto");
     
-    // Limpiar el ID del localStorage
+    // Limpiar el localStorage
     localStorage.removeItem("currentChecklistId");
+    localStorage.removeItem("currentChecklistCollection");
     currentChecklistId = null;
   } catch (error) {
     console.error("❌ Error al abortar el checklist:", error);
@@ -233,4 +256,16 @@ export const abortChecklist = async () => {
  */
 export const getCurrentChecklistId = () => {
   return currentChecklistId || localStorage.getItem("currentChecklistId");
+};
+
+/**
+ * Verificar estado del checklist
+ */
+export const debugChecklistStatus = () => {
+  console.log("🔍 DEBUG: Estado del Checklist");
+  console.log("  - currentChecklistId (variable):", currentChecklistId);
+  console.log("  - localStorage.currentChecklistId:", localStorage.getItem("currentChecklistId"));
+  console.log("  - localStorage.currentChecklistCollection:", localStorage.getItem("currentChecklistCollection"));
+  console.log("  - window.db existe:", !!window.db);
+  console.log("  - window.firebaseCollection existe:", !!window.firebaseCollection);
 };

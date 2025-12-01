@@ -65,30 +65,41 @@ body {
 /* === BUTTONS === */
 .buttons {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 1rem;
-  margin-top: 1.5rem;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.wideBtn {
   width: 100%;
 }
 
 button {
   border: none;
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 0.8rem 1.4rem;
   cursor: pointer;
   font-weight: 600;
   color: #fff;
   font-size: 1rem;
   transition: all 0.2s ease;
-  width: 45%;
+  width: 47%;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.322);
 }
 
 #nextBtn,
 #finishBtn,
 #nextSectionBtn,
 #sendIssueBtn {
-  background-color: #2ecc71;
+  background-color: #2ecc70;
 }
 
 #prevBtn {
@@ -98,6 +109,13 @@ button {
 #issueBtn,
 #cancelIssueBtn {
   background-color: #e74c3c;
+  width: 100%;
+}
+
+#backToMenuBtn {
+  background-color: #9b59b6;
+  width: 100%;
+  margin-top: 0.5rem;
 }
 
 button:hover {
