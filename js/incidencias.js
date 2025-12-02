@@ -1,5 +1,3 @@
-// js/incidencias.js - ACTUALIZADO
-
 import { updateChecklistStep } from "../firebase/checklist-manager.js";
 
 // Variable para almacenar temporalmente la incidencia antes de avanzar

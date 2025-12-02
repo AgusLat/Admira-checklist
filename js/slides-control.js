@@ -1,5 +1,3 @@
-// js/slides-control.js - ACTUALIZADO
-
 import { openIssueModal } from "./modal.js";
 import { markStepAsOK, processPendingIncidencia } from "./incidencias.js";
 import { completeChecklist, abortChecklist } from "../firebase/checklist-manager.js";
@@ -103,8 +101,8 @@ function showSlide(index) {
       const zonasPorOficina = {
         santarosa: ["sala360", "arcade", "cafeteria", "garaje"],
         planetanave: ["entrada", "ascensor", "nave", "oficina"],
-        planetaterminator: ["entrada", "pantallas"],
-        store: ["metahuman", "recepcion"],
+        planetaterminator: ["terminator"],
+        store: ["metahuman", "escritorio"],
       };
 
       const zonas = zonasPorOficina[oficina];

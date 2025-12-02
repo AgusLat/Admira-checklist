@@ -57,33 +57,28 @@ export const slidesStore = {
     5: { type: "outro", desc: "Zona completada."}
   },
 
-  recepcion: {
-    0: { type: "intro", desc: "Recepción"},
-    1: { desc: "Encender la pantalla con el mando y poner música de los años 80 en YouTube.", imgSrc: "./img/store/recepcion/recepcion_1.jpg" },
-    2: { desc: "Encender el portátil (código 0007) e iniciar la aplicación correspondiente (ROG Remix). ", imgSrc: "./img/store/portatil/recepcion_2.jpg" },
+  escritorio: {
+    0: { type: "intro", desc: "Escritorio"},
+    1: { desc: "Encender la pantalla con el mando y poner música de los años 80 en YouTube.", imgSrc: "./img/store/escritorio/escritorio_1.jpg" },
+    2: { desc: "Encender el portátil (código 0007) e iniciar la aplicación correspondiente (ROG Remix). ", imgSrc: "./img/store/escritorio/escritorio_2.jpg" },
     3: { type: "outro", desc: "Zona completada."}
   }
 };
 
 //PLANETA SALA REUNIONES/CLASE
 export const slidesPlanetaTerminator = {
-  entrada: {
-    0: { type: "intro", desc: "Entrada"},
+  terminator: {
+    0: { type: "intro", desc: "Oficina Terminator"},
     1: { desc: "No cerrar completamente la puerta, ya que luego resulta difícil abrirla." },
-    2: { desc: "Subir las pías.", imgSrc: "./img/planeta-terminator/entrada/entrada_2.jpg" },
+    2: { desc: "Subir las pías.", imgSrc: "./img/planeta-terminator/entrada_2.jpg" },
     3: { desc: "Encender el aire acondicionado con el mando." },
-    4: { type: "outro", desc: "Zona completada."}
-  },
-
-  pantallas: {
-    0: { type: "intro", desc: "Zona PC's / pantallas"},
-    1: { desc: "Pantalla de la moto: encender con el botón situado a la derecha. Está conectada al PC de Joel.", imgSrc: "./img/planeta-terminator/pantallas/pant_1.jpg" },
-    2: { desc: "Pantalla al lado de los terminators robots, sala de reunión: se enciende automáticamente.", imgSrc: "./img/planeta-terminator/pantallas/pant_2.jpg" },
-    3: { desc: "Pantalla al lado de los terminators humanos, sala de reunión: abrir Admira y ponerlo en pantalla completa.", imgSrc: "./img/planeta-terminator/pantallas/pant_3.jpg" },
-    4: { desc: "Pantallas de la zona de PC: Si no se encienden, usar el mando. la pantalla derecha corresponde al PC derecho, y la izquierda al PC izquierdo."+
-                "Iniciar sesión si es necesario con la clave: BitsandAtoms2025!", imgSrc: "./img/planeta-terminator/pantallas/pant_4.jpg" },
-    5: { desc: "Verificar que todas las puertas estén bien cerradas, girando la llave completamente hacia la derecha.", imgSrc: "./img/planeta-terminator/pantallas/pant_5.jpg"  },
-    6: { type: "outro", desc: "Zona completada."}
+    4: { desc: "Pantalla de la moto: encender con el botón situado a la derecha. Está conectada al PC de Joel.", imgSrc: "./img/planeta-terminator/pant_1.jpg" },
+    5: { desc: "Pantalla al lado de los terminators robots, sala de reunión: se enciende automáticamente.", imgSrc: "./img/planeta-terminator/pant_2.jpg" },
+    6: { desc: "Pantalla al lado de los terminators humanos, sala de reunión: abrir Admira y ponerlo en pantalla completa.", imgSrc: "./img/planeta-terminator/pant_3.jpg" },
+    7: { desc: "Pantallas de la zona de PC: Si no se encienden, usar el mando. la pantalla derecha corresponde al PC derecho, y la izquierda al PC izquierdo."+
+                "Iniciar sesión si es necesario con la clave: BitsandAtoms2025!", imgSrc: "./img/planeta-terminator/pant_4.jpg" },
+    8: { desc: "Verificar que todas las puertas estén bien cerradas, girando la llave completamente hacia la derecha.", imgSrc: "./img/planeta-terminator/pant_5.jpg"  },
+    9: { type: "outro", desc: "Zona completada."}
     }
 };
 
