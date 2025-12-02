@@ -197,11 +197,11 @@ async function finishSlides() {
   }
 }
 
-// Volver al menú (abortar checklist)
+// Volver al menú (SOLO guardar progreso, NO abortar)
 async function backToMenu() {
   const confirmar = confirm(
     "¿Seguro que quieres volver al menú?\n\n" +
-    "Se guardará tu progreso actual y el checklist quedará marcado como incompleto."
+    "Se guardará tu progreso actual."
   );
   
   if (confirmar) {
@@ -216,8 +216,8 @@ async function backToMenu() {
         }
       }
       
-      // Marcar checklist como incompleto
-      await abortChecklist();
+      
+      // El checklist mantiene su estado "en_progreso"
       
       // Redirigir al menú
       const params = new URLSearchParams(window.location.search);
