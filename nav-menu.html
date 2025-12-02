@@ -10,8 +10,12 @@
   <body>
     <main>
       <div class="contenido">
-        <h1>CHECKLIST OFICINA</h1>
+        <h1>CHECKLIST ADMIRA</h1>
         <nav class="navMenu" id="menu"></nav>
+        <button id="abortChecklistBtn" class="abort-btn" style="display: none;">
+         ABORTAR CHECKLIST
+        </button>
+         <a class="logoutBtn" href="#logout">CERRAR SESIÓN</a>
       </div>
     </main>
 
@@ -29,6 +33,7 @@
         slidesPlanetaTerminator,
         slidesPlanetaNave,
       } from "./slides/slides.js";
+      import { abortChecklist } from "./firebase/checklist-manager.js";
 
       // --- 1. Configuración Firebase (misma que index) ---
 
@@ -86,7 +91,7 @@
           .map((opt) => `<li><a href="${opt.href}">${opt.seccion}</a></li>`)
           .join("")}
       </ul>
-      <a class="logoutBtn" href="#logout">Cerrar sesión</a>
+     
     `;
 
         // --- 4. Logout ---
@@ -98,6 +103,37 @@
             window.location.href = `index.html?oficina=${oficina}`;
           });
       });
+
+        // Obtener el botón
+        const abortBtn = document.getElementById("abortChecklistBtn");
+
+        // Mostrar el botón solo si hay un checklist activo
+        const checklistId = localStorage.getItem("currentChecklistId");
+        if (checklistId) {
+        abortBtn.style.display = "block";
+        }
+
+      // Evento para abortar checklist
+      abortBtn.addEventListener("click", async () => {
+        const confirmar = confirm(
+        "⚠️ ¿Estás seguro de que quieres abortar el checklist?\n\n" +
+        "El checklist se marcará como INCOMPLETO y se cerrará.\n" +
+        "Esta acción no se puede deshacer."
+      );
+
+      if (confirmar) {
+        try {
+          await abortChecklist();
+          alert("✅ Checklist abortado correctamente");
+          // Recargar la página para actualizar la UI
+          location.reload();
+        } catch (error) {
+          console.error("❌ Error al abortar checklist:", error);
+          alert("❌ Error al abortar el checklist. Revisa la consola.");
+        }
+      }
+    });
+
     </script>
   </body>
 </html>
