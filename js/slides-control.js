@@ -1,6 +1,6 @@
 import { openIssueModal } from "./modal.js";
 import { markStepAsOK, processPendingIncidencia } from "./incidencias.js";
-import { completeChecklist, abortChecklist } from "../firebase/checklist-manager.js";
+import { abortChecklist } from "../firebase/checklist-manager.js";
 
 // Variables
 export let currentSlideIndex = 0;
@@ -113,10 +113,9 @@ function showSlide(index) {
         // Ir a la siguiente zona de la misma oficina
         window.location.href = `slides.html?oficina=${oficina}&seccion=${siguiente}`;
       } else {
-        // Última zona → completar checklist y volver al menú principal
-        completeChecklist().then(() => {
-          window.location.href = `nav-menu.html?oficina=${oficina}`;
-        });
+        // Última zona → volver al menú principal (sin completar automáticamente)
+        // El usuario completará desde el menú cuando todos los pasos estén listos
+        window.location.href = `nav-menu.html?oficina=${oficina}`;
       }
     });
   }
@@ -215,7 +214,6 @@ async function backToMenu() {
           await markStepAsOK(currentSeccion, currentSlideIndex, descripcionPaso);
         }
       }
-      
       
       // El checklist mantiene su estado "en_progreso"
       

@@ -11,10 +11,24 @@
     <main>
       <div class="contenido">
         <h1>CHECKLIST ADMIRA</h1>
+        
+        <!-- Indicador de progreso -->
+        <div id="progressIndicator" style="display: none; margin: 1rem 0; padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 8px; width: 70%;">
+          <p style="margin: 0; font-size: 0.9rem;">
+            <strong>Progreso:</strong> <span id="progressText">0/0</span>
+          </p>
+        </div>
+        
         <nav class="navMenu" id="menu"></nav>
+        
         <button id="abortChecklistBtn" class="abort-btn" style="display: none;">
          ABORTAR CHECKLIST
         </button>
+        
+        <button id="completeChecklistBtn" class="complete-btn" style="display: none;">
+         ✅ COMPLETAR CHECKLIST
+        </button>
+        
          <a class="logoutBtn" href="#logout">CERRAR SESIÓN</a>
       </div>
     </main>
@@ -28,20 +42,41 @@
         signOut,
       } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
       import {
+        getFirestore,
+        collection,
+        addDoc,
+        query,
+        where,
+        getDocs,
+        updateDoc
+      } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+      import {
         slidesSantaRosa,
         slidesStore,
         slidesPlanetaTerminator,
         slidesPlanetaNave,
       } from "./slides/slides.js";
-      import { abortChecklist } from "./firebase/checklist-manager.js";
+      import { abortChecklist, completeChecklist, isChecklistComplete } from "./firebase/checklist-manager.js";
 
-      // --- 1. Configuración Firebase (misma que index) ---
-
+      // --- 1. Configuración Firebase ---
       const app = initializeApp(firebaseConfig);
       const auth = getAuth(app);
+      const db = getFirestore(app);
+
+      // Hacer disponible globalmente
+      if (!window.firebaseApp) {
+        window.firebaseApp = app;
+        window.db = db;
+        window.firebaseCollection = collection;
+        window.firebaseAddDoc = addDoc;
+        window.firebaseGetDocs = getDocs;
+        window.firebaseQuery = query;
+        window.firebaseWhere = where;
+        window.firebaseUpdateDoc = updateDoc;
+      }
 
       // --- 2. Verificar sesión ---
-      onAuthStateChanged(auth, (user) => {
+      onAuthStateChanged(auth, async (user) => {
         if (!user) {
           window.location.href = "index.html";
           return;
@@ -94,7 +129,79 @@
      
     `;
 
-        // --- 4. Logout ---
+        // --- 4. Verificar estado del checklist ---
+        const checklistId = localStorage.getItem("currentChecklistId");
+        const abortBtn = document.getElementById("abortChecklistBtn");
+        const completeBtn = document.getElementById("completeChecklistBtn");
+        const progressIndicator = document.getElementById("progressIndicator");
+        const progressText = document.getElementById("progressText");
+
+        if (checklistId) {
+          // Verificar si el checklist está completo
+          const { isComplete, stats } = await isChecklistComplete();
+
+          if (stats) {
+            // Mostrar progreso
+            progressIndicator.style.display = "block";
+            progressText.textContent = `${stats.completados + stats.incidencias}/${stats.total} pasos completados`;
+            
+            if (stats.incidencias > 0) {
+              progressText.innerHTML += ` <span style="color: #e74c3c;">(${stats.incidencias} con incidencias)</span>`;
+            }
+          }
+
+          if (isComplete) {
+            // Mostrar botón de completar
+            completeBtn.style.display = "block";
+            abortBtn.style.display = "none";
+          } else {
+            // Mostrar botón de abortar
+            abortBtn.style.display = "block";
+            completeBtn.style.display = "none";
+          }
+        }
+
+        // --- 5. Evento para abortar checklist ---
+        abortBtn.addEventListener("click", async () => {
+          const confirmar = confirm(
+            "⚠️ ¿Estás seguro de que quieres abortar el checklist?\n\n" +
+            "El checklist se marcará como INCOMPLETO y se cerrará.\n" +
+            "Esta acción no se puede deshacer."
+          );
+
+          if (confirmar) {
+            try {
+              await abortChecklist();
+              alert("✅ Checklist abortado correctamente");
+              location.reload();
+            } catch (error) {
+              console.error("❌ Error al abortar checklist:", error);
+              alert("❌ Error al abortar el checklist. Revisa la consola.");
+            }
+          }
+        });
+
+        // --- 6. Evento para completar checklist ---
+        completeBtn.addEventListener("click", async () => {
+          const confirmar = confirm(
+            "✅ ¿Confirmas que deseas completar el checklist?\n\n" +
+            "Todos los pasos han sido revisados.\n" +
+            "El checklist se marcará como COMPLETADO."
+          );
+
+          if (confirmar) {
+            try {
+              await completeChecklist();
+              alert("🎉 ¡Checklist completado exitosamente!");
+              location.reload();
+            } catch (error) {
+              console.error("❌ Error al completar checklist:", error);
+              alert("❌ Error al completar el checklist. Revisa la consola.");
+            }
+          }
+        });
+
+        // --- 7. Logout ---
         document
           .querySelector('a[href="#logout"]')
           .addEventListener("click", async () => {
@@ -103,37 +210,6 @@
             window.location.href = `index.html?oficina=${oficina}`;
           });
       });
-
-        // Obtener el botón
-        const abortBtn = document.getElementById("abortChecklistBtn");
-
-        // Mostrar el botón solo si hay un checklist activo
-        const checklistId = localStorage.getItem("currentChecklistId");
-        if (checklistId) {
-        abortBtn.style.display = "block";
-        }
-
-      // Evento para abortar checklist
-      abortBtn.addEventListener("click", async () => {
-        const confirmar = confirm(
-        "⚠️ ¿Estás seguro de que quieres abortar el checklist?\n\n" +
-        "El checklist se marcará como INCOMPLETO y se cerrará.\n" +
-        "Esta acción no se puede deshacer."
-      );
-
-      if (confirmar) {
-        try {
-          await abortChecklist();
-          alert("✅ Checklist abortado correctamente");
-          // Recargar la página para actualizar la UI
-          location.reload();
-        } catch (error) {
-          console.error("❌ Error al abortar checklist:", error);
-          alert("❌ Error al abortar el checklist. Revisa la consola.");
-        }
-      }
-    });
-
     </script>
   </body>
 </html>

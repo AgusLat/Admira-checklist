@@ -57,15 +57,11 @@ main{
     box-shadow: 3px 3px 10px 0.5px rgba(59, 59, 59, 0.662);
     outline: 1px solid rgba(0, 0, 0, 0.168);
     font-weight: bold;
-
-
-
 }
 
 .navMenu li a{
     color: white;
     text-decoration: none;
-
 }
 
 .logoutBtn{
@@ -80,7 +76,6 @@ main{
     border-radius: 5px;
     margin-top: 2rem;
     box-shadow: 3px 3px 10px 0.5px rgba(59, 59, 59, 0.662);
-    
 }
 
 
@@ -101,7 +96,6 @@ main{
     margin-bottom: 3rem;
     align-self: center;
     outline: 1px solid rgba(0, 0, 0, 0.168);
-
 }
 
 .abort-btn:hover {
@@ -112,4 +106,44 @@ main{
 
 .abort-btn:active {
     transform: translateY(0);
+}
+
+/* === COMPLETE BUTTON === */
+.complete-btn {
+    width: 86%;
+    background-color: #2ecc71;
+    color: white;
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 3px 3px 10px 0.5px rgba(59, 59, 59, 0.662);
+    transition: all 0.2s ease;
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+    align-self: center;
+    outline: 1px solid rgba(0, 0, 0, 0.168);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.complete-btn:hover {
+    background-color: #27ae60;
+    transform: translateY(-2px);
+    box-shadow: 3px 5px 15px 0.5px rgba(59, 59, 59, 0.8);
+    animation: none;
+}
+
+.complete-btn:active {
+    transform: translateY(0);
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 3px 3px 10px 0.5px rgba(59, 59, 59, 0.662);
+    }
+    50% {
+        box-shadow: 0 0 20px 5px rgba(46, 204, 113, 0.5);
+    }
 }

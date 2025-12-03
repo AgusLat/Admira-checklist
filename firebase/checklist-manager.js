@@ -73,16 +73,6 @@ export const updateChecklistStep = async (seccion, paso, estado, tieneIncidencia
     const checklistId = currentChecklistId || localStorage.getItem("currentChecklistId");
     const collectionName = localStorage.getItem("currentChecklistCollection");
     
-    // 🔍 DEBUG: Mostrar valores
-    // console.log("🔍 DEBUG updateChecklistStep:");
-    // console.log("  - checklistId:", checklistId);
-    // console.log("  - collectionName:", collectionName);
-    // console.log("  - seccion:", seccion);
-    // console.log("  - paso:", paso);
-    // console.log("  - estado:", estado);
-    // console.log("  - tieneIncidencia:", tieneIncidencia);
-    // console.log("  - descripcionPaso:", descripcionPaso);
-    
     if (!checklistId || !collectionName) {
       console.error("❌ No hay un checklist activo o no se conoce la colección");
       console.error("   localStorage.currentChecklistId:", localStorage.getItem("currentChecklistId"));
@@ -154,6 +144,83 @@ export const updateChecklistStep = async (seccion, paso, estado, tieneIncidencia
   } catch (error) {
     console.error("❌ Error al actualizar el paso del checklist:", error);
     throw error;
+  }
+};
+
+/**
+ * Verifica si todos los pasos del checklist están completados
+ * @returns {Promise<object>} - { isComplete: boolean, stats: { total, completados, incidencias, noCompletados } }
+ */
+export const isChecklistComplete = async () => {
+  try {
+    const checklistId = currentChecklistId || localStorage.getItem("currentChecklistId");
+    const collectionName = localStorage.getItem("currentChecklistCollection");
+    
+    if (!checklistId || !collectionName) {
+      console.error("❌ No hay un checklist activo");
+      return { isComplete: false, stats: null };
+    }
+
+    const db = window.db;
+    const checklistRef = window.firebaseCollection(db, collectionName);
+    const q = window.firebaseQuery(
+      checklistRef,
+      window.firebaseWhere("id", "==", checklistId)
+    );
+    
+    const querySnapshot = await window.firebaseGetDocs(q);
+    
+    if (querySnapshot.empty) {
+      console.error("❌ No se encontró el documento del checklist");
+      return { isComplete: false, stats: null };
+    }
+
+    const checklistData = querySnapshot.docs[0].data();
+    const checklist = checklistData.checklist;
+
+    // Contar estadísticas
+    let totalPasos = 0;
+    let completados = 0;
+    let incidencias = 0;
+    let noCompletados = 0;
+
+    // Iterar por todas las secciones y pasos
+    for (const seccion in checklist) {
+      for (const paso in checklist[seccion]) {
+        totalPasos++;
+        const estadoPaso = checklist[seccion][paso].estado;
+
+        if (estadoPaso === "COMPLETADO") {
+          completados++;
+        } else if (estadoPaso === "INCIDENCIA") {
+          incidencias++;
+        } else if (estadoPaso === "NO COMPLETADO") {
+          noCompletados++;
+        }
+      }
+    }
+
+    const isComplete = noCompletados === 0 && totalPasos > 0;
+
+    console.log("📊 Estado del checklist:");
+    console.log(`   Total pasos: ${totalPasos}`);
+    console.log(`   ✅ Completados: ${completados}`);
+    console.log(`   ⚠️  Incidencias: ${incidencias}`);
+    console.log(`   ⏸️  No completados: ${noCompletados}`);
+    console.log(`   ${isComplete ? '✅ CHECKLIST COMPLETO' : '⏳ CHECKLIST INCOMPLETO'}`);
+
+    return {
+      isComplete,
+      stats: {
+        total: totalPasos,
+        completados,
+        incidencias,
+        noCompletados
+      }
+    };
+  } catch (error) {
+    console.error("❌ Error al verificar el checklist:", error);
+    return { isComplete: false, stats: null };
   }
 };
 
