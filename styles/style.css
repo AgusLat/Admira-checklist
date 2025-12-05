@@ -20,7 +20,7 @@ body {
 
 /* === SLIDE CARD === */
 
-.slides{
+.slides {
   display: flex;
   height: 100%;
   flex-direction: column;
@@ -127,7 +127,10 @@ button:hover {
 #issueModal {
   display: none;
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: rgba(0, 0, 0, 0.7);
   z-index: 999;
   justify-content: center;
@@ -135,6 +138,8 @@ button:hover {
 }
 
 #issueContent {
+  display: flex;
+  flex-direction: column;
   background: #222;
   border-radius: 12px;
   padding: 2rem;
@@ -142,6 +147,7 @@ button:hover {
   max-width: 400px;
   color: #fff;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  gap: 1rem;
 }
 
 #issueContent h3 {
@@ -178,6 +184,7 @@ button:hover {
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -189,9 +196,11 @@ button:hover {
   .slide {
     padding: 1.5rem;
   }
+
   .slide h2 {
     font-size: 1.5rem;
   }
+
   .slide p {
     font-size: 1rem;
   }
