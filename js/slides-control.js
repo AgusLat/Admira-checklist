@@ -1,6 +1,5 @@
 import { openIssueModal } from "./modal.js";
 import { markStepAsOK, processPendingIncidencia } from "./incidencias.js";
-import { abortChecklist } from "../firebase/checklist-manager.js";
 
 // Variables
 export let currentSlideIndex = 0;
@@ -84,12 +83,18 @@ function showSlide(index) {
   if (document.getElementById("prevBtn"))
     document.getElementById("prevBtn").addEventListener("click", prevSlide);
   if (document.getElementById("finishBtn"))
-    document.getElementById("finishBtn").addEventListener("click", finishSlides);
+    document
+      .getElementById("finishBtn")
+      .addEventListener("click", finishSlides);
   if (document.getElementById("issueBtn"))
-    document.getElementById("issueBtn").addEventListener("click", openIssueModal);
+    document
+      .getElementById("issueBtn")
+      .addEventListener("click", openIssueModal);
   if (document.getElementById("backToMenuBtn"))
-    document.getElementById("backToMenuBtn").addEventListener("click", backToMenu);
-  
+    document
+      .getElementById("backToMenuBtn")
+      .addEventListener("click", backToMenu);
+
   // Navegar entre secciones
   if (document.getElementById("nextSectionBtn")) {
     document.getElementById("nextSectionBtn").addEventListener("click", () => {
@@ -125,10 +130,13 @@ function showSlide(index) {
 export async function nextSlide() {
   try {
     // SOLO guardar si NO es intro/outro
-    if (slides[currentSlideIndex].type !== "intro" && slides[currentSlideIndex].type !== "outro") {
+    if (
+      slides[currentSlideIndex].type !== "intro" &&
+      slides[currentSlideIndex].type !== "outro"
+    ) {
       // Primero verificar si hay una incidencia pendiente del paso actual
       const hadIncidencia = await processPendingIncidencia();
-      
+
       // Si NO había incidencia, marcar el paso actual como OK
       // Pasar la descripción del paso actual
       if (!hadIncidencia) {
@@ -164,10 +172,13 @@ function prevSlide() {
 async function finishSlides() {
   try {
     // SOLO guardar si NO es intro/outro
-    if (slides[currentSlideIndex].type !== "intro" && slides[currentSlideIndex].type !== "outro") {
+    if (
+      slides[currentSlideIndex].type !== "intro" &&
+      slides[currentSlideIndex].type !== "outro"
+    ) {
       // Procesar incidencia pendiente si existe
       const hadIncidencia = await processPendingIncidencia();
-      
+
       // Si NO había incidencia, marcar el último paso como OK
       if (!hadIncidencia) {
         const descripcionPaso = slides[currentSlideIndex].desc || "";
@@ -200,23 +211,30 @@ async function finishSlides() {
 async function backToMenu() {
   const confirmar = confirm(
     "¿Seguro que quieres volver al menú?\n\n" +
-    "Se guardará tu progreso actual."
+      "Se guardará tu progreso actual."
   );
-  
+
   if (confirmar) {
     try {
       // SOLO guardar si NO es intro/outro
-      if (slides[currentSlideIndex].type !== "intro" && slides[currentSlideIndex].type !== "outro") {
+      if (
+        slides[currentSlideIndex].type !== "intro" &&
+        slides[currentSlideIndex].type !== "outro"
+      ) {
         // Guardar el paso actual si hay progreso
         const hadIncidencia = await processPendingIncidencia();
         if (!hadIncidencia) {
           const descripcionPaso = slides[currentSlideIndex].desc || "";
-          await markStepAsOK(currentSeccion, currentSlideIndex, descripcionPaso);
+          await markStepAsOK(
+            currentSeccion,
+            currentSlideIndex,
+            descripcionPaso
+          );
         }
       }
-      
+
       // El checklist mantiene su estado "en_progreso"
-      
+
       // Redirigir al menú
       const params = new URLSearchParams(window.location.search);
       const oficina = params.get("oficina");

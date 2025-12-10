@@ -5,6 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Menú principal</title>
     <link rel="stylesheet" href="styles/nav-menu.css" />
+
+    <!-- EmailJS -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+    ></script>
+    <script type="text/javascript">
+      (function () {
+        emailjs.init({
+          publicKey: "AOsFjcFh572HFsomg",
+        });
+      })();
+    </script>
   </head>
 
   <body>
@@ -66,9 +79,9 @@
         abortChecklist,
         completeChecklist,
         isChecklistComplete,
-      } from "./firebase/checklist-manager.js";
+      } from "./js/checklist-manager.js";
 
-      // --- 1. Configuración Firebase ---
+      //Configuración Firebase
       const app = initializeApp(firebaseConfig);
       const auth = getAuth(app);
       const db = getFirestore(app);

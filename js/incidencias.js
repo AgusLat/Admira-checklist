@@ -1,4 +1,4 @@
-import { updateChecklistStep } from "../firebase/checklist-manager.js";
+import { updateChecklistStep } from "./checklist-manager.js";
 
 // Variable para almacenar temporalmente la incidencia antes de avanzar
 let pendingIncidencia = null;
@@ -24,9 +24,8 @@ export const reportIssue = async (issue) => {
       seccion: issue.seccion,
       paso: issue.paso,
       descripcionIncidencia: issue.incidencia,
-      descripcionPaso: issue.pasoDesc || ""
+      descripcionPaso: issue.pasoDesc || "",
     };
-
   } catch (error) {
     console.error("❌ Error al guardar la incidencia:", error);
     alert("Hubo un error al guardar la incidencia. Revisa la consola.");
@@ -63,7 +62,9 @@ export const processPendingIncidencia = async () => {
         true,
         pendingIncidencia.descripcionPaso
       );
-      console.log(`⚠️ Incidencia procesada para paso ${pendingIncidencia.paso} de ${pendingIncidencia.seccion}`);
+      console.log(
+        `⚠️ Incidencia procesada para paso ${pendingIncidencia.paso} de ${pendingIncidencia.seccion}`
+      );
       pendingIncidencia = null;
       return true;
     } catch (error) {
