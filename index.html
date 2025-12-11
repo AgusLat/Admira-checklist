@@ -38,91 +38,34 @@
     </main>
 
     <script type="module">
-      import { firebaseConfig } from "./firebase/firebaseConfig.js";
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+      import { startGlobalFirebase } from "./firebase/firebaseConfig.js";
       import {
-        getAuth,
-        signInWithPopup,
-        GoogleAuthProvider,
+        loginUser,
+        isAuthorizedUser,
+      } from "./js/auth/loginController.js";
+      import { auth } from "./firebase/firebaseConfig.js";
+      import {
         onAuthStateChanged,
         signOut,
       } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-      import {
-        getFirestore,
-        doc,
-        getDoc,
-        collection,
-        addDoc,
-        query,
-        where,
-        getDocs,
-        updateDoc,
-      } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-
-      //Configuración Firebase
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      const provider = new GoogleAuthProvider();
-      const db = getFirestore(app);
 
       // Hacer disponible globalmente para otros módulos
-      if (!window.firebaseApp) {
-        window.firebaseApp = app;
-        window.db = db;
-        window.firebaseCollection = collection;
-        window.firebaseAddDoc = addDoc;
-        window.firebaseGetDocs = getDocs;
-        window.firebaseQuery = query;
-        window.firebaseWhere = where;
-        window.firebaseUpdateDoc = updateDoc;
-      }
+      startGlobalFirebase();
 
       // Importar la función de crear checklist
       const { createChecklistDocument } = await import(
         "./js/checklist-manager.js"
       );
 
-      // --- 2. Función de verificación ---
-      async function esUsuarioAutorizado(email) {
-        if (email.endsWith("@admira.com")) return true;
-
-        const ref = doc(db, "usuarios_autorizados", email);
-        const snap = await getDoc(ref);
-        return snap.exists() && snap.data().activo === true;
-      }
-
-      // --- 3. Evento de login ---
+      // Evento de login
       const loginButton = document.getElementById("login-button");
-      loginButton.addEventListener("click", async () => {
-        try {
-          const result = await signInWithPopup(auth, provider);
-          const email = result.user.email;
+      loginButton.addEventListener("click", loginUser);
 
-          const autorizado = await esUsuarioAutorizado(email);
-          if (!autorizado) {
-            alert("Acceso denegado: usuario no autorizado.");
-            signOut(auth);
-            return;
-          }
-
-          // Guardar email
-          localStorage.setItem("userEmail", email);
-
-          // Mantener el parámetro de la URL
-          const params = new URLSearchParams(window.location.search);
-          const oficina = params.get("oficina") || "store";
-          localStorage.setItem("oficinaParam", oficina);
-        } catch (error) {
-          console.error("Error al iniciar sesión:", error);
-          alert("Error al iniciar sesión");
-        }
-      });
-
-      // --- 4. Manejo de sesión activa ---
+      // Manejo de sesión activa
       onAuthStateChanged(auth, async (user) => {
         if (!user) return;
 
-        const autorizado = await esUsuarioAutorizado(user.email);
+        const autorizado = await isAuthorizedUser(user.email);
         if (autorizado) {
           const oficina =
             new URLSearchParams(window.location.search).get("oficina") ||
