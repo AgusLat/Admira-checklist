@@ -24,10 +24,10 @@ function showSlide(index) {
   if (slide.type === "intro") {
     html = `
       <div class="slide intro">
-        <h2>${slide.desc}</h2>
+        <h2>Sección: ${slide.desc}</h2>
         ${slide.imgSrc ? `<img src="${slide.imgSrc}" alt="Intro">` : ""}
         <div class="buttons">
-        <button id="nextBtn" class="wideBtn">Comenzar ▶</button>
+        <button id="nextBtn" class="wideBtn">Comenzar</button>
         <button id="backToMenuBtn" class="back-to-menu">Volver al Menú</button>
         </div>
       </div>
@@ -55,8 +55,7 @@ function showSlide(index) {
   else {
     html = `
       <div class="slide">
-        <h2>Paso ${index}</h2>
-        <p>${slide.desc}</p>
+        <p><strong>${index} - </strong>${slide.desc}</p>
         ${slide.imgSrc ? `<img src="${slide.imgSrc}" alt="Paso ${index}">` : ""}
         </div>
         <div class="buttons">
@@ -64,7 +63,7 @@ function showSlide(index) {
         ${index > 0 ? `<button id="prevBtn">◀ Atrás</button>` : ""}
         ${
           index < slides.length - 1
-            ? `<button id="nextBtn">Continuar ▶</button>`
+            ? `<button id="nextBtn">Siguiente ✓</button>`
             : `<button id="finishBtn">✅ Terminar</button>`
         }
 
