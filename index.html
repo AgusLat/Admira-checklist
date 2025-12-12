@@ -25,7 +25,6 @@
     <main>
       <div class="contenedor" id="login-container">
         <img id="logo-admira" src="/img/assets/admira-logo.png" />
-        <h1>Ir a la plataforma</h1>
         <button id="login-button">
           <img
             src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
@@ -39,6 +38,7 @@
 
     <script type="module">
       import { startGlobalFirebase } from "./firebase/firebaseConfig.js";
+      import { setOficina } from "./js/nav-menu-controller.js";
       import {
         loginUser,
         isAuthorizedUser,
@@ -48,6 +48,9 @@
         onAuthStateChanged,
         signOut,
       } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+
+      // Mantener el parámetro de la URL
+      setOficina();
 
       // Hacer disponible globalmente para otros módulos
       startGlobalFirebase();
@@ -67,27 +70,7 @@
 
         const autorizado = await isAuthorizedUser(user.email);
         if (autorizado) {
-          const oficina =
-            new URLSearchParams(window.location.search).get("oficina") ||
-            localStorage.getItem("oficinaParam") ||
-            "store";
-
-          // *** CREAR EL DOCUMENTO DE CHECKLIST ***
-          // Si ya hay sesión, verificar si hay un checklist activo
-          const checklistId = localStorage.getItem("currentChecklistId");
-          if (!checklistId) {
-            // No hay checklist activo, crear uno nuevo
-            try {
-              await createChecklistDocument(oficina, user.email);
-              console.log("✅ Checklist creado para sesión existente");
-            } catch (error) {
-              console.error("⚠️ Error al crear checklist:", error);
-            }
-          }
-
-          window.location.href = `nav-menu.html?oficina=${encodeURIComponent(
-            oficina
-          )}`;
+          window.location.replace("nav-menu.html");
         } else {
           signOut(auth);
         }

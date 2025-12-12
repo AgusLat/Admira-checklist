@@ -48,27 +48,25 @@
           ✅ COMPLETAR CHECKLIST
         </button>
 
-        <a class="logoutBtn" href="#logout">CERRAR SESIÓN</a>
+        <a class="logoutBtn" id="logoutBtn" href="#logout">CERRAR SESIÓN</a>
       </div>
     </main>
 
     <script type="module">
-      import { firebaseConfig } from "./firebase/firebaseConfig.js";
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+      import {
+        firebaseConfig,
+        startGlobalFirebase,
+        app,
+        auth,
+        db,
+      } from "./firebase/firebaseConfig.js";
+      import { getOficina, ensureChecklist } from "./js/nav-menu-controller.js";
+      import { logoutUser } from "./js/auth/loginController.js";
       import {
         getAuth,
         onAuthStateChanged,
         signOut,
       } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-      import {
-        getFirestore,
-        collection,
-        addDoc,
-        query,
-        where,
-        getDocs,
-        updateDoc,
-      } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
       import {
         slidesSantaRosa,
         slidesStore,
@@ -81,22 +79,21 @@
         isChecklistComplete,
       } from "./js/checklist-manager.js";
 
-      //Configuración Firebase
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      const db = getFirestore(app);
+      //Hacer disponible globalmente
+      startGlobalFirebase();
 
-      // Hacer disponible globalmente
-      if (!window.firebaseApp) {
-        window.firebaseApp = app;
-        window.db = db;
-        window.firebaseCollection = collection;
-        window.firebaseAddDoc = addDoc;
-        window.firebaseGetDocs = getDocs;
-        window.firebaseQuery = query;
-        window.firebaseWhere = where;
-        window.firebaseUpdateDoc = updateDoc;
-      }
+      //Elementos del DOM
+      const menu = document.getElementById("menu");
+      const logoutBtn = document.getElementById("logoutBtn");
+      const abortBtn = document.getElementById("abortChecklistBtn");
+      const completeBtn = document.getElementById("completeChecklistBtn");
+      const progressIndicator = document.getElementById("progressIndicator");
+      const progressText = document.getElementById("progressText");
+
+      //Eventos
+      logoutBtn.addEventListener("click", logoutUser);
+      abortBtn.addEventListener("click", abortChecklist);
+      completeBtn.addEventListener("click", completeChecklist);
 
       // --- 2. Verificar sesión ---
       onAuthStateChanged(auth, async (user) => {
@@ -106,10 +103,14 @@
         }
 
         // --- 3. Construir menú según parámetro ---
-        const oficina =
-          new URLSearchParams(window.location.search).get("oficina") ||
-          "general";
-        const menu = document.getElementById("menu");
+        const oficina = getOficina();
+        await ensureChecklist(user, oficina);
+        const checklistClosed = localStorage.getItem("checklistClosed");
+
+        if (checklistClosed === "true") {
+          menu.innerHTML = `<h2>Checklist cerrado</h2> <p>Para generar un nuevo checklist, cierra la sesión y vuelve a entrar</p>`;
+          return;
+        }
         let opciones = [];
 
         switch (oficina) {
@@ -154,10 +155,6 @@
 
         // --- 4. Verificar estado del checklist ---
         const checklistId = localStorage.getItem("currentChecklistId");
-        const abortBtn = document.getElementById("abortChecklistBtn");
-        const completeBtn = document.getElementById("completeChecklistBtn");
-        const progressIndicator = document.getElementById("progressIndicator");
-        const progressText = document.getElementById("progressText");
 
         if (checklistId) {
           // Verificar si el checklist está completo
@@ -185,55 +182,6 @@
             completeBtn.style.display = "none";
           }
         }
-
-        // --- 5. Evento para abortar checklist ---
-        abortBtn.addEventListener("click", async () => {
-          const confirmar = confirm(
-            "⚠️ ¿Estás seguro de que quieres abortar el checklist?\n\n" +
-              "El checklist se marcará como INCOMPLETO y se cerrará.\n" +
-              "Esta acción no se puede deshacer."
-          );
-
-          if (confirmar) {
-            try {
-              await abortChecklist();
-              alert("✅ Checklist abortado correctamente");
-              location.reload();
-            } catch (error) {
-              console.error("❌ Error al abortar checklist:", error);
-              alert("❌ Error al abortar el checklist. Revisa la consola.");
-            }
-          }
-        });
-
-        // --- 6. Evento para completar checklist ---
-        completeBtn.addEventListener("click", async () => {
-          const confirmar = confirm(
-            "✅ ¿Confirmas que deseas completar el checklist?\n\n" +
-              "Todos los pasos han sido revisados.\n" +
-              "El checklist se marcará como COMPLETADO."
-          );
-
-          if (confirmar) {
-            try {
-              await completeChecklist();
-              alert("🎉 ¡Checklist completado exitosamente!");
-              location.reload();
-            } catch (error) {
-              console.error("❌ Error al completar checklist:", error);
-              alert("❌ Error al completar el checklist. Revisa la consola.");
-            }
-          }
-        });
-
-        // --- 7. Logout ---
-        document
-          .querySelector('a[href="#logout"]')
-          .addEventListener("click", async () => {
-            await signOut(auth);
-            localStorage.clear();
-            window.location.href = `index.html?oficina=${oficina}`;
-          });
       });
     </script>
   </body>

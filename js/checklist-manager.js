@@ -435,68 +435,82 @@ const sendChecklistEmail = async (checklistData, stats) => {
  * Marca el checklist como completado y envía email
  */
 export const completeChecklist = async () => {
+  const confirmar = confirm(
+    "✅ ¿Confirmas que deseas completar el checklist?\n\n" +
+      "Todos los pasos han sido revisados.\n" +
+      "El checklist se marcará como COMPLETADO."
+  );
+
   try {
-    const checklistId =
-      currentChecklistId || localStorage.getItem("currentChecklistId");
-    const collectionName = localStorage.getItem("currentChecklistCollection");
+    if (confirmar) {
+      const checklistId =
+        currentChecklistId || localStorage.getItem("currentChecklistId");
+      const collectionName = localStorage.getItem("currentChecklistCollection");
 
-    if (!checklistId || !collectionName) {
-      console.error("❌ No hay un checklist activo");
-      return;
-    }
-
-    const db = window.db;
-    const checklistRef = window.firebaseCollection(db, collectionName);
-    const q = window.firebaseQuery(
-      checklistRef,
-      window.firebaseWhere("id", "==", checklistId)
-    );
-
-    const querySnapshot = await window.firebaseGetDocs(q);
-
-    if (querySnapshot.empty) {
-      console.error("❌ No se encontró el documento del checklist");
-      return;
-    }
-
-    const docRef = querySnapshot.docs[0].ref;
-
-    // Actualizar el estado en Firebase
-    await window.firebaseUpdateDoc(docRef, {
-      estado: "completado",
-      fechaFin: new Date().toISOString(),
-      fechaActualizacion: new Date().toISOString(),
-    });
-
-    console.log("✅ Checklist marcado como completado");
-
-    // Obtener datos para el email
-    const { stats } = await isChecklistComplete();
-    const checklistData = await getChecklistDataForEmail();
-
-    // Enviar email usando EmailJS
-    if (checklistData && stats) {
-      const emailEnviado = await sendChecklistEmail(checklistData, stats);
-
-      if (emailEnviado) {
-        console.log("✅ Email de confirmación enviado correctamente");
-      } else {
-        console.warn(
-          "⚠️ Checklist completado pero hubo un problema al enviar el email"
-        );
-        // Mostrar alerta al usuario
-        alert(
-          "✅ Checklist completado\n\n⚠️ Hubo un problema al enviar el email de confirmación.\nPor favor, verifica la consola para más detalles."
-        );
+      if (!checklistId || !collectionName) {
+        console.error("❌ No hay un checklist activo");
+        return;
       }
-    }
 
-    // Limpiar el localStorage
-    localStorage.removeItem("currentChecklistId");
-    localStorage.removeItem("currentChecklistCollection");
-    currentChecklistId = null;
+      const db = window.db;
+      const checklistRef = window.firebaseCollection(db, collectionName);
+      const q = window.firebaseQuery(
+        checklistRef,
+        window.firebaseWhere("id", "==", checklistId)
+      );
+
+      const querySnapshot = await window.firebaseGetDocs(q);
+
+      if (querySnapshot.empty) {
+        console.error("❌ No se encontró el documento del checklist");
+        return;
+      }
+
+      const docRef = querySnapshot.docs[0].ref;
+
+      // Actualizar el estado en Firebase
+      await window.firebaseUpdateDoc(docRef, {
+        estado: "completado",
+        fechaFin: new Date().toISOString(),
+        fechaActualizacion: new Date().toISOString(),
+      });
+
+      console.log("✅ Checklist marcado como completado");
+
+      // Obtener datos para el email
+      const { stats } = await isChecklistComplete();
+      const checklistData = await getChecklistDataForEmail();
+
+      // Enviar email usando EmailJS
+      if (checklistData && stats) {
+        const emailEnviado = await sendChecklistEmail(checklistData, stats);
+
+        if (emailEnviado) {
+          console.log("✅ Email de confirmación enviado correctamente");
+        } else {
+          console.warn(
+            "⚠️ Checklist completado pero hubo un problema al enviar el email"
+          );
+          // Mostrar alerta al usuario
+          alert(
+            "✅ Checklist completado\n\n⚠️ Hubo un problema al enviar el email de confirmación.\nPor favor, verifica la consola para más detalles."
+          );
+        }
+      }
+
+      // Limpiar el localStorage
+      localStorage.setItem("checklistClosed", "true");
+      // localStorage.removeItem("currentChecklistId");
+      // localStorage.removeItem("currentChecklistCollection");
+      // currentChecklistId = null;
+
+      alert("🎉 ¡Checklist completado exitosamente!");
+      location.reload();
+    }
   } catch (error) {
     console.error("❌ Error al completar el checklist:", error);
+    alert("❌ Error al completar el checklist. Revisa la consola.");
+
     throw error;
   }
 };
@@ -506,45 +520,55 @@ export const completeChecklist = async () => {
  */
 export const abortChecklist = async () => {
   try {
-    const checklistId =
-      currentChecklistId || localStorage.getItem("currentChecklistId");
-    const collectionName = localStorage.getItem("currentChecklistCollection");
-
-    if (!checklistId || !collectionName) {
-      console.error("❌ No hay un checklist activo");
-      return;
-    }
-
-    const db = window.db;
-    const checklistRef = window.firebaseCollection(db, collectionName);
-    const q = window.firebaseQuery(
-      checklistRef,
-      window.firebaseWhere("id", "==", checklistId)
+    const confirmar = confirm(
+      "⚠️ ¿Estás seguro de que quieres abortar el checklist?\n\n" +
+        "El checklist se marcará como INCOMPLETO y se cerrará.\n" +
+        "Esta acción no se puede deshacer."
     );
 
-    const querySnapshot = await window.firebaseGetDocs(q);
+    if (confirmar) {
+      // await abortChecklist();
+      const checklistId =
+        currentChecklistId || localStorage.getItem("currentChecklistId");
+      const collectionName = localStorage.getItem("currentChecklistCollection");
 
-    if (querySnapshot.empty) {
-      console.error("❌ No se encontró el documento del checklist");
-      return;
+      if (!checklistId || !collectionName) {
+        console.error("❌ No hay un checklist activo");
+        return;
+      }
+
+      const db = window.db;
+      const checklistRef = window.firebaseCollection(db, collectionName);
+      const q = window.firebaseQuery(
+        checklistRef,
+        window.firebaseWhere("id", "==", checklistId)
+      );
+
+      const querySnapshot = await window.firebaseGetDocs(q);
+
+      if (querySnapshot.empty) {
+        console.error("❌ No se encontró el documento del checklist");
+        return;
+      }
+
+      const docRef = querySnapshot.docs[0].ref;
+
+      await window.firebaseUpdateDoc(docRef, {
+        estado: "incompleto",
+        fechaAbandono: new Date().toISOString(),
+        fechaActualizacion: new Date().toISOString(),
+      });
+
+      console.log("⚠️ Checklist marcado como incompleto");
+
+      localStorage.setItem("checklistClosed", "true");
+      alert("✅ Checklist abortado correctamente");
+      location.reload();
     }
-
-    const docRef = querySnapshot.docs[0].ref;
-
-    await window.firebaseUpdateDoc(docRef, {
-      estado: "incompleto",
-      fechaAbandono: new Date().toISOString(),
-      fechaActualizacion: new Date().toISOString(),
-    });
-
-    console.log("⚠️ Checklist marcado como incompleto");
-
-    // Limpiar el localStorage
-    localStorage.removeItem("currentChecklistId");
-    localStorage.removeItem("currentChecklistCollection");
-    currentChecklistId = null;
   } catch (error) {
     console.error("❌ Error al abortar el checklist:", error);
+    alert("❌ Error al abortar el checklist. Revisa la consola.");
+
     throw error;
   }
 };

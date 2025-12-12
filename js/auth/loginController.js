@@ -7,6 +7,7 @@ import {
   doc,
   getDoc,
 } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+import { getOficina } from "../nav-menu-controller.js";
 
 export const loginUser = async () => {
   try {
@@ -22,11 +23,6 @@ export const loginUser = async () => {
 
     // Guardar email
     localStorage.setItem("userEmail", email);
-
-    // Mantener el parámetro de la URL
-    const params = new URLSearchParams(window.location.search);
-    const oficina = params.get("oficina") || "store";
-    localStorage.setItem("oficinaParam", oficina);
   } catch (error) {
     console.error("Error al iniciar sesión:", error);
     alert("Error al iniciar sesión");
@@ -39,4 +35,13 @@ export const isAuthorizedUser = async (email) => {
   const ref = doc(db, "usuarios_autorizados", email);
   const snap = await getDoc(ref);
   return snap.exists() && snap.data().activo === true;
+};
+
+export const logoutUser = async (e) => {
+  e.preventDefault();
+  const oficina = getOficina();
+  //VERIFICAR SI HAY UN CHECKLIST ABIERTO Y BORRARLO DE FIREBASE SI NO ESTA COMPLETADO
+  await signOut(auth);
+  localStorage.clear();
+  window.location.href = `index.html?oficina=${oficina}`;
 };
