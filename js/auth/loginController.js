@@ -9,6 +9,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 import { getOficina } from "../nav-menu-controller.js";
 
+// Inicia sesión con popup de Google
 export const loginUser = async () => {
   try {
     const result = await signInWithPopup(auth, provider);
@@ -29,6 +30,7 @@ export const loginUser = async () => {
   }
 };
 
+// Verifica si el usuario está autorizado
 export const isAuthorizedUser = async (email) => {
   if (email.endsWith("@admira.com")) return true;
 
@@ -37,6 +39,7 @@ export const isAuthorizedUser = async (email) => {
   return snap.exists() && snap.data().activo === true;
 };
 
+// Cierra sesión del usuario
 export const logoutUser = async (e) => {
   e.preventDefault();
   const oficina = getOficina();

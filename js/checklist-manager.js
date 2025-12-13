@@ -21,17 +21,13 @@ const getChecklistCollectionName = (oficina) => {
 };
 
 /**
- * Crea un nuevo documento de checklist en Firebase al hacer login
+ * Crea un nuevo documento de checklist en Firebase en ensureChecklist
  * @param {string} oficina - Nombre de la oficina
  * @param {string} userEmail - Email del usuario
  * @param {object} slidesData - Objeto con todas las slides de la oficina para obtener descripciones
  * @returns {Promise<string>} - ID del documento creado
  */
-export const createChecklistDocument = async (
-  oficina,
-  userEmail,
-  slidesData = null
-) => {
+export const createChecklistDocument = async (oficina, userEmail) => {
   try {
     const db = window.db;
     const now = new Date();
@@ -43,7 +39,7 @@ export const createChecklistDocument = async (
       "0"
     )}_${now.getTime()}`;
 
-    const template = generateChecklistTemplate(oficina, slidesData);
+    const template = generateChecklistTemplate(oficina);
 
     if (!template) {
       throw new Error(`No se encontró template para la oficina: ${oficina}`);

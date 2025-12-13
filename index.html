@@ -52,16 +52,13 @@
       // Mantener el parámetro de la URL
       setOficina();
 
-      // Hacer disponible globalmente para otros módulos
+      // Iniciar Firebase
       startGlobalFirebase();
 
-      // Importar la función de crear checklist
-      const { createChecklistDocument } = await import(
-        "./js/checklist-manager.js"
-      );
-
-      // Evento de login
+      // Elementos del DOM
       const loginButton = document.getElementById("login-button");
+
+      // Eventos
       loginButton.addEventListener("click", loginUser);
 
       // Manejo de sesión activa

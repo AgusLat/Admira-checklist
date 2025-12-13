@@ -53,109 +53,58 @@
     </main>
 
     <script type="module">
+      import { startGlobalFirebase, auth } from "./firebase/firebaseConfig.js";
+      import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
       import {
-        firebaseConfig,
-        startGlobalFirebase,
-        app,
-        auth,
-        db,
-      } from "./firebase/firebaseConfig.js";
-      import { getOficina, ensureChecklist } from "./js/nav-menu-controller.js";
+        getOficina,
+        ensureChecklist,
+        renderNavMenu,
+      } from "./js/nav-menu-controller.js";
       import { logoutUser } from "./js/auth/loginController.js";
-      import {
-        getAuth,
-        onAuthStateChanged,
-        signOut,
-      } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-      import {
-        slidesSantaRosa,
-        slidesStore,
-        slidesPlanetaTerminator,
-        slidesPlanetaNave,
-      } from "./slides/slides.js";
       import {
         abortChecklist,
         completeChecklist,
         isChecklistComplete,
       } from "./js/checklist-manager.js";
 
-      //Hacer disponible globalmente
+      // Iniciar Firebase
       startGlobalFirebase();
 
-      //Elementos del DOM
-      const menu = document.getElementById("menu");
+      // Elementos del DOM
+      const navMenu = document.getElementById("menu");
       const logoutBtn = document.getElementById("logoutBtn");
       const abortBtn = document.getElementById("abortChecklistBtn");
       const completeBtn = document.getElementById("completeChecklistBtn");
       const progressIndicator = document.getElementById("progressIndicator");
       const progressText = document.getElementById("progressText");
 
-      //Eventos
+      // Eventos
       logoutBtn.addEventListener("click", logoutUser);
       abortBtn.addEventListener("click", abortChecklist);
       completeBtn.addEventListener("click", completeChecklist);
 
-      // --- 2. Verificar sesión ---
+      // Variables
+      const oficina = getOficina();
+
+      // Renderizar menu al cargar la página
       onAuthStateChanged(auth, async (user) => {
         if (!user) {
           window.location.href = "index.html";
           return;
         }
 
-        // --- 3. Construir menú según parámetro ---
-        const oficina = getOficina();
+        // Verificar estado del checklist: cerrado o crear uno nuevo
         await ensureChecklist(user, oficina);
         const checklistClosed = localStorage.getItem("checklistClosed");
-
+        const checklistId = localStorage.getItem("currentChecklistId");
         if (checklistClosed === "true") {
           menu.innerHTML = `<h2>Checklist cerrado</h2> <p>Para generar un nuevo checklist, cierra la sesión y vuelve a entrar</p>`;
           return;
-        }
-        let opciones = [];
-
-        switch (oficina) {
-          case "santarosa":
-            opciones = Object.keys(slidesSantaRosa).map((titulo) => ({
-              seccion: titulo.toLocaleUpperCase(),
-              href: `slides.html?oficina=${oficina}&seccion=${titulo}`,
-            }));
-            break;
-          case "store":
-            opciones = Object.keys(slidesStore).map((titulo) => ({
-              seccion: titulo.toLocaleUpperCase(),
-              href: `slides.html?oficina=${oficina}&seccion=${titulo}`,
-            }));
-            break;
-          case "planetaterminator":
-            opciones = Object.keys(slidesPlanetaTerminator).map((titulo) => ({
-              seccion: titulo.toLocaleUpperCase(),
-              href: `slides.html?oficina=${oficina}&seccion=${titulo}`,
-            }));
-            break;
-          case "planetanave":
-            opciones = Object.keys(slidesPlanetaNave).map((titulo) => ({
-              seccion: titulo.toLocaleUpperCase(),
-              href: `slides.html?oficina=${oficina}&seccion=${titulo}`,
-            }));
-            break;
-          default:
-            opciones = [{ seccion: "OFICINA NO IDENTIFICADA", href: "" }];
-            break;
+        } else if (checklistClosed === null) {
+          renderNavMenu(oficina, navMenu);
         }
 
-        // Render del menú
-        menu.innerHTML = `
-      <ul>
-        ${opciones
-          .map((opt) => `<li><a href="${opt.href}">${opt.seccion}</a></li>`)
-          .join("")}
-      </ul>
-     
-    `;
-
-        // --- 4. Verificar estado del checklist ---
-        const checklistId = localStorage.getItem("currentChecklistId");
-
+        // Verificar progreso
         if (checklistId) {
           // Verificar si el checklist está completo
           const { isComplete, stats } = await isChecklistComplete();
