@@ -23,7 +23,9 @@
   <body>
     <main>
       <div class="contenido">
-        <h1>CHECKLIST ADMIRA</h1>
+        <h1>ADMIRA Ready!</h1>
+        <span id="loader" class="loader"></span>
+        <nav class="navMenu" id="menu"></nav>
 
         <!-- Indicador de progreso -->
         <div
@@ -34,21 +36,20 @@
           <p><strong>Progreso:</strong> <span id="progressText">0/0</span></p>
         </div>
 
-        <nav class="navMenu" id="menu"></nav>
+        <div class="btnContainer">
+          <button
+            id="completeChecklistBtn"
+            class="complete-btn disabled"
+            disabled
+          >
+            ✅ Completar checklist
+          </button>
+          <button id="abortChecklistBtn" class="abort-btn disabled" disabled>
+            ❌ Abortar checklist
+          </button>
 
-        <button id="abortChecklistBtn" class="abort-btn" style="display: none">
-          ABORTAR CHECKLIST
-        </button>
-
-        <button
-          id="completeChecklistBtn"
-          class="complete-btn"
-          style="display: none"
-        >
-          ✅ COMPLETAR CHECKLIST
-        </button>
-
-        <a class="logoutBtn" id="logoutBtn" href="#logout">CERRAR SESIÓN</a>
+          <button class="logoutBtn" id="logoutBtn">Cerrar sesión</button>
+        </div>
       </div>
     </main>
 
@@ -59,6 +60,7 @@
         getOficina,
         ensureChecklist,
         renderNavMenu,
+        renderProgressStats,
       } from "./js/nav-menu-controller.js";
       import { logoutUser } from "./js/auth/loginController.js";
       import {
@@ -77,6 +79,7 @@
       const completeBtn = document.getElementById("completeChecklistBtn");
       const progressIndicator = document.getElementById("progressIndicator");
       const progressText = document.getElementById("progressText");
+      const loader = document.getElementById("loader");
 
       // Eventos
       logoutBtn.addEventListener("click", logoutUser);
@@ -98,37 +101,28 @@
         const checklistClosed = localStorage.getItem("checklistClosed");
         const checklistId = localStorage.getItem("currentChecklistId");
         if (checklistClosed === "true") {
+          loader.style.display = "none";
+          abortBtn.classList.add("disabled");
+          completeBtn.classList.add("disabled");
+
           menu.innerHTML = `<h2>Checklist cerrado</h2> <p>Para generar un nuevo checklist, cierra la sesión y vuelve a entrar</p>`;
           return;
-        } else if (checklistClosed === null) {
-          renderNavMenu(oficina, navMenu);
         }
 
-        // Verificar progreso
-        if (checklistId) {
-          // Verificar si el checklist está completo
+        //Renderizar menú de navegación
+        if (checklistId && checklistClosed === null) {
           const { isComplete, stats } = await isChecklistComplete();
-
-          if (stats) {
-            // Mostrar progreso
-            progressIndicator.style.display = "block";
-            progressText.textContent = `${
-              stats.completados + stats.incidencias
-            }/${stats.total} pasos completados`;
-
-            if (stats.incidencias > 0) {
-              progressText.innerHTML += ` <p><strong>Incidencias:</strong> <span>${stats.incidencias}</span></p>`;
-            }
-          }
+          loader.style.display = "none";
+          abortBtn.disabled = false;
+          abortBtn.classList.remove("disabled");
+          renderNavMenu(oficina, navMenu, stats?.porSeccion);
+          renderProgressStats(stats);
 
           if (isComplete) {
-            // Mostrar botón de completar
-            completeBtn.style.display = "block";
-            abortBtn.style.display = "none";
+            completeBtn.disabled = false;
+            completeBtn.classList.remove("disabled");
           } else {
-            // Mostrar botón de abortar
-            abortBtn.style.display = "block";
-            completeBtn.style.display = "none";
+            completeBtn.classList.add("disabled");
           }
         }
       });

@@ -1,18 +1,20 @@
-body{
+body {
     width: 100%;
     margin: 0px;
     background-color: #689840;
+
 }
 
-main{
+main {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100dvh;
     width: 100vw;
+
 }
 
-.contenedor{
+.contenedor {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -22,14 +24,14 @@ main{
     height: 50%;
 }
 
-.contenedor h1{
+.contenedor h1 {
     margin-top: 3rem;
     font-size: 1.75rem;
     color: white;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-.contenedor button{
+.contenedor button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -44,10 +46,10 @@ main{
 
 }
 
-.google-icon{
+.google-icon {
     max-width: 50px;
 }
 
-#logo-admira{
+#logo-admira {
     max-width: 200px;
 }

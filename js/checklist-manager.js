@@ -212,17 +212,30 @@ export const isChecklistComplete = async () => {
     let completados = 0;
     let incidencias = 0;
     let noCompletados = 0;
+    let porSeccion = {};
 
     // Iterar por todas las secciones y pasos
     for (const seccion in checklist) {
+      if (!porSeccion[seccion]) {
+        porSeccion[seccion] = {
+          total: 0,
+          completados: 0,
+          incidencias: 0,
+        };
+      }
+
       for (const paso in checklist[seccion]) {
         totalPasos++;
+        porSeccion[seccion].total++;
+
         const estadoPaso = checklist[seccion][paso].estado;
 
         if (estadoPaso === "COMPLETADO") {
           completados++;
+          porSeccion[seccion].completados++;
         } else if (estadoPaso === "INCIDENCIA") {
           incidencias++;
+          porSeccion[seccion].incidencias++;
         } else if (estadoPaso === "NO COMPLETADO") {
           noCompletados++;
         }
@@ -231,14 +244,14 @@ export const isChecklistComplete = async () => {
 
     const isComplete = noCompletados === 0 && totalPasos > 0;
 
-    console.log("📊 Estado del checklist:");
-    console.log(`   Total pasos: ${totalPasos}`);
-    console.log(`   ✅ Completados: ${completados}`);
-    console.log(`   ⚠️  Incidencias: ${incidencias}`);
-    console.log(`   ⏸️  No completados: ${noCompletados}`);
-    console.log(
-      `   ${isComplete ? "✅ CHECKLIST COMPLETO" : "⏳ CHECKLIST INCOMPLETO"}`
-    );
+    // console.log("📊 Estado del checklist:");
+    // console.log(`   Total pasos: ${totalPasos}`);
+    // console.log(`   ✅ Completados: ${completados}`);
+    // console.log(`   ⚠️  Incidencias: ${incidencias}`);
+    // console.log(`   ⏸️  No completados: ${noCompletados}`);
+    // console.log(
+    //   `   ${isComplete ? "✅ CHECKLIST COMPLETO" : "⏳ CHECKLIST INCOMPLETO"}`
+    // );
 
     return {
       isComplete,
@@ -247,6 +260,7 @@ export const isChecklistComplete = async () => {
         completados,
         incidencias,
         noCompletados,
+        porSeccion,
       },
     };
   } catch (error) {

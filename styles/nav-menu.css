@@ -2,7 +2,6 @@ body {
     width: 100%;
     margin: 0px;
     background-color: #689840;
-
 }
 
 main {
@@ -17,11 +16,11 @@ main {
 .contenido {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
     max-width: 400px;
-    height: 50%;
+    height: 100dvh;
 }
 
 .contenido h1 {
@@ -46,6 +45,8 @@ main {
     align-items: center;
     padding-inline-start: 0px;
     width: 100%;
+    font-size: 1.2rem;
+
 }
 
 .navMenu li {
@@ -60,11 +61,20 @@ main {
 
 .navMenu li a {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
     color: white;
     text-decoration: none;
     padding: 0.5rem 2rem;
     width: 80%;
+}
+
+.progreso-seccion {
+    padding: 0.2rem 0.5rem;
+    background-color: #daffcc;
+    /* outline: 1px solid rgba(0, 0, 0, 0.168); */
+    color: #496b2d;
+    border-radius: 10px;
 }
 
 .progressIndicator {
@@ -89,19 +99,32 @@ main {
     font-weight: lighter;
 }
 
-.logoutBtn {
-    text-align: center;
-    text-decoration: none;
-    background-color: aliceblue;
-    padding: 0.5rem 2rem;
-    width: 70%;
-    align-self: center;
-    color: #689840;
-    font-weight: bold;
-    border-radius: 5px;
-    margin-top: 2rem;
-    box-shadow: 3px 3px 10px 0.5px rgba(59, 59, 59, 0.662);
+.btnContainer {
+    display: flex;
+    gap: 1.2rem;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    margin-top: auto;
+    margin-bottom: 2rem;
 }
+
+.logoutBtn {
+    width: 86%;
+    color: #689840;
+    background-color: #ffffff;
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 3px 3px 10px 0.5px rgba(59, 59, 59, 0.662);
+    align-self: center;
+    outline: 1px solid rgba(0, 0, 0, 0.168);
+}
+
+
 
 
 /* === ABORT BUTTON === */
@@ -117,8 +140,6 @@ main {
     cursor: pointer;
     box-shadow: 3px 3px 10px 0.5px rgba(59, 59, 59, 0.662);
     transition: all 0.2s ease;
-    margin-top: 1rem;
-    margin-bottom: 3rem;
     align-self: center;
     outline: 1px solid rgba(0, 0, 0, 0.168);
 }
@@ -146,8 +167,6 @@ main {
     cursor: pointer;
     box-shadow: 3px 3px 10px 0.5px rgba(59, 59, 59, 0.662);
     transition: all 0.2s ease;
-    margin-top: 1rem;
-    margin-bottom: 3rem;
     align-self: center;
     outline: 1px solid rgba(0, 0, 0, 0.168);
     animation: pulse 2s ease-in-out infinite;
@@ -164,6 +183,27 @@ main {
     transform: translateY(0);
 }
 
+.disabled {
+    background-color: grey;
+    cursor: not-allowed;
+    box-shadow: none;
+    animation: none;
+    opacity: 0.5;
+}
+
+.disabled:hover {
+    background-color: grey;
+    transform: none;
+    box-shadow: none;
+    animation: none;
+}
+
+.disabled:active {
+    transform: none;
+}
+
+
+
 @keyframes pulse {
 
     0%,
@@ -173,5 +213,36 @@ main {
 
     50% {
         box-shadow: 0 0 20px 5px rgba(46, 204, 113, 0.5);
+    }
+}
+
+/* Loader */
+.loader {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    border: 10px solid;
+    box-sizing: border-box;
+    animation: animloader 1s linear infinite alternate;
+    margin: 4rem 0rem;
+}
+
+@keyframes animloader {
+    0% {
+        border-color: white rgba(255, 255, 255, 0) rgba(255, 255, 255, 0) rgba(255, 255, 255, 0);
+    }
+
+    33% {
+        border-color: white white rgba(255, 255, 255, 0) rgba(255, 255, 255, 0);
+    }
+
+    66% {
+        border-color: white white white rgba(255, 255, 255, 0);
+    }
+
+    100% {
+        border-color: white white white white;
     }
 }
