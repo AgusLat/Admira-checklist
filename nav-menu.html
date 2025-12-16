@@ -3,6 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+      rel="stylesheet"
+    />
+
     <title>Menú principal</title>
     <link rel="stylesheet" href="styles/nav-menu.css" />
 
@@ -23,7 +31,9 @@
   <body>
     <main>
       <div class="contenido">
-        <h1>ADMIRA Ready!</h1>
+        <h1>
+          <img class="ready-logo" src="./img/assets/admira-text.png" /> READY!
+        </h1>
         <span id="loader" class="loader"></span>
         <nav class="navMenu" id="menu"></nav>
 
@@ -33,7 +43,7 @@
           style="display: none"
           class="progressIndicator"
         >
-          <p><strong>Progreso:</strong> <span id="progressText">0/0</span></p>
+          <ul id="progressText"></ul>
         </div>
 
         <div class="btnContainer">
@@ -42,7 +52,7 @@
             class="complete-btn disabled"
             disabled
           >
-            ✅ Completar checklist
+            READY!
           </button>
           <button id="abortChecklistBtn" class="abort-btn disabled" disabled>
             ❌ Abortar checklist
@@ -67,6 +77,7 @@
         abortChecklist,
         completeChecklist,
         isChecklistComplete,
+        cleanupOldChecklists,
       } from "./js/checklist-manager.js";
 
       // Iniciar Firebase
@@ -96,6 +107,8 @@
           return;
         }
 
+        // Limpieza de checklists antiguos
+        await cleanupOldChecklists();
         // Verificar estado del checklist: cerrado o crear uno nuevo
         await ensureChecklist(user, oficina);
         const checklistClosed = localStorage.getItem("checklistClosed");
@@ -105,7 +118,7 @@
           abortBtn.classList.add("disabled");
           completeBtn.classList.add("disabled");
 
-          menu.innerHTML = `<h2>Checklist cerrado</h2> <p>Para generar un nuevo checklist, cierra la sesión y vuelve a entrar</p>`;
+          menu.innerHTML = `<div class="closed-checklist"><img src="./img/assets/checklist-complete.png"><h2>¡Checklist finalizado!</h2> <p>Cerrar sesión para completar </p></div>`;
           return;
         }
 

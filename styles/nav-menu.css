@@ -10,7 +10,11 @@ main {
     align-items: center;
     height: 100dvh;
     width: 100vw;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: "Nunito", system-ui, sans-serif;
+}
+
+button {
+    font-family: "Nunito", system-ui, sans-serif;
 }
 
 .contenido {
@@ -24,8 +28,26 @@ main {
 }
 
 .contenido h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
     color: white;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: white;
+    color: #689840;
+    padding: 0.5rem 1.5rem;
+    border-radius: 2rem;
+    outline: 3px solid rgba(0, 0, 0, 0.168);
+    margin: 0px;
+    margin-top: 1rem;
+    font-weight: 800;
+}
+
+.ready-logo {
+    width: 100px;
+    margin-top: 0px;
+    margin-bottom: 2px;
+
 }
 
 
@@ -51,9 +73,10 @@ main {
 
 .navMenu li {
     width: 80%;
-    background-color: rgb(47, 125, 47);
+    background-color: #daffcca7;
+
     text-align: center;
-    border-radius: 5px;
+    border-radius: 2rem;
     box-shadow: 3px 3px 10px 0.5px rgba(59, 59, 59, 0.662);
     outline: 1px solid rgba(0, 0, 0, 0.168);
     font-weight: bold;
@@ -63,11 +86,50 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: white;
+    color: #496b2d;
+
     text-decoration: none;
     padding: 0.5rem 2rem;
     width: 80%;
 }
+
+.closed-checklist {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    align-self: center;
+    background-color: #daffcca7;
+    margin: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 3px 3px 10px 0.5px rgba(59, 59, 59, 0.662);
+    outline: 3px solid rgba(0, 0, 0, 0.168);
+
+
+}
+
+.closed-checklist img {
+    width: 120px;
+    margin-top: 2rem;
+}
+
+.closed-checklist h2 {
+    padding: 1.5rem;
+    padding-bottom: 0rem;
+    font-size: 2rem;
+    margin: 0rem;
+    color: #5a785e;
+}
+
+.closed-checklist p {
+    width: 90%;
+    color: #496b2d75;
+    line-height: 2rem;
+    border-radius: 5px;
+    font-size: 1.2rem;
+}
+
 
 .progreso-seccion {
     padding: 0.2rem 0.5rem;
@@ -82,17 +144,36 @@ main {
     margin: 1rem 0px;
     padding: 1rem;
     background: rgba(255, 255, 255, 0.1);
+    color: rgb(184, 229, 177);
     border-radius: 8px;
-    width: 80%;
+    width: 70%;
 }
 
-.progressIndicator p {
+.progressIndicator ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
     font-size: 1rem;
+    padding-inline-start: 0px;
+    gap: 0.5rem;
+    margin: 0px;
 }
+
+.progressIndicator li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 0.5rem;
+}
+
 
 .progressIndicator strong {
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: bold;
+    color: #496b2d;
+
 }
 
 .progressIndicator span {
@@ -162,8 +243,8 @@ main {
     padding: 0.75rem 2rem;
     border: none;
     border-radius: 8px;
-    font-size: 1rem;
-    font-weight: bold;
+    font-size: 1.3rem;
+    font-weight: 800;
     cursor: pointer;
     box-shadow: 3px 3px 10px 0.5px rgba(59, 59, 59, 0.662);
     transition: all 0.2s ease;

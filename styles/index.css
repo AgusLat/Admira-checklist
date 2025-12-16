@@ -11,6 +11,7 @@ main {
     align-items: center;
     height: 100dvh;
     width: 100vw;
+    font-family: "Nunito", system-ui, sans-serif;
 
 }
 
@@ -28,7 +29,7 @@ main {
     margin-top: 3rem;
     font-size: 1.75rem;
     color: white;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
 }
 
 .contenedor button {
@@ -43,6 +44,8 @@ main {
     cursor: pointer;
     background-color: rgb(255, 255, 255);
     box-shadow: 3px 3px 10px 0.5px rgba(59, 59, 59, 0.662);
+    font-family: "Nunito", system-ui, sans-serif;
+
 
 }
 

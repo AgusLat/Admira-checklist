@@ -3,7 +3,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: "Nunito", system-ui, sans-serif;
+
 }
 
 /* === BASE === */
@@ -16,6 +17,8 @@ body {
   justify-content: flex-start;
   height: 100dvh;
   padding: 1rem 1rem;
+  font-family: "Nunito", system-ui, sans-serif;
+
 }
 
 /* === SLIDE CARD === */

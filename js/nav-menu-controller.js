@@ -20,6 +20,7 @@ export const getOficina = () => {
 // Asegura que exista un checklist para el usuario y oficina dados,si no crea una nueva
 export const ensureChecklist = async (user, oficina) => {
   const checklistId = localStorage.getItem("currentChecklistId");
+  const collectionName = localStorage.getItem("currentChecklistCollection");
   const checklistClosed = localStorage.getItem("checklistClosed");
 
   // Si el último checklist fue cerrado, NO crear otro
@@ -27,10 +28,65 @@ export const ensureChecklist = async (user, oficina) => {
     return;
   }
 
-  if (!checklistId) {
-    console.log("🆕 Creando checklist nuevo");
-    await createChecklistDocument(oficina, user.email);
+  if (checklistId && collectionName) {
+    const checklistRef = window.firebaseCollection(window.db, collectionName);
+
+    const q = window.firebaseQuery(
+      checklistRef,
+      window.firebaseWhere("id", "==", checklistId)
+    );
+
+    const snapshot = await window.firebaseGetDocs(q);
+
+    if (!snapshot.empty) {
+      const doc = snapshot.docs[0];
+      const data = doc.data();
+
+      // Evaluar antiguedad si está en progreso (limite 60 minutos)
+      if (data.estado === "en_progreso") {
+        const lastUpdate = new Date(data.fechaActualizacion).getTime();
+        const now = Date.now();
+        const diffMinutes = (now - lastUpdate) / 1000 / 60;
+
+        if (diffMinutes > 60) {
+          const continuar = confirm(
+            "⚠️ Tenés un checklist iniciado anteriormente.\n\n" +
+              "Para continuar con ese checklist, presiona ACEPTAR.\n" +
+              "Para abortar ese checklist y crear uno nuevo, presiona CANCELAR."
+          );
+
+          if (!continuar) {
+            // Abortar checklist viejo
+            const nowISO = new Date().toISOString();
+
+            await window.firebaseUpdateDoc(doc.ref, {
+              estado: "abortado",
+              fechaFin: nowISO,
+              fechaActualizacion: nowISO,
+            });
+
+            localStorage.removeItem("currentChecklistId");
+            localStorage.removeItem("currentChecklistCollection");
+
+            alert("🛑 El checklist anterior fue abortado.");
+            // Crear uno nuevo
+            await createChecklistDocument(oficina, user.email);
+            return;
+          }
+        }
+
+        console.log("♻️ Recuperando checklist en progreso");
+        return;
+      }
+    }
+
+    // Si no es válido
+    localStorage.removeItem("currentChecklistId");
+    localStorage.removeItem("currentChecklistCollection");
   }
+
+  console.log("🆕 Creando checklist nuevo");
+  await createChecklistDocument(oficina, user.email);
 };
 
 // Renderiza el menú de navegación basado en las slides de la oficina
@@ -74,8 +130,9 @@ export const renderNavMenu = (oficina, menu, stats = {}) => {
 // Renderiza las estadísticas de progreso e incidencias en el menú de navegación
 export const renderProgressStats = (stats) => {
   progressIndicator.style.display = "block";
-  progressText.textContent = `${stats.completados + stats.incidencias}/${
-    stats.total
-  } pasos completados`;
-  progressText.innerHTML += ` <p><strong>Incidencias:</strong> <span>${stats.incidencias}</span></p>`;
+  progressText.innerHTML = ` <li><strong>Pasos completados:</strong> <span>${
+    stats.completados + stats.incidencias
+  }/${stats.total}</span></li> <li><strong>Incidencias:</strong> <span>${
+    stats.incidencias
+  }</span></li>`;
 };

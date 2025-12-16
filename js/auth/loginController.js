@@ -43,8 +43,8 @@ export const isAuthorizedUser = async (email) => {
 export const logoutUser = async (e) => {
   e.preventDefault();
   const oficina = getOficina();
-  //VERIFICAR SI HAY UN CHECKLIST ABIERTO Y BORRARLO DE FIREBASE SI NO ESTA COMPLETADO
   await signOut(auth);
-  localStorage.clear();
+  // localStorage.clear();
+  localStorage.removeItem("checklistClosed");
   window.location.href = `index.html?oficina=${oficina}`;
 };

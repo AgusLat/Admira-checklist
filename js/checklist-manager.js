@@ -1,23 +1,72 @@
 import { generateChecklistTemplate } from "../slides/slides-template.js";
-
-// ========================================
-// CONFIGURACIÓN DE EMAILJS
-// ========================================
-const EMAILJS_CONFIG = {
-  SERVICE_ID: "service_cd8hga8",
-  TEMPLATE_ID: "template_tfbu0qd",
-  PUBLIC_KEY: "AOsFjcFh572HFsomg",
-};
+import { getChecklistDataForEmail, sendChecklistEmail } from "./emailjs.js";
 
 // Variable global para almacenar el ID del checklist actual
 let currentChecklistId = null;
+// Tiempo límite para considerar un checklist como abandonado (en milisegundos)
+const ABANDON_DAYS = 7;
+const ABANDON_MS = ABANDON_DAYS * 24 * 60 * 60 * 1000;
 
 /**
  * Devuelve el nombre de la colección para una oficina
  * @param {string} oficina - Nombre de la oficina
  */
 const getChecklistCollectionName = (oficina) => {
-  return `checklist_${oficina.toLowerCase()}`;
+  const oficinaFinal = oficina || localStorage.getItem("oficinaParam");
+
+  if (!oficinaFinal) return null;
+
+  return `checklist_${oficinaFinal.toLowerCase()}`;
+};
+
+/**
+ * Limpia checklists antiguos en estado "en_progreso"
+ */
+export const cleanupOldChecklists = async () => {
+  const collectionName = getChecklistCollectionName();
+
+  if (!collectionName) {
+    console.warn("⚠️ No hay colección activa para limpieza");
+    return;
+  }
+
+  const db = window.db;
+  const now = Date.now();
+  const currentChecklistId = localStorage.getItem("currentChecklistId");
+
+  const checklistRef = window.firebaseCollection(db, collectionName);
+
+  const q = window.firebaseQuery(
+    checklistRef,
+    window.firebaseWhere("estado", "==", "en_progreso")
+  );
+
+  const snapshot = await window.firebaseGetDocs(q);
+
+  for (const doc of snapshot.docs) {
+    const data = doc.data();
+
+    if (!data.fechaActualizacion) continue;
+
+    // (opcional pero recomendable)
+    if (data.id === currentChecklistId) continue;
+
+    const lastUpdate = new Date(data.fechaActualizacion).getTime();
+
+    if (now - lastUpdate > ABANDON_MS) {
+      const nowISO = new Date().toISOString();
+
+      await window.firebaseUpdateDoc(doc.ref, {
+        estado: "abortado",
+        fechaFin: nowISO,
+        fechaActualizacion: nowISO,
+      });
+
+      console.log(
+        `🧹 Checklist ${data.id} abortado por antigüedad (${collectionName})`
+      );
+    }
+  }
 };
 
 /**
@@ -270,178 +319,6 @@ export const isChecklistComplete = async () => {
 };
 
 /**
- * Obtiene los datos completos del checklist para enviar por email
- * @returns {Promise<object>} - Datos del checklist con incidencias
- */
-const getChecklistDataForEmail = async () => {
-  try {
-    const checklistId =
-      currentChecklistId || localStorage.getItem("currentChecklistId");
-    const collectionName = localStorage.getItem("currentChecklistCollection");
-
-    if (!checklistId || !collectionName) {
-      return null;
-    }
-
-    const db = window.db;
-    const checklistRef = window.firebaseCollection(db, collectionName);
-    const q = window.firebaseQuery(
-      checklistRef,
-      window.firebaseWhere("id", "==", checklistId)
-    );
-
-    const querySnapshot = await window.firebaseGetDocs(q);
-
-    if (querySnapshot.empty) {
-      return null;
-    }
-
-    const checklistData = querySnapshot.docs[0].data();
-    const checklist = checklistData.checklist;
-
-    // Recopilar todas las incidencias
-    const incidencias = [];
-
-    for (const seccion in checklist) {
-      for (const paso in checklist[seccion]) {
-        const pasoData = checklist[seccion][paso];
-
-        if (pasoData.estado === "INCIDENCIA" && pasoData.incidencia) {
-          incidencias.push({
-            seccion: seccion,
-            paso: paso,
-            descripcion: pasoData.incidencia,
-            descripcionPaso: pasoData.desc || "",
-          });
-        }
-      }
-    }
-
-    return {
-      checklistId: checklistData.id,
-      oficina: checklistData.oficina,
-      userEmail: checklistData.usuario,
-      fechaInicio: checklistData.fechaInicio,
-      incidencias: incidencias,
-    };
-  } catch (error) {
-    console.error("❌ Error al obtener datos para email:", error);
-    return null;
-  }
-};
-
-/**
- * Formatea una fecha ISO a formato legible
- * @param {string} isoDate - Fecha en formato ISO
- * @returns {string} - Fecha formateada
- */
-const formatearFecha = (isoDate) => {
-  const fecha = new Date(isoDate);
-  const opciones = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    timeZone: "Europe/Madrid",
-  };
-  return fecha.toLocaleDateString("es-ES", opciones);
-};
-
-/**
- * Genera el HTML de las incidencias para el email
- * @param {Array} incidencias - Array de incidencias
- * @returns {string} - HTML de las incidencias
- */
-const generarHTMLIncidencias = (incidencias) => {
-  if (incidencias.length === 0) {
-    return "";
-  }
-
-  return incidencias
-    .map(
-      (inc) => `
-    <div style="background: #fff3cd; padding: 15px; margin: 10px 0; border-left: 4px solid #ff9800; border-radius: 4px;">
-      <strong style="color: #ff9800;">Sección:</strong> ${inc.seccion} - Paso ${inc.paso}<br>
-      <strong style="color: #ff9800;">Descripción del paso:</strong> ${inc.descripcionPaso}<br>
-      <strong style="color: #ff9800;">Incidencia:</strong> ${inc.descripcion}
-    </div>
-  `
-    )
-    .join("");
-};
-
-/**
- * Envía un email con los datos del checklist usando EmailJS
- * @param {object} checklistData - Datos del checklist
- * @param {object} stats - Estadísticas del checklist
- */
-const sendChecklistEmail = async (checklistData, stats) => {
-  try {
-    console.log("📧 Enviando email de checklist completado via EmailJS...");
-
-    // Verificar que EmailJS esté cargado
-    if (typeof emailjs === "undefined") {
-      console.error(
-        "❌ EmailJS no está cargado. Asegúrate de incluir el script en index.html"
-      );
-      return false;
-    }
-
-    // Formatear fechas
-    const fechaInicioFormatted = formatearFecha(checklistData.fechaInicio);
-    const fechaFinFormatted = formatearFecha(new Date().toISOString());
-
-    // Generar HTML de incidencias
-    const detalleIncidencias = generarHTMLIncidencias(
-      checklistData.incidencias
-    );
-    const hayIncidencias = checklistData.incidencias.length > 0;
-
-    // Preparar los parámetros para la plantilla de EmailJS
-    const templateParams = {
-      oficina: checklistData.oficina.toUpperCase(),
-      userEmail: checklistData.userEmail,
-      checklistId: checklistData.checklistId,
-      fechaInicio: fechaInicioFormatted,
-      fechaFin: fechaFinFormatted,
-      totalPasos: stats.total,
-      completados: stats.completados,
-      incidencias: stats.incidencias,
-      detalleIncidencias: detalleIncidencias,
-      if_incidencias: hayIncidencias ? "true" : "",
-      if_no_incidencias: !hayIncidencias ? "true" : "",
-    };
-
-    console.log("📤 Enviando con parámetros:", templateParams);
-
-    // Enviar el email usando EmailJS
-    const response = await emailjs.send(
-      EMAILJS_CONFIG.SERVICE_ID,
-      EMAILJS_CONFIG.TEMPLATE_ID,
-      templateParams,
-      EMAILJS_CONFIG.PUBLIC_KEY
-    );
-
-    if (response.status === 200) {
-      console.log("✅ Email enviado correctamente");
-      console.log("   Response:", response);
-      return true;
-    } else {
-      console.error("❌ Error al enviar email. Status:", response.status);
-      return false;
-    }
-  } catch (error) {
-    console.error("❌ Error en sendChecklistEmail:", error);
-    // Mostrar detalles del error
-    if (error.text) {
-      console.error("   Mensaje de error:", error.text);
-    }
-    return false;
-  }
-};
-
-/**
  * Marca el checklist como completado y envía email
  */
 export const completeChecklist = async () => {
@@ -489,7 +366,7 @@ export const completeChecklist = async () => {
 
       // Obtener datos para el email
       const { stats } = await isChecklistComplete();
-      const checklistData = await getChecklistDataForEmail();
+      const checklistData = await getChecklistDataForEmail(currentChecklistId);
 
       // Enviar email usando EmailJS
       if (checklistData && stats) {
@@ -526,7 +403,7 @@ export const completeChecklist = async () => {
 };
 
 /**
- * Marca el checklist como incompleto (cuando el usuario aborta)
+ * Marca el checklist como incompleto
  */
 export const abortChecklist = async () => {
   try {
@@ -537,7 +414,6 @@ export const abortChecklist = async () => {
     );
 
     if (confirmar) {
-      // await abortChecklist();
       const checklistId =
         currentChecklistId || localStorage.getItem("currentChecklistId");
       const collectionName = localStorage.getItem("currentChecklistCollection");
@@ -564,14 +440,16 @@ export const abortChecklist = async () => {
       const docRef = querySnapshot.docs[0].ref;
 
       await window.firebaseUpdateDoc(docRef, {
-        estado: "incompleto",
-        fechaAbandono: new Date().toISOString(),
+        estado: "abortado",
+        fechaFin: new Date().toISOString(),
         fechaActualizacion: new Date().toISOString(),
       });
 
       console.log("⚠️ Checklist marcado como incompleto");
 
       localStorage.setItem("checklistClosed", "true");
+      localStorage.removeItem("currentChecklistId");
+      localStorage.removeItem("currentChecklistCollection");
       alert("✅ Checklist abortado correctamente");
       location.reload();
     }
@@ -581,33 +459,4 @@ export const abortChecklist = async () => {
 
     throw error;
   }
-};
-
-/**
- * Obtiene el ID del checklist actual
- */
-export const getCurrentChecklistId = () => {
-  return currentChecklistId || localStorage.getItem("currentChecklistId");
-};
-
-/**
- * Verificar estado del checklist
- */
-export const debugChecklistStatus = () => {
-  console.log("🔍 DEBUG: Estado del Checklist");
-  console.log("  - currentChecklistId (variable):", currentChecklistId);
-  console.log(
-    "  - localStorage.currentChecklistId:",
-    localStorage.getItem("currentChecklistId")
-  );
-  console.log(
-    "  - localStorage.currentChecklistCollection:",
-    localStorage.getItem("currentChecklistCollection")
-  );
-  console.log("  - window.db existe:", !!window.db);
-  console.log(
-    "  - window.firebaseCollection existe:",
-    !!window.firebaseCollection
-  );
-  console.log("  - EmailJS cargado:", typeof emailjs !== "undefined");
 };
