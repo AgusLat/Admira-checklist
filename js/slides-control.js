@@ -131,31 +131,30 @@ function showSlide(index) {
 
 // Navegación - Avanzar
 export async function nextSlide() {
+  const nextBtn = document.getElementById("nextBtn");
+
+  // Bloquear inmediatamente (evita doble click)
+  nextBtn.disabled = true;
+
   try {
-    // SOLO guardar si NO es intro/outro
     if (
       slides[currentSlideIndex].type !== "intro" &&
       slides[currentSlideIndex].type !== "outro"
     ) {
-      // Primero verificar si hay una incidencia pendiente del paso actual
       const hadIncidencia = await processPendingIncidencia();
 
-      // Si NO había incidencia, marcar el paso actual como OK
-      // Pasar la descripción del paso actual
       if (!hadIncidencia) {
         const descripcionPaso = slides[currentSlideIndex].desc || "";
         await markStepAsOK(currentSeccion, currentSlideIndex, descripcionPaso);
       }
     }
 
-    // Avanzar al siguiente slide
     if (currentSlideIndex < slides.length - 1) {
       currentSlideIndex++;
-      showSlide(currentSlideIndex);
+      showSlide(currentSlideIndex); // recrea el DOM
     }
   } catch (error) {
     console.error("❌ Error en nextSlide:", error);
-    // Continuar de todas formas para no bloquear al usuario
     if (currentSlideIndex < slides.length - 1) {
       currentSlideIndex++;
       showSlide(currentSlideIndex);
@@ -218,27 +217,8 @@ async function backToMenu() {
   );
 
   if (confirmar) {
-    //CORRECCION TEMPORAL: no confirmar paso al volver al menu
+    // El checklist mantiene su estado "en_progreso"
     try {
-      // SOLO guardar si NO es intro/outro
-      // if (
-      //   slides[currentSlideIndex].type !== "intro" &&
-      //   slides[currentSlideIndex].type !== "outro"
-      // ) {
-      //   // Guardar el paso actual si hay progreso
-      //   const hadIncidencia = await processPendingIncidencia();
-      //   if (!hadIncidencia) {
-      //     const descripcionPaso = slides[currentSlideIndex].desc || "";
-      //     await markStepAsOK(
-      //       currentSeccion,
-      //       currentSlideIndex,
-      //       descripcionPaso
-      //     );
-      //   }
-      // }
-
-      // El checklist mantiene su estado "en_progreso"
-
       // Redirigir al menú
       const params = new URLSearchParams(window.location.search);
       const oficina = params.get("oficina");
