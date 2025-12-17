@@ -42,8 +42,8 @@ function showSlide(index) {
         ${slide.imgSrc ? `<img src="${slide.imgSrc}" alt="Final">` : ""}
         <div class="buttons">
           <div class="nav-buttons"> 
-          <button id="prevBtn">◀ Atrás</button>
-          <button id="nextSectionBtn">Siguiente sección ▶</button>
+          <button id="prevBtn">◀ </button>
+          <button id="nextSectionBtn">▶</button>
           </div>
           <button id="backToMenuBtn" class="back-to-menu">Volver al Menú</button>
         </div>
@@ -60,16 +60,20 @@ function showSlide(index) {
         </div>
         <div class="buttons">
         <div class="nav-buttons">
-        ${index > 0 ? `<button id="prevBtn">◀ Atrás</button>` : ""}
+        ${
+          index > 0
+            ? `<button id="prevBtn">◀ </button> <button id="issueBtn">⚠ </button>`
+            : ""
+        }
         ${
           index < slides.length - 1
-            ? `<button id="nextBtn">Siguiente ✓</button>`
+            ? `<button id="nextBtn">✓</button>`
             : `<button id="finishBtn">✅ Terminar</button>`
         }
 
         </div>
           <button id="backToMenuBtn" class="back-to-menu"> Volver al Menú</button>
-          <button id="issueBtn">⚠ Incidencia</button>
+          
         </div>
     `;
   }
@@ -216,21 +220,21 @@ async function backToMenu() {
   if (confirmar) {
     try {
       // SOLO guardar si NO es intro/outro
-      if (
-        slides[currentSlideIndex].type !== "intro" &&
-        slides[currentSlideIndex].type !== "outro"
-      ) {
-        // Guardar el paso actual si hay progreso
-        const hadIncidencia = await processPendingIncidencia();
-        if (!hadIncidencia) {
-          const descripcionPaso = slides[currentSlideIndex].desc || "";
-          await markStepAsOK(
-            currentSeccion,
-            currentSlideIndex,
-            descripcionPaso
-          );
-        }
-      }
+      // if (
+      //   slides[currentSlideIndex].type !== "intro" &&
+      //   slides[currentSlideIndex].type !== "outro"
+      // ) {
+      //   // Guardar el paso actual si hay progreso
+      //   const hadIncidencia = await processPendingIncidencia();
+      //   if (!hadIncidencia) {
+      //     const descripcionPaso = slides[currentSlideIndex].desc || "";
+      //     await markStepAsOK(
+      //       currentSeccion,
+      //       currentSlideIndex,
+      //       descripcionPaso
+      //     );
+      //   }
+      // }
 
       // El checklist mantiene su estado "en_progreso"
 

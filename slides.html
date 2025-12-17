@@ -2,6 +2,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+      rel="stylesheet"
+    />
     <title>Checklist</title>
     <link rel="stylesheet" href="styles/style.css" />
   </head>
@@ -43,9 +50,13 @@
       import {
         renderSlides,
         currentSlideIndex,
+        nextSlide,
         slides,
       } from "./js/slides-control.js";
-      import { reportIssue } from "./js/incidencias.js";
+      import {
+        reportIssue,
+        processPendingIncidencia,
+      } from "./js/incidencias.js";
       import { openIssueModal, closeIssueModal } from "./js/modal.js";
       import {
         slidesSantaRosa,
@@ -113,6 +124,8 @@
         };
 
         await reportIssue(issue);
+        // await processPendingIncidencia();
+        await nextSlide();
         closeIssueModal();
       });
 

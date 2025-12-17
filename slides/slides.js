@@ -18,7 +18,7 @@ export const slidesSantaRosa = {
       desc: "Encender el portátil de la sala 360. Entrar con la contraseña: “admira123”. Dejar abierta la página del control del showroom colocando la URL: 192.168.1.82 en el navegador.",
     },
     5: { desc: "Cerrar la puerta de administración." },
-    6: { type: "outro", desc: "Zona completada." },
+    6: { type: "outro", desc: "Zona completada" },
   },
   arcade: {
     0: { type: "intro", desc: "Arcade" },
@@ -58,7 +58,7 @@ export const slidesSantaRosa = {
       desc: "Encender cada máquina Pinball pulsando los botones de encendido en la parte inferior de cada una.",
       imgSrc: "./img/santa-rosa/arcade/pinballs.webp",
     },
-    10: { type: "outro", desc: "Zona completada." },
+    10: { type: "outro", desc: "Zona completada" },
   },
   cafeteria: {
     0: { type: "intro", desc: "Cafetería" },
@@ -82,7 +82,7 @@ export const slidesSantaRosa = {
       desc: "Asegurarse de que la puerta de acceso a los baños queda cerrada.",
       imgSrc: "./img/santa-rosa/cafeteria/cafe_5.webp",
     },
-    6: { type: "outro", desc: "Zona completada." },
+    6: { type: "outro", desc: "Zona completada" },
   },
   garaje: {
     0: { type: "intro", desc: "Garaje" },
@@ -114,7 +114,7 @@ export const slidesSantaRosa = {
       desc: "Cerrar las puertas de los cuartillos detrás de la furgoneta de las TNT.",
       imgSrc: "./img/santa-rosa/garaje/garaje_7.webp",
     },
-    8: { type: "outro", desc: "Zona completada." },
+    8: { type: "outro", desc: "Zona completada" },
   },
 };
 
@@ -138,7 +138,7 @@ export const slidesStore = {
       desc: "Comprobar que el metahuman te sigue correctamente.",
       imgSrc: "./img/store/metahuman/meta_4.webp",
     },
-    5: { type: "outro", desc: "Zona completada." },
+    5: { type: "outro", desc: "Zona completada" },
   },
 
   escritorio: {
@@ -151,7 +151,7 @@ export const slidesStore = {
       desc: "Encender el portátil (código 0007) e iniciar la aplicación correspondiente (ROG Remix). ",
       imgSrc: "./img/store/escritorio/escritorio_2.webp",
     },
-    3: { type: "outro", desc: "Zona completada." },
+    3: { type: "outro", desc: "Zona completada" },
   },
 };
 
@@ -189,7 +189,7 @@ export const slidesPlanetaTerminator = {
       desc: "Verificar que todas las puertas estén bien cerradas, girando la llave completamente hacia la derecha.",
       imgSrc: "./img/planeta-terminator/pant_5.webp",
     },
-    9: { type: "outro", desc: "Zona completada." },
+    9: { type: "outro", desc: "Zona completada" },
   },
 };
 
@@ -248,7 +248,7 @@ export const slidesPlanetaNave = {
       desc: "Luego presionar el botón del candado para cerrar por defecto.",
       imgSrc: "/img/planeta-nave/entrada/entrada_11.webp",
     },
-    12: { type: "outro", desc: "Zona completada." },
+    12: { type: "outro", desc: "Zona completada" },
   },
 
   // === DENTRO DEL ASCENSOR ===
@@ -266,7 +266,7 @@ export const slidesPlanetaNave = {
       desc: "Si aparece 'sin señal', encender el PC izquierdo que está encima del ascensor (aunque tenga luces, puede estar apagado).",
       imgSrc: "./img/planeta-nave/ascensor/placeholder.webp",
     },
-    4: { type: "outro", desc: "Zona completada." },
+    4: { type: "outro", desc: "Zona completada" },
   },
 
   nave: {
@@ -348,7 +348,7 @@ export const slidesPlanetaNave = {
       desc: "Verificar que está enchufado en el armario izquierdo y subir su diferencial.",
       imgSrc: "./img/planeta-nave/nave/placeholder.webp",
     },
-    17: { type: "outro", desc: "Zona completada." },
+    17: { type: "outro", desc: "Zona completada" },
   },
 
   // === OFICINA (Despacho IT Crowd)===
@@ -401,6 +401,6 @@ export const slidesPlanetaNave = {
       desc: "Divoom Time Gate: encender y conectar al WiFi. Desde la app, lanzar el reloj 'Clock Face'.",
       imgSrc: "./img/planeta-nave/oficina/placeholder.webp",
     },
-    11: { type: "outro", desc: "Zona completada." },
+    11: { type: "outro", desc: "Zona completada" },
   },
 };
