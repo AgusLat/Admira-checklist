@@ -52,11 +52,11 @@ export const slidesSantaRosa = {
     },
     8: {
       desc: "Encender cada máquina Viewlix (Arcades blancas) presionando el botón en la parte inferior izquierda del tablero de joysticks.",
-      imgSrc: "./img/santa-rosa/arcade/viewlix.webp",
+      imgSrc: "./img/santa-rosa/arcade/arcade_8.webp",
     },
     9: {
       desc: "Encender cada máquina Pinball pulsando los botones de encendido en la parte inferior de cada una.",
-      imgSrc: "./img/santa-rosa/arcade/pinballs.webp",
+      imgSrc: "./img/santa-rosa/arcade/arcade_9.webp",
     },
     10: { type: "outro", desc: "Zona completada" },
   },

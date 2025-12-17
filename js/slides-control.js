@@ -218,6 +218,7 @@ async function backToMenu() {
   );
 
   if (confirmar) {
+    //CORRECCION TEMPORAL: no confirmar paso al volver al menu
     try {
       // SOLO guardar si NO es intro/outro
       // if (
