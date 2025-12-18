@@ -32,32 +32,17 @@
     </div>
 
     <script type="module">
-      import {
-        getFirestore,
-        collection,
-        addDoc,
-        getDocs,
-        query,
-        where,
-        updateDoc,
-      } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-      import { firebaseConfig } from "../firebase/firebaseConfig.js";
-      import {
-        getAuth,
-        onAuthStateChanged,
-      } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+      import { startGlobalFirebase, auth } from "../firebase/firebaseConfig.js";
+      import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
       import {
         renderSlides,
         currentSlideIndex,
         nextSlide,
         slides,
       } from "./js/slides-control.js";
-      import {
-        reportIssue,
-        processPendingIncidencia,
-      } from "./js/incidencias.js";
+      import { reportIssue, confirmIssue } from "./js/incidencias.js";
       import { openIssueModal, closeIssueModal } from "./js/modal.js";
+      import { slidesMap } from "./slides/slides-template.js";
       import {
         slidesSantaRosa,
         slidesPlanetaNave,
@@ -65,19 +50,13 @@
         slidesStore,
       } from "./slides/slides.js";
 
-      // INICIAR FIREBASE
-      if (!window.firebaseApp) {
-        window.firebaseApp = initializeApp(firebaseConfig);
-        window.db = getFirestore(window.firebaseApp);
-        window.firebaseAddDoc = addDoc;
-        window.firebaseCollection = collection;
-        window.firebaseGetDocs = getDocs;
-        window.firebaseQuery = query;
-        window.firebaseWhere = where;
-        window.firebaseUpdateDoc = updateDoc;
-        window.firebaseAuth = getAuth(window.firebaseApp);
-      }
+      // Iniciar Firebase
+      startGlobalFirebase();
 
+      // ELEMENTOS
+      const container = document.getElementById("slides");
+      const cancelIssueBtn = document.getElementById("cancelIssueBtn");
+      const sendIssueBtn = document.getElementById("sendIssueBtn");
       // PARAMS
       const oficina = new URLSearchParams(window.location.search).get(
         "oficina"
@@ -87,50 +66,22 @@
       );
 
       // VARIABLES
-      const sitios = {
-        santarosa: slidesSantaRosa,
-        planetanave: slidesPlanetaNave,
-        planetaterminator: slidesPlanetaTerminator,
-        store: slidesStore,
-      };
-
-      // ELEMENTOS
-      const slidesArray = Object.values(sitios[oficina][seccion]);
-      const container = document.getElementById("slides");
-      const cancelIssueBtn = document.getElementById("cancelIssueBtn");
-      const sendIssueBtn = document.getElementById("sendIssueBtn");
+      const slidesArray = Object.values(slidesMap[oficina][seccion]);
 
       // EVENTOS
-      cancelIssueBtn.addEventListener("click", () => {
-        document.getElementById("issueModal").style.display = "none";
-        document.getElementById("issueDesc").value = "";
-        document.getElementById("issueFile").value = "";
-      });
+      cancelIssueBtn.addEventListener("click", closeIssueModal);
+      sendIssueBtn.addEventListener("click", () =>
+        confirmIssue(oficina, seccion)
+      );
 
-      sendIssueBtn.addEventListener("click", async () => {
-        const issueDesc = document.getElementById("issueDesc").value.trim();
-
-        if (!issueDesc) {
-          alert("Por favor, describe la incidencia antes de enviar.");
+      onAuthStateChanged(auth, async (user) => {
+        if (!user) {
+          window.location.href = "index.html";
           return;
         }
-
-        const issue = {
-          oficina: oficina,
-          seccion: seccion,
-          incidencia: issueDesc,
-          paso: currentSlideIndex,
-          pasoDesc: slides[currentSlideIndex].desc,
-        };
-
-        await reportIssue(issue);
-        // await processPendingIncidencia();
-        await nextSlide();
-        closeIssueModal();
+        // RENDERIZA LAS SLIDES (pasamos la sección actual)
+        renderSlides(container, slidesArray, seccion);
       });
-
-      // RENDERIZA LAS SLIDES (pasamos la sección actual)
-      renderSlides(container, slidesArray, seccion);
     </script>
   </body>
 </html>

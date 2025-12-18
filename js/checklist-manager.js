@@ -321,12 +321,36 @@ export const isChecklistComplete = async () => {
 /**
  * Marca el checklist como completado y envía email
  */
-export const completeChecklist = async () => {
+export const completeChecklist = async (event) => {
+  const completeBtn = event.currentTarget;
+
+  // 🔒 bloquear botones INMEDIATAMENTE
+  completeBtn.disabled = true;
+  completeBtn.classList.add("disabled");
+
+  const abortBtn = document.getElementById("abortChecklistBtn");
+  if (abortBtn) {
+    abortBtn.disabled = true;
+    abortBtn.classList.add("disabled");
+  }
+
   const confirmar = confirm(
     "✅ ¿Confirmas que deseas completar el checklist?\n\n" +
       "Todos los pasos han sido revisados.\n" +
       "El checklist se marcará como COMPLETADO."
   );
+
+  // Si cancela, re-habilitamos
+  if (!confirmar) {
+    completeBtn.disabled = false;
+    completeBtn.classList.remove("disabled");
+
+    if (abortBtn) {
+      abortBtn.disabled = false;
+      abortBtn.classList.remove("disabled");
+    }
+    return;
+  }
 
   try {
     if (confirmar) {
@@ -387,15 +411,20 @@ export const completeChecklist = async () => {
 
       // Limpiar el localStorage
       localStorage.setItem("checklistClosed", "true");
-      // localStorage.removeItem("currentChecklistId");
-      // localStorage.removeItem("currentChecklistCollection");
-      // currentChecklistId = null;
 
       alert("🎉 ¡Checklist completado exitosamente!");
       location.reload();
     }
   } catch (error) {
     console.error("❌ Error al completar el checklist:", error);
+
+    completeBtn.disabled = false;
+    completeBtn.classList.remove("disabled");
+
+    if (abortBtn) {
+      abortBtn.disabled = false;
+      abortBtn.classList.remove("disabled");
+    }
     alert("❌ Error al completar el checklist. Revisa la consola.");
 
     throw error;

@@ -1,4 +1,6 @@
 import { updateChecklistStep } from "./checklist-manager.js";
+import { closeIssueModal } from "./modal.js";
+import { currentSlideIndex, slides, nextSlide } from "./slides-control.js";
 
 // Variable para almacenar temporalmente la incidencia antes de avanzar
 let pendingIncidencia = null;
@@ -81,4 +83,28 @@ export const processPendingIncidencia = async () => {
  */
 export const hasPendingIncidencia = () => {
   return pendingIncidencia !== null;
+};
+
+/**
+ * Comienza el proceso de reporte de incidencia y avanza al siguiente paso
+ */
+export const confirmIssue = async (oficina, seccion) => {
+  const issueDesc = document.getElementById("issueDesc").value.trim();
+
+  if (!issueDesc) {
+    alert("Por favor, describe la incidencia antes de enviar.");
+    return;
+  }
+
+  const issue = {
+    oficina: oficina,
+    seccion: seccion,
+    incidencia: issueDesc,
+    paso: currentSlideIndex,
+    pasoDesc: slides[currentSlideIndex].desc,
+  };
+
+  await reportIssue(issue);
+  await nextSlide();
+  closeIssueModal();
 };
