@@ -1,5 +1,6 @@
 import { openIssueModal } from "./modal.js";
 import { markStepAsOK, processPendingIncidencia } from "./incidencias.js";
+import { slidesMap } from "../slides/slides-template.js";
 
 // Variables
 export let currentSlideIndex = 0;
@@ -99,30 +100,50 @@ function showSlide(index) {
       .addEventListener("click", backToMenu);
 
   // Navegar entre secciones
+
   if (document.getElementById("nextSectionBtn")) {
     document.getElementById("nextSectionBtn").addEventListener("click", () => {
       const params = new URLSearchParams(window.location.search);
-      const oficina = params.get("oficina").toLowerCase();
-      const seccion = params.get("seccion").toLowerCase();
+      const oficinaParam = params.get("oficina");
+      const seccionParam = params.get("seccion");
 
-      // Lista de zonas de cada oficina (ordenadas)
-      const zonasPorOficina = {
-        santarosa: ["sala360", "arcade", "cafeteria", "garaje"],
-        planetanave: ["entrada", "ascensor", "nave", "oficina"],
-        planetaterminator: ["terminator"],
-        store: ["metahuman", "escritorio"],
-      };
+      if (!oficinaParam || !seccionParam) {
+        console.error("❌ Faltan parámetros en la URL");
+        window.location.href = "nav-menu.html";
+        return;
+      }
 
-      const zonas = zonasPorOficina[oficina];
+      const oficina = oficinaParam.toLowerCase();
+      const seccion = seccionParam.toLowerCase();
+
+      const slidesOficina = slidesMap[oficina];
+
+      if (!slidesOficina) {
+        console.error("❌ Oficina inexistente:", oficina);
+        window.location.href = `nav-menu.html?oficina=${oficina}`;
+        return;
+      }
+
+      // Zonas dinámicas desde slides.js
+      const zonas = Object.keys(slidesOficina);
+
       const indiceActual = zonas.indexOf(seccion);
-      const siguiente = zonas[indiceActual + 1];
 
-      if (siguiente) {
-        // Ir a la siguiente zona de la misma oficina
-        window.location.href = `slides.html?oficina=${oficina}&seccion=${siguiente}`;
+      // Si la sección fue eliminada o no existe
+      if (indiceActual === -1) {
+        console.warn(
+          `⚠️ Sección '${seccion}' no existe. Redirigiendo a la primera válida.`
+        );
+        window.location.href = `slides.html?oficina=${oficina}&seccion=${zonas[0]}`;
+        return;
+      }
+
+      const siguienteZona = zonas[indiceActual + 1];
+
+      if (siguienteZona) {
+        window.location.href = `slides.html?oficina=${oficina}&seccion=${siguienteZona}`;
       } else {
-        // Última zona → volver al menú principal (sin completar automáticamente)
-        // El usuario completará desde el menú cuando todos los pasos estén listos
+        // Última zona → volver al menú
         window.location.href = `nav-menu.html?oficina=${oficina}`;
       }
     });

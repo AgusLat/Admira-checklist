@@ -40,9 +40,9 @@ export const generateChecklistTemplate = (oficina) => {
 
       // OMITIR slides tipo "intro" y "outro"
       if (slide.type === "intro" || slide.type === "outro") {
-        console.log(
-          `⏭️  Omitiendo paso ${idx} de ${seccionNombre} (tipo: ${slide.type})`
-        );
+        // console.log(
+        //   `⏭️  Omitiendo paso ${idx} de ${seccionNombre} (tipo: ${slide.type})`
+        // );
         continue;
       }
 
