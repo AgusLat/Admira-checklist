@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 800px;
+        margin: 20px auto;
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      .header {
+        background: #689840;
+        color: white;
+        padding: 30px 20px;
+        text-align: center;
+      }
+      .header h1 {
+        margin: 0;
+        font-size: 24px;
+      }
+      .content {
+        padding: 30px 20px;
+      }
+      .info-row {
+        margin: 15px 0;
+        padding: 12px;
+        background: #f9f9f9;
+        border-left: 4px solid #689840;
+        border-radius: 4px;
+      }
+      .info-row strong {
+        color: #689840;
+        display: inline-block;
+        min-width: 180px;
+      }
+      .stats {
+        display: inline-block;
+        align-items: center;
+        justify-content: center;
+        margin: 10px 0;
+        border-collapse: collapse;
+        width: 100%;
+      }
+      .stat-box {
+        display: inline-block;
+        padding: 10px;
+        width: 80%;
+        font-weight: bold;
+      }
+      .stat-number {
+        font-size: 22px;
+        font-weight: bold;
+        color: #689840;
+        margin-bottom: 5px;
+      }
+      .stat-label {
+        font-size: 16px;
+        color: #666;
+        text-transform: uppercase;
+      }
+      .incidencias-section {
+        margin: 30px 0;
+      }
+      .incidencias-section h3 {
+        color: #ff9800;
+        border-bottom: 2px solid #ff9800;
+        padding-bottom: 10px;
+      }
+      .incidencia-item {
+        background: #fff3cd;
+        padding: 15px;
+        margin: 10px 0;
+        border-left: 4px solid #ff9800;
+        border-radius: 4px;
+      }
+      .incidencia-item strong {
+        color: #ff9800;
+      }
+      .no-incidencias {
+        background: #d4edda;
+        padding: 20px;
+        border-left: 4px solid #2ecc71;
+        border-radius: 4px;
+        text-align: center;
+      }
+      .no-incidencias strong {
+        color: #155724;
+        font-size: 18px;
+      }
+      .footer {
+        background: #333;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        font-size: 12px;
+      }
+      .footer p {
+        margin: 5px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Checklist Completado</h1>
+      </div>
+
+      <div class="content">
+        <h2 style="color: #689840; margin-top: 0">Información del Checklist</h2>
+
+        <div class="info-row">
+          <strong>Oficina:</strong>
+          <div>{{oficina}}</div>
+        </div>
+
+        <div class="info-row">
+          <strong>Realizado por:</strong>
+          <div>{{userEmail}}</div>
+        </div>
+
+        <div class="info-row">
+          <strong>Checklist ID:</strong>
+          <div>{{checklistId}}</div>
+        </div>
+
+        <div class="info-row">
+          <strong>Fecha de inicio:</strong>
+          <div>{{fechaInicio}}</div>
+        </div>
+
+        <div class="info-row">
+          <strong>Fecha de finalización:</strong>
+          <div>{{fechaFin}}</div>
+        </div>
+
+        <h3 style="margin-top: 30px; color: #689840">📊 Estadísticas</h3>
+        <div class="stats">
+          <div class="stat-box">
+            <div class="stat-label">
+              Total Pasos: <strong class="stat-number">{{totalPasos}}</strong>
+            </div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">
+              Completados:
+              <strong class="stat-number" style="color: #2ecc71"
+                >{{completados}}</strong
+              >
+            </div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">
+              Incidencias:
+              <strong class="stat-number" style="color: #ff9800"
+                >{{incidencias}}</strong
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="incidencias-section">
+          {{#if_incidencias}}
+          <h3>⚠️ Incidencias Reportadas</h3>
+          {{{detalleIncidencias}}} {{/if_incidencias}} {{#if_no_incidencias}}
+          <div class="no-incidencias">
+            <strong>✅ No se reportaron incidencias</strong>
+            <p>Todos los pasos se completaron sin problemas</p>
+          </div>
+          {{/if_no_incidencias}}
+        </div>
+      </div>
+
+      <div class="footer">
+        <p><strong>Sistema de Checklist admira READY!</strong></p>
+        <p>Este es un email automático - No responder</p>
+      </div>
+    </div>
+  </body>
+</html>
