@@ -8,6 +8,59 @@ export const setOficina = () => {
   localStorage.setItem("oficinaParam", oficina);
 };
 
+export const setMode = async (navMenu) => {
+  const MODE_KEY = "checkListMode";
+  const modeSelector = document.getElementById("modeSelector");
+  const btnApertura = document.getElementById("btnApertura");
+  const btnCierre = document.getElementById("btnCierre");
+
+  // Si ya hay modo guardado, no bloquea el flujo
+  const saved = localStorage.getItem(MODE_KEY);
+  if (saved === "ABRIR" || saved === "CERRAR") {
+    modeSelector.style.display = "none";
+    navMenu.style.display = "flex";
+    return Promise.resolve(saved);
+  }
+
+  // Bloquea el flujo hasta elegir
+  modeSelector.style.display = "flex";
+  navMenu.style.display = "none"; // el menú NO se muestra
+
+  // Evitar doble click mientras resuelve
+  const disableButtons = (disabled) => {
+    btnApertura.disabled = disabled;
+    btnCierre.disabled = disabled;
+  };
+
+  return new Promise((resolve) => {
+    const handlePick = (e) => {
+      const picked = e.currentTarget.dataset.mode; // "ABRIR" o "CERRAR"
+      if (picked !== "ABRIR" && picked !== "CERRAR") return;
+
+      disableButtons(true);
+
+      localStorage.setItem(MODE_KEY, picked);
+
+      // Limpieza UI
+      modeSelector.style.display = "none";
+      navMenu.style.display = "flex";
+
+      // Sacar listeners para que no se dispare otra vez
+      btnApertura.removeEventListener("click", onApertura);
+      btnCierre.removeEventListener("click", onCierre);
+
+      resolve(picked);
+    };
+
+    const onApertura = (e) => handlePick(e);
+    const onCierre = (e) => handlePick(e);
+
+    // Registrar listeners
+    btnApertura.addEventListener("click", onApertura, { once: true });
+    btnCierre.addEventListener("click", onCierre, { once: true });
+  });
+};
+
 //Obtiene el valor del parámetro "oficina" desde la URL o localStorage
 export const getOficina = () => {
   return (
@@ -90,7 +143,7 @@ export const ensureChecklist = async (user, oficina) => {
 };
 
 // Renderiza el menú de navegación basado en las slides de la oficina
-export const renderNavMenu = (oficina, menu, stats = {}) => {
+export const renderNavMenu = (oficina, menu, mode, stats = {}) => {
   let seccionData = [];
 
   // Obtener las slides correspondientes a la oficina

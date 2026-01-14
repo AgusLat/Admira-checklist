@@ -48,7 +48,6 @@ export const cleanupOldChecklists = async () => {
 
     if (!data.fechaActualizacion) continue;
 
-    // (opcional pero recomendable)
     if (data.id === currentChecklistId) continue;
 
     const lastUpdate = new Date(data.fechaActualizacion).getTime();
@@ -411,6 +410,7 @@ export const completeChecklist = async (event) => {
 
       // Limpiar el localStorage
       localStorage.setItem("checklistClosed", "true");
+      localStorage.removeItem("checkListMode");
 
       alert("🎉 ¡Checklist completado exitosamente!");
       location.reload();
@@ -479,6 +479,7 @@ export const abortChecklist = async () => {
       localStorage.setItem("checklistClosed", "true");
       localStorage.removeItem("currentChecklistId");
       localStorage.removeItem("currentChecklistCollection");
+      localStorage.removeItem("checkListMode");
       alert("✅ Checklist abortado correctamente");
       location.reload();
     }

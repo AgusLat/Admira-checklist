@@ -35,6 +35,13 @@
           <img class="ready-logo" src="./img/assets/admira-text.png" /> READY!
         </h1>
         <span id="loader" class="loader"></span>
+        <div class="modeSelector" id="modeSelector">
+          <!-- <h2>Seleccionar modo</h2> -->
+          <div>
+            <button id="btnCierre" data-mode="CERRAR">Cierre</button>
+            <button id="btnApertura" data-mode="ABRIR">Apertura</button>
+          </div>
+        </div>
         <nav class="navMenu" id="menu"></nav>
 
         <!-- Indicador de progreso -->
@@ -67,6 +74,7 @@
       import { startGlobalFirebase, auth } from "./firebase/firebaseConfig.js";
       import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
       import {
+        setMode,
         getOficina,
         ensureChecklist,
         renderNavMenu,
@@ -84,6 +92,9 @@
       startGlobalFirebase();
 
       // Elementos del DOM
+      const modeSelector = document.getElementById("modeSelector");
+      const btnCierre = document.getElementById("btnCierre");
+      const btnApertura = document.getElementById("btnApertura");
       const navMenu = document.getElementById("menu");
       const logoutBtn = document.getElementById("logoutBtn");
       const abortBtn = document.getElementById("abortChecklistBtn");
@@ -98,6 +109,8 @@
       completeBtn.addEventListener("click", completeChecklist);
 
       // Variables
+      let mode = localStorage.getItem("checkListMode");
+      const isClosed = localStorage.getItem("checklistClosed");
       const oficina = getOficina();
 
       // Renderizar menu al cargar la página
@@ -105,6 +118,12 @@
         if (!user) {
           window.location.href = "index.html";
           return;
+        }
+
+        if (mode === null && isClosed !== "true") {
+          modeSelector.style.display = "flex";
+          await setMode(navMenu);
+          mode = localStorage.getItem("checkListMode");
         }
 
         // Limpieza de checklists antiguos
@@ -128,7 +147,7 @@
           loader.style.display = "none";
           abortBtn.disabled = false;
           abortBtn.classList.remove("disabled");
-          renderNavMenu(oficina, navMenu, stats?.porSeccion);
+          renderNavMenu(oficina, navMenu, mode, stats?.porSeccion);
           renderProgressStats(stats);
 
           if (isComplete) {
