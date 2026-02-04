@@ -16,49 +16,57 @@ export const slidesSantaRosa = {
     },
     4: {
       desc: "Encender el portátil de la sala 360. Entrar con la contraseña: “admira123”. Dejar abierta la página del control del showroom colocando la URL: 192.168.1.82 en el navegador.",
+      imgSrc: "./img/santa-rosa/sala360/360_4.webp",
     },
-    5: { desc: "Cerrar la puerta de administración." },
+    5: {
+      desc: "Cerrar la puerta de administración, de la sala 360 y apagar la luz con el interruptor que esta fuera.",
+      imgSrc: "./img/santa-rosa/sala360/360_5.webp",
+    },
     6: { type: "outro", desc: "Zona completada" },
   },
   arcade: {
     0: { type: "intro", desc: "Arcade" },
     1: {
+      desc: "Subir las pías para la sala arcade que estan indicadas en el manual de la puerta superior.",
+      imgSrc: "./img/santa-rosa/arcade/arcade_0.webp",
+    },
+    2: {
       desc: "En la zona de almacén, colocar en el selector de llave la posición que mantiene las puertas cerradas hasta que se presiona el pulsador.",
       imgSrc: "./img/santa-rosa/arcade/arcade_1.webp",
     },
-    2: {
+    3: {
       desc: "Poner la radio en modo CD, presionar play y pulsar “Rep” dos veces hasta que aparezca “REP-ALL”. Dejar el volumen en 14.",
       imgSrc: "./img/santa-rosa/arcade/arcade_2.webp",
     },
-    3: {
+    4: {
       desc: "Encender los dos aires acondicionados de la sala de arcade con el mando ubicado encima del Condensador De Flujo de Back To The Future (entrando a mano derecha).",
       imgSrc: "./img/santa-rosa/arcade/arcade_3.webp",
     },
-    4: {
+    5: {
       desc: "Encender Máquina Pong con el botón en la parte superior izquierda trasera. Conectar teclado, presionar F1 para entrar en BIOS, Esc para salir y Enter. El juego inicia automáticamente.",
       imgSrc: "./img/santa-rosa/arcade/arcade_4.webp",
     },
-    5: {
+    6: {
       desc: "En la TV con VHS, presionar stop y rebobinar la película de Back To The Future. Luego presionar play.",
       imgSrc: "./img/santa-rosa/arcade/arcade_5.webp",
     },
-    6: {
+    7: {
       desc: "Encender la TV Darth Vader y presionar “TV/DVD”. Seleccionar Español y Play Movie.",
       imgSrc: "./img/santa-rosa/arcade/arcade_6.webp",
     },
-    7: {
-      desc: "Encender la Polybius usando la llave de Stranger Things. Abrir la carcasa, presionar el botón rojo de encendido y seleccionar Donkey Kong.",
+    8: {
+      desc: "Encender la Polybius usando la llave de Stranger Things(en la recepción). Abrir la carcasa, presionar el botón rojo de encendido, moverse hasta la seleccion de juego de Nintendo Classics y seleccionar Donkey Kong.",
       imgSrc: "./img/santa-rosa/arcade/arcade_7.webp",
     },
-    8: {
+    9: {
       desc: "Encender cada máquina Viewlix (Arcades blancas) presionando el botón en la parte inferior izquierda del tablero de joysticks.",
       imgSrc: "./img/santa-rosa/arcade/arcade_8.webp",
     },
-    9: {
-      desc: "Encender cada máquina Pinball pulsando los botones de encendido en la parte inferior de cada una.",
+    10: {
+      desc: "Encender cada máquina Pinball pulsando los botones de encendido que estan en la zona inferior derecha del cabezal.",
       imgSrc: "./img/santa-rosa/arcade/arcade_9.webp",
     },
-    10: { type: "outro", desc: "Zona completada" },
+    11: { type: "outro", desc: "Zona completada" },
   },
   cafeteria: {
     0: { type: "intro", desc: "Cafetería" },
@@ -71,7 +79,7 @@ export const slidesSantaRosa = {
       imgSrc: "./img/santa-rosa/cafeteria/cafe_2.webp",
     },
     3: {
-      desc: "En la rockola, reproducir el álbum deseado. Presionar los números y los dos últimos dígitos deben ser “00”.",
+      desc: "En la rockola, reproducir el álbum deseado. Presionar la secuencia 1500 y luego el boton de HITS.",
       imgSrc: "./img/santa-rosa/cafeteria/cafe_3.webp",
     },
     4: {
@@ -87,35 +95,34 @@ export const slidesSantaRosa = {
   garaje: {
     0: { type: "intro", desc: "Garaje" },
     1: {
+      desc: "Subir las pías de la zona de garaje que estan en la recepcion. Ver manual en la puerta superior.",
+      imgSrc: "./img/santa-rosa/garaje/garaje_0.webp",
+    },
+    2: {
       desc: "Encender los aires acondicionados con los interruptores que se encuentran uno a cada lado de la pared del fondo.",
       imgSrc: "./img/santa-rosa/garaje/garaje_1.webp",
     },
-    2: {
-      desc: "Encender cada máquina Pinball Stern, Tiburón, Jurassic Park, Tortugas Ninja y Mandalorian con el botón en la parte inferior.",
-      imgSrc: "./img/santa-rosa/garaje/garaje_2.webp",
-    },
     3: {
-      desc: "Encender la mesa de Pong con el botón de la parte lateral inferior.",
-      imgSrc: "./img/santa-rosa/garaje/garaje_3.webp",
-    },
-    4: {
       desc: "Comprobar que el PC de Tiburón está encendido y emitiendo en la pantalla grande.",
       imgSrc: "./img/santa-rosa/garaje/garaje_4.webp",
     },
-    5: {
+    4: {
       desc: "Comprobar que está encendido el PC y la pantalla trasera del Jeep.",
       imgSrc: "./img/santa-rosa/garaje/garaje_5.webp",
     },
+    5: {
+      desc: "Encender el juego de Jurassic Park en el Jeep desde el interruptor que se encuentra en el maletero. (FOTO PENDIENTE)",
+    },
     6: {
-      desc: "Cerrar las puertas de la furgoneta de las TNT si hace falta.",
+      desc: "Comprobar que la pantalla de la furgoneta de las TMNT está encendida. Cerrar las puertas si hace falta.",
       imgSrc: "./img/santa-rosa/garaje/garaje_6.webp",
     },
     7: {
-      desc: "Si la pantalla triángulo no esta encendida, encenderla desde el cuartillo.",
+      desc: "Verificar que la pantalla triángulo esta encendida, sino encenderla desde el cuartillo.",
       imgSrc: "./img/santa-rosa/garaje/garaje_7.webp",
     },
     8: {
-      desc: "Cerrar las puertas de los cuartillos detrás de la furgoneta de las TNT.",
+      desc: "Cerrar las puertas de los cuartillos detrás de la furgoneta de las TMNT.",
       imgSrc: "./img/santa-rosa/garaje/garaje_8.webp",
     },
     9: { type: "outro", desc: "Zona completada" },
@@ -127,12 +134,12 @@ export const slidesStore = {
   metahuman: {
     0: { type: "intro", desc: "Metahuman" },
     1: {
-      desc: "Encender el aire acondicionado.",
-      imgSrc: "./img/store/metahuman/placeholder.webp",
+      desc: "Activar los 2 interruptores blancos para dar corriente y encender las luces.",
+      imgSrc: "./img/store/metahuman/meta_1.webp",
     },
     2: {
-      desc: "Activar el interruptor de las luces.",
-      imgSrc: "./img/store/metahuman/placeholder.webp",
+      desc: "Encender el aire acondicionado de la entrada y del fondo.",
+      imgSrc: "./img/store/metahuman/meta_2.webp",
     },
     3: {
       desc: "Encender el iPad y abrir la aplicación de abajo a la derecha.",
