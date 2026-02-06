@@ -2,6 +2,7 @@ body {
     width: 100%;
     margin: 0px;
     background-color: #689840;
+    
 }
 
 main {
@@ -14,6 +15,7 @@ main {
 }
 
 button {
+  -webkit-tap-highlight-color: transparent;
     font-family: "Nunito", system-ui, sans-serif;
 }
 
@@ -83,6 +85,8 @@ button {
 }
 
 .navMenu li a {
+  -webkit-tap-highlight-color: transparent;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
