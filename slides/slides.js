@@ -134,7 +134,7 @@ export const slidesStore = {
   metahuman: {
     0: { type: "intro", desc: "Metahuman" },
     1: {
-      desc: "Activar los 2 interruptores blancos para dar corriente y encender las luces.",
+      desc: "Activar los 2 interruptores blancos para dar corriente y encender las luces. Comprobar todas las pantallas",
       imgSrc: "./img/store/metahuman/meta_1.webp",
     },
     2: {
@@ -229,24 +229,27 @@ export const slidesPlanetaNave = {
     0: { type: "intro", desc: "Entrada" },
     1: {
       desc: "Subir todas las Pias, especialmente las grises (son las principales). Primero subir la Pia de Pantallas Altas y su gris para que se conecten a internet.",
-      imgSrc: "/img/planeta-nave/entrada/entrada_1.webp",
+      imgSrc: "./img/planeta-nave/entrada/entrada_1.webp",
     },
 
     // Holograma
     2: {
       desc: "Asegurarse de que el PC del armario esté encendido.",
-      imgSrc: "/img/planeta-nave/entrada/entrada_2.webp",
+      imgSrc: "./img/planeta-nave/entrada/entrada_2.webp",
     },
     3: {
-      desc: "Subir el interruptor del holograma (debería estar siempre arriba).",
-      imgSrc: "/img/planeta-nave/entrada/entrada_3.webp",
+      desc: "Revisar que el holograma funcione, sino reiniciarlo en las pías (debería estar siempre arriba).",
+      imgSrc: "./img/planeta-nave/entrada/entrada_3.webp",
     },
-    4: { desc: "La luz de la entrada debe estar apagada." },
+    4: {
+      desc: "La luz de la entrada debe estar apagada.",
+      imgSrc: "./img/planeta-nave/entrada/entrada_4.webp",
+    },
 
     // Póster de tinta digital
     5: {
-      desc: "Si la pantalla 'frame' está apagada, usar el mando del armario (identificado con etiqueta). Seleccionar el póster en 'recientes'.",
-      imgSrc: "/img/planeta-nave/entrada/entrada_7.webp",
+      desc: "Revisar que el póster de tinta digital esté encendido. Si no lo está, utilizar el mando de Samsung. ",
+      imgSrc: "./img/planeta-nave/entrada/entrada_5.webp",
     },
 
     6: { type: "outro", desc: "Zona completada" },
@@ -255,90 +258,80 @@ export const slidesPlanetaNave = {
   nave: {
     0: { type: "intro", desc: "Nave" },
     1: {
-      desc: "Cerrar la puerta del ascensor de este lado, igual que en la entrada.",
-      imgSrc: "./img/planeta-nave/nave/placeholder.webp",
+      desc: "Cerrar la puerta del ascensor de este lado, igual que en la entrada. (Si no cierra, presionar los botones izquierdo y derecho a la vez y luego el candado)",
+      imgSrc: "./img/planeta-nave/nave/nave_1.webp",
     },
+    // Luces
     2: {
-      desc: "A mano izquierda del ascensor, nada más entrar, encender el display con botones para que se enciendan las luces de colores.",
+      desc: "Encender las luces con el interruptor de la derecha, el izquierdo se mantiene apagado para dejar el escritorio sin luz.",
       imgSrc: "./img/planeta-nave/nave/nave_2.webp",
     },
-
-    // Luces
     3: {
-      desc: "Encender las luces con el interruptor de la derecha.",
-      imgSrc: "./img/planeta-nave/nave/placeholder.webp",
+      desc: "Presionar dos veces las luces blancas para que se pongan azules. Solo dejar en blanco la del marco de la puerta que ilumina a Han Solo.",
+      imgSrc: "./img/planeta-nave/nave/nave_3.webp",
     },
     4: {
-      desc: "Presionar dos veces las luces blancas para que se pongan azules. Solo la del baño (Hans Solo) se deja en blanca.",
+      desc: "A mano izquierda del ascensor, nada más entrar, encender el display con botones para que se enciendan las luces de colores.",
       imgSrc: "./img/planeta-nave/nave/nave_4.webp",
     },
 
     // Pantallas / Videos
     5: {
-      desc: "Si un video terminó, hacer clic con el mouse en la pantalla para reiniciar Admira.",
+      desc: "Revisar ambos Divoom Pixel Art y reiniciarlo si no funciona.",
+      imgSrc: "./img/planeta-nave/nave/nave_5.webp",
     },
 
     // PC de tres pantallas
     6: {
       desc: "El PC de tres pantallas arranca solo con la luz. Revisar que no tenga errores visibles.",
+      imgSrc: "./img/planeta-nave/nave/nave_6.webp",
     },
 
     // Tablet
     7: {
       desc: "Si la tablet está apagada, tocar la pantalla.",
-      imgSrc: "./img/planeta-nave/nave/placeholder.webp",
+      imgSrc: "./img/planeta-nave/nave/nave_7.webp",
     },
     8: {
-      desc: "Si no responde, retirarla del soporte y encenderla. Para retirarla, abrir la carcasa, separar la tablet y encenderla.",
+      desc: "Si no responde, retirarla del soporte y encenderla. Para retirarla, abrir la carcasa, separar la tablet, encenderla e iniciar Admira.",
       imgSrc: "./img/planeta-nave/nave/nave_8.webp",
-    },
-    9: {
-      desc: "Abrir Admira en la tablet.",
-      imgSrc: "./img/planeta-nave/nave/nave_9.webp",
     },
 
     // Mesa reuniones
-    10: {
+    9: {
       desc: "Encender el astronauta que hay encima de la mesa.",
-      imgSrc: "./img/planeta-nave/nave/nave_10.webp",
+      imgSrc: "./img/planeta-nave/nave/nave_9.webp",
     },
 
     // Humo
-    11: {
+    10: {
       desc: "Activar la máquina de humo durante 20 segundos cuando llegue la visita. Está sobre la entrada a la cantina. El mando está al lado del PC 1 (etiquetado 'Máquina Humo').",
-      imgSrc: "./img/planeta-nave/nave/placeholder.webp",
-    },
-
-    // Cantina
-    12: {
-      desc: "Apagar todas las luces blancas del techo.",
-      imgSrc: "./img/planeta-nave/nave/placeholder.webp",
+      imgSrc: "./img/planeta-nave/nave/nave_10.webp",
     },
 
     // R2D2
-    13: { desc: "Enchufar R2D2 a la corriente." },
-    14: {
-      desc: "Abrir su cabeza, presionar el botón y colocar de nuevo su cabeza.",
-      imgSrc: "./img/planeta-nave/nave/nave_14.webp",
+    11: {
+      desc: "Enchufar R2D2 a la corriente si no lo esta. Abrir su cabeza, presionar el botón y colocar de nuevo su cabeza.",
+      imgSrc: "./img/planeta-nave/nave/nave_11.webp",
     },
-    15: {
+    12: {
       desc: "Encender el mando de la play y presionar el botón R1 + direccional izquierda. Una vez funcione, apagar el mando.",
-      imgSrc: "./img/planeta-nave/nave/nave_15.webp",
+      imgSrc: "./img/planeta-nave/nave/nave_12.webp",
     },
 
     // Simulador
-    16: {
-      desc: "Verificar que está enchufado en el armario izquierdo y subir su diferencial.",
-      imgSrc: "./img/planeta-nave/nave/placeholder.webp",
+    13: {
+      desc: "Verificar que la cabina está enchufada en el armario izquierdo y subir su diferencial para encenderla.",
+      imgSrc: "./img/planeta-nave/nave/nave_13.webp",
     },
-    17: { type: "outro", desc: "Zona completada" },
+    14: { type: "outro", desc: "Zona completada" },
   },
 
   // === OFICINA (Despacho IT Crowd)===
   oficina: {
     0: { type: "intro", desc: "Oficina IT Crowd" },
     1: {
-      desc: "Encender el botón que se encuentra tras el televisor que hay al lado del sofá.",
+      desc: "Encender el botón que se encuentra tras el televisor que hay al lado del sofá y seleccionar un juego para dejar de fondo.",
       imgSrc: "./img/planeta-nave/oficina/ofi_1.webp",
     },
     2: {
@@ -355,17 +348,9 @@ export const slidesPlanetaNave = {
     },
     5: {
       desc: "La puerta debe estar cerrada. Si no lo está, entrar y usar el panel como el del ascensor para cerrarla. Para salir, hay un sensor (la puerta se abrirá sola).",
+      imgSrc: "./img/planeta-nave/oficina/ofi_5.webp",
     },
 
-    // Divoom
-    6: {
-      desc: "Divoom PixelArt: verificar que se enciende y conecta al WiFi. Usar la app para lanzar contenido de Star Wars.",
-      imgSrc: "./img/planeta-nave/oficina/placeholder.webp",
-    },
-    7: {
-      desc: "Divoom Time Gate: encender y conectar al WiFi. Desde la app, lanzar el reloj 'Clock Face'.",
-      imgSrc: "./img/planeta-nave/oficina/placeholder.webp",
-    },
-    8: { type: "outro", desc: "Zona completada" },
+    6: { type: "outro", desc: "Zona completada" },
   },
 };
