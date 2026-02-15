@@ -2,13 +2,179 @@ import { openIssueModal } from "./modal.js";
 import { markStepAsOK, processPendingIncidencia } from "./incidencias.js";
 import { slidesMap } from "../slides/slides-template.js";
 
-// Variables
+// ─────────────────────────────────────────────
+// ESTADO
+// ─────────────────────────────────────────────
+
 export let currentSlideIndex = 0;
 export let slides = [];
 let container = null;
 let currentSeccion = null;
 
-// Renderizar slides
+// ─────────────────────────────────────────────
+// HELPERS
+// ─────────────────────────────────────────────
+
+function getUrlParams() {
+  const params = new URLSearchParams(window.location.search);
+  return {
+    oficina: params.get("oficina")?.toLowerCase(),
+    seccion: params.get("seccion")?.toLowerCase(),
+  };
+}
+
+function redirectTo(path) {
+  window.location.href = path;
+}
+
+function isNormalSlide(index) {
+  const type = slides[index]?.type;
+  return type !== "intro" && type !== "outro";
+}
+
+// Fade-out solo del contenido (no los botones), resuelve al terminar
+function fadeOutContent() {
+  return new Promise((resolve) => {
+    const content = container.querySelector(".slide-content");
+    if (!content) {
+      resolve();
+      return;
+    }
+    content.style.transition = "opacity 0.15s ease";
+    content.style.opacity = "0";
+    setTimeout(resolve, 150);
+  });
+}
+
+// Fade-in de la imagen: espera load real o caché
+function fadeInImage(img) {
+  img.style.opacity = "0";
+  img.style.transition = "opacity 0.3s ease";
+
+  const show = () => {
+    img.style.opacity = "1";
+  };
+
+  if (img.complete && img.naturalWidth > 0) {
+    requestAnimationFrame(() => requestAnimationFrame(show));
+  } else {
+    img.addEventListener("load", show, { once: true });
+    img.addEventListener("error", show, { once: true });
+  }
+}
+
+// ─────────────────────────────────────────────
+// TEMPLATES HTML
+// ─────────────────────────────────────────────
+// Estructura: .slide-content (anima) + .buttons (siempre visible)
+
+function templateIntro(slide) {
+  return `
+    <div class="slide-content slide--intro">
+      <h3>Sección: </h3>
+      <h2>${slide.desc}</h2>
+      
+    </div>
+    <div class="buttons">
+      <button id="nextBtn" class="btn--wide">Comenzar</button>
+      <button id="backToMenuBtn" class="btn--menu">Volver al Menú</button>
+    </div>
+  `;
+}
+
+function templateOutro(slide) {
+  return `
+    <div class="slide-content slide--outro">
+     <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="currentColor" class="icon icon-tabler icons-tabler-filled icon-tabler-circle-check"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" /></svg>
+      <h2>${slide.desc}</h2>
+    </div>
+    <div class="buttons">
+      <div class="nav-buttons">
+        <button id="prevBtn" class="btn--nav">Anterior</button>
+        <button id="nextSectionBtn" class="btn--next-section">Siguiente sección</button>
+      </div>
+      <button id="backToMenuBtn" class="btn--menu">Volver al Menú</button>
+    </div>
+  `;
+}
+
+function templateSlide(slide, index) {
+  const isFirst = index === 0;
+  const isLast = index >= slides.length - 1;
+
+  return `
+    <div class="slide-content">
+      <p><strong>${index} - </strong>${slide.desc}</p>
+      ${slide.imgSrc ? `<img src="${slide.imgSrc}" alt="Paso ${index}">` : ""}
+    </div>
+    <div class="buttons">
+      <div class="nav-buttons">
+        ${!isFirst ? `<button id="prevBtn" class="btn--nav">◀</button><button id="issueBtn" class="btn--issue">⚠</button>` : ""}
+        ${
+          !isLast
+            ? `<button id="nextBtn" class="btn--confirm">✓</button>`
+            : `<button id="finishBtn" class="btn--finish">✅ Terminar</button>`
+        }
+      </div>
+      <button id="backToMenuBtn" class="btn--menu">Volver al Menú</button>
+    </div>
+  `;
+}
+
+function templateFinish() {
+  return `
+    <div class="slide-content">
+      <h2>✅ Sección completada</h2>
+      <p>Has terminado todos los pasos de <strong>${currentSeccion}</strong>.</p>
+    </div>
+    <div class="buttons">
+      <button id="backToMenuBtn" class="btn--menu">🏠 Volver al Menú</button>
+    </div>
+  `;
+}
+
+// ─────────────────────────────────────────────
+// EVENTOS
+// ─────────────────────────────────────────────
+
+function bindPressEffect() {
+  if (container.dataset.pressEffect) return;
+
+  container.addEventListener("pointerdown", (e) => {
+    e.target.closest("button")?.classList.add("is-pressed");
+  });
+
+  container.addEventListener("pointerup", (e) => {
+    const btn = e.target.closest("button");
+    if (btn) setTimeout(() => btn.classList.remove("is-pressed"), 120);
+  });
+
+  container.addEventListener("pointercancel", (e) => {
+    e.target.closest("button")?.classList.remove("is-pressed");
+  });
+
+  container.dataset.pressEffect = "true";
+}
+
+function bindSlideEvents() {
+  document.getElementById("nextBtn")?.addEventListener("click", nextSlide);
+  document.getElementById("prevBtn")?.addEventListener("click", prevSlide);
+  document.getElementById("finishBtn")?.addEventListener("click", finishSlides);
+  document
+    .getElementById("issueBtn")
+    ?.addEventListener("click", openIssueModal);
+  document
+    .getElementById("backToMenuBtn")
+    ?.addEventListener("click", backToMenu);
+  document
+    .getElementById("nextSectionBtn")
+    ?.addEventListener("click", goToNextSection);
+}
+
+// ─────────────────────────────────────────────
+// RENDERIZADO
+// ─────────────────────────────────────────────
+
 export function renderSlides(containerElement, slideArray, seccion) {
   container = containerElement;
   slides = slideArray;
@@ -16,154 +182,45 @@ export function renderSlides(containerElement, slideArray, seccion) {
   showSlide(currentSlideIndex);
 }
 
-// Mostrar una slide
 function showSlide(index) {
   const slide = slides[index];
-  let html = "";
 
-  // --- INTRO ---
   if (slide.type === "intro") {
-    html = `
-      <div class="slide intro">
-        <h2>Sección: ${slide.desc}</h2>
-        ${slide.imgSrc ? `<img src="${slide.imgSrc}" alt="Intro">` : ""}
-        <div class="buttons">
-        <button id="nextBtn" class="wideBtn">Comenzar</button>
-        <button id="backToMenuBtn" class="back-to-menu">Volver al Menú</button>
-        </div>
-      </div>
-    `;
+    container.innerHTML = templateIntro(slide);
+  } else if (slide.type === "outro") {
+    container.innerHTML = templateOutro(slide);
+  } else {
+    container.innerHTML = templateSlide(slide, index);
   }
 
-  // --- OUTRO (FINAL) ---
-  else if (slide.type === "outro") {
-    html = `
-      <div class="slide outro">
-        <h2>${slide.desc}</h2>
-        ${slide.imgSrc ? `<img src="${slide.imgSrc}" alt="Final">` : ""}
-        <div class="buttons">
-          <div class="nav-buttons"> 
-          <button id="prevBtn">◀ </button>
-          <button id="nextSectionBtn">▶</button>
-          </div>
-          <button id="backToMenuBtn" class="back-to-menu">Volver al Menú</button>
-        </div>
-      </div>
-    `;
+  // Fade-in del contenido (sin tocar los botones)
+  const content = container.querySelector(".slide-content");
+  if (content) {
+    content.style.opacity = "0";
+    content.style.transition = "opacity 0.2s ease";
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        content.style.opacity = "1";
+      }),
+    );
   }
 
-  // --- SLIDE NORMAL ---
-  else {
-    html = `
-      <div class="slide">
-        <p><strong>${index} - </strong>${slide.desc}</p>
-        ${slide.imgSrc ? `<img src="${slide.imgSrc}" alt="Paso ${index}">` : ""}
-        </div>
-        <div class="buttons">
-        <div class="nav-buttons">
-        ${
-          index > 0
-            ? `<button id="prevBtn">◀ </button> <button id="issueBtn">⚠ </button>`
-            : ""
-        }
-        ${
-          index < slides.length - 1
-            ? `<button id="nextBtn">✓</button>`
-            : `<button id="finishBtn">✅ Terminar</button>`
-        }
+  // Fade-in de la imagen una vez cargada
+  const img = container.querySelector("img");
+  if (img) fadeInImage(img);
 
-        </div>
-          <button id="backToMenuBtn" class="back-to-menu"> Volver al Menú</button>
-          
-        </div>
-    `;
-  }
-
-  container.innerHTML = html;
-
-  // Eventos
-  if (document.getElementById("nextBtn"))
-    document.getElementById("nextBtn").addEventListener("click", nextSlide);
-  if (document.getElementById("prevBtn"))
-    document.getElementById("prevBtn").addEventListener("click", prevSlide);
-  if (document.getElementById("finishBtn"))
-    document
-      .getElementById("finishBtn")
-      .addEventListener("click", finishSlides);
-  if (document.getElementById("issueBtn"))
-    document
-      .getElementById("issueBtn")
-      .addEventListener("click", openIssueModal);
-  if (document.getElementById("backToMenuBtn"))
-    document
-      .getElementById("backToMenuBtn")
-      .addEventListener("click", backToMenu);
-
-  // Navegar entre secciones
-
-  if (document.getElementById("nextSectionBtn")) {
-    document.getElementById("nextSectionBtn").addEventListener("click", () => {
-      const params = new URLSearchParams(window.location.search);
-      const oficinaParam = params.get("oficina");
-      const seccionParam = params.get("seccion");
-
-      if (!oficinaParam || !seccionParam) {
-        console.error("❌ Faltan parámetros en la URL");
-        window.location.href = "nav-menu.html";
-        return;
-      }
-
-      const oficina = oficinaParam.toLowerCase();
-      const seccion = seccionParam.toLowerCase();
-
-      const slidesOficina = slidesMap[oficina];
-
-      if (!slidesOficina) {
-        console.error("❌ Oficina inexistente:", oficina);
-        window.location.href = `nav-menu.html?oficina=${oficina}`;
-        return;
-      }
-
-      // Zonas dinámicas desde slides.js
-      const zonas = Object.keys(slidesOficina);
-
-      const indiceActual = zonas.indexOf(seccion);
-
-      // Si la sección fue eliminada o no existe
-      if (indiceActual === -1) {
-        console.warn(
-          `⚠️ Sección '${seccion}' no existe. Redirigiendo a la primera válida.`
-        );
-        window.location.href = `slides.html?oficina=${oficina}&seccion=${zonas[0]}`;
-        return;
-      }
-
-      const siguienteZona = zonas[indiceActual + 1];
-
-      if (siguienteZona) {
-        window.location.href = `slides.html?oficina=${oficina}&seccion=${siguienteZona}`;
-      } else {
-        // Última zona → volver al menú
-        window.location.href = `nav-menu.html?oficina=${oficina}`;
-      }
-    });
-  }
+  bindPressEffect();
+  bindSlideEvents();
 }
 
-// Navegación - Avanzar
+// ─────────────────────────────────────────────
+// NAVEGACIÓN
+// ─────────────────────────────────────────────
+
 export async function nextSlide() {
-  const nextBtn = document.getElementById("nextBtn");
-
-  // Bloquear inmediatamente (evita doble click)
-  nextBtn.disabled = true;
-
   try {
-    if (
-      slides[currentSlideIndex].type !== "intro" &&
-      slides[currentSlideIndex].type !== "outro"
-    ) {
+    if (isNormalSlide(currentSlideIndex)) {
       const hadIncidencia = await processPendingIncidencia();
-
       if (!hadIncidencia) {
         const descripcionPaso = slides[currentSlideIndex].desc || "";
         await markStepAsOK(currentSeccion, currentSlideIndex, descripcionPaso);
@@ -171,8 +228,9 @@ export async function nextSlide() {
     }
 
     if (currentSlideIndex < slides.length - 1) {
+      await fadeOutContent();
       currentSlideIndex++;
-      showSlide(currentSlideIndex); // recrea el DOM
+      showSlide(currentSlideIndex);
     }
   } catch (error) {
     console.error("❌ Error en nextSlide:", error);
@@ -183,73 +241,83 @@ export async function nextSlide() {
   }
 }
 
-// Navegación - Retroceder
-function prevSlide() {
+async function prevSlide() {
   if (currentSlideIndex > 0) {
+    await fadeOutContent();
     currentSlideIndex--;
     showSlide(currentSlideIndex);
   }
 }
 
-// Terminar checklist de la sección
+function goToNextSection() {
+  const { oficina, seccion } = getUrlParams();
+
+  if (!oficina || !seccion) {
+    console.error("❌ Faltan parámetros en la URL");
+    redirectTo("nav-menu.html");
+    return;
+  }
+
+  const slidesOficina = slidesMap[oficina];
+
+  if (!slidesOficina) {
+    console.error("❌ Oficina inexistente:", oficina);
+    redirectTo(`nav-menu.html?oficina=${oficina}`);
+    return;
+  }
+
+  const zonas = Object.keys(slidesOficina);
+  const indiceActual = zonas.indexOf(seccion);
+
+  if (indiceActual === -1) {
+    console.warn(
+      `⚠️ Sección '${seccion}' no encontrada. Redirigiendo a la primera válida.`,
+    );
+    redirectTo(`slides.html?oficina=${oficina}&seccion=${zonas[0]}`);
+    return;
+  }
+
+  const siguienteZona = zonas[indiceActual + 1];
+
+  redirectTo(
+    siguienteZona
+      ? `slides.html?oficina=${oficina}&seccion=${siguienteZona}`
+      : `nav-menu.html?oficina=${oficina}`,
+  );
+}
+
+// ─────────────────────────────────────────────
+// ACCIONES FINALES
+// ─────────────────────────────────────────────
+
 async function finishSlides() {
   try {
-    // SOLO guardar si NO es intro/outro
-    if (
-      slides[currentSlideIndex].type !== "intro" &&
-      slides[currentSlideIndex].type !== "outro"
-    ) {
-      // Procesar incidencia pendiente si existe
+    if (isNormalSlide(currentSlideIndex)) {
       const hadIncidencia = await processPendingIncidencia();
-
-      // Si NO había incidencia, marcar el último paso como OK
       if (!hadIncidencia) {
         const descripcionPaso = slides[currentSlideIndex].desc || "";
         await markStepAsOK(currentSeccion, currentSlideIndex, descripcionPaso);
       }
     }
 
-    // Mostrar mensaje de finalización
-    container.innerHTML = `
-      <div class="slide">
-        <h2>✅ Sección completada</h2>
-        <p>Has terminado todos los pasos de <strong>${currentSeccion}</strong>.</p>
-        <div class="buttons">
-          <button id="backToMenuBtn">🏠 Volver al Menú</button>
-        </div>
-      </div>
-    `;
+    container.innerHTML = templateFinish();
 
     document.getElementById("backToMenuBtn").addEventListener("click", () => {
-      const params = new URLSearchParams(window.location.search);
-      const oficina = params.get("oficina");
-      window.location.href = `nav-menu.html?oficina=${oficina}`;
+      const { oficina } = getUrlParams();
+      redirectTo(`nav-menu.html?oficina=${oficina}`);
     });
   } catch (error) {
     console.error("❌ Error al finalizar la sección:", error);
   }
 }
 
-// Volver al menú (SOLO guardar progreso, NO abortar)
 async function backToMenu() {
   const confirmar = confirm(
-    "¿Seguro que quieres volver al menú?\n\n" +
-      "Se guardará tu progreso actual."
+    "¿Seguro que quieres volver al menú?\n\nSe guardará tu progreso actual.",
   );
 
-  if (confirmar) {
-    // El checklist mantiene su estado "en_progreso"
-    try {
-      // Redirigir al menú
-      const params = new URLSearchParams(window.location.search);
-      const oficina = params.get("oficina");
-      window.location.href = `nav-menu.html?oficina=${oficina}`;
-    } catch (error) {
-      console.error("❌ Error al volver al menú:", error);
-      // Redirigir de todas formas
-      const params = new URLSearchParams(window.location.search);
-      const oficina = params.get("oficina");
-      window.location.href = `nav-menu.html?oficina=${oficina}`;
-    }
-  }
+  if (!confirmar) return;
+
+  const { oficina } = getUrlParams();
+  redirectTo(`nav-menu.html?oficina=${oficina}`);
 }

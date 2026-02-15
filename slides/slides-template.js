@@ -3,6 +3,7 @@ import {
   slidesStore,
   slidesPlanetaTerminator,
   slidesPlanetaNave,
+  slidesBigbang,
 } from "./slides.js";
 
 // Mapeo de oficinas a sus slides correspondientes
@@ -11,6 +12,7 @@ export const slidesMap = {
   store: slidesStore,
   planetaterminator: slidesPlanetaTerminator,
   planetanave: slidesPlanetaNave,
+  bigbang: slidesBigbang,
   //NUEVAS OFICINAS AQUÍ (IMPORTAR LAS SLIDES) :
   //"nombreoficina": slidesNombreOficina
 };

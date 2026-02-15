@@ -181,7 +181,10 @@ export const slidesPlanetaTerminator = {
       desc: "Subir las pías del aire acondicionado que estan debajo.",
       imgSrc: "./img/planeta-terminator/entrada_3.webp",
     },
-    4: { desc: "Encender el aire acondicionado con el mando." },
+    4: {
+      desc: "Encender el aire acondicionado con el mando si fuese necesario.",
+      imgSrc: "./img/planeta-terminator/aire_1.webp",
+    },
     5: {
       desc: "Pantalla de la moto: encender con el botón situado a la derecha. Está conectada al PC de Joel.",
       imgSrc: "./img/planeta-terminator/pant_1.webp",
@@ -199,23 +202,19 @@ export const slidesPlanetaTerminator = {
       imgSrc: "./img/planeta-terminator/pant_4.webp",
     },
     9: {
-      desc:
-        "La pantalla derecha corresponde al PC derecho." +
-        "Iniciar sesión si es necesario con la clave: BitsandAtoms2025!",
+      desc: "La pantalla derecha corresponde al PC derecho. Iniciar sesión si es necesario con la clave: BitsandAtoms2025!",
       imgSrc: "./img/planeta-terminator/pant_5.webp",
     },
     10: {
-      desc:
-        "La pantalla izquierda corresponde al PC izquierdo" +
-        "Iniciar sesión si es necesario con la clave: BitsandAtoms2025!",
+      desc: "La pantalla izquierda corresponde al PC izquierdo. Iniciar sesión si es necesario con la clave: BitsandAtoms2025!",
       imgSrc: "./img/planeta-terminator/pant_6.webp",
     },
     11: {
       desc: "Verificar que todas las puertas estén bien cerradas, girando la llave completamente hacia la derecha.",
-      imgSrc: "./img/planeta-terminator/cabina_2.webp",
+      imgSrc: "./img/planeta-terminator/term_11.webp",
     },
     12: {
-      desc: "Verificar que la cabina funcione utilizando el codigo ...?",
+      desc: "Verificar que la cabina funcione utilizando el codigo 1234",
       imgSrc: "./img/planeta-terminator/cabina_1.webp",
     },
     13: { type: "outro", desc: "Zona completada" },
@@ -351,6 +350,66 @@ export const slidesPlanetaNave = {
       imgSrc: "./img/planeta-nave/oficina/ofi_5.webp",
     },
 
+    6: { type: "outro", desc: "Zona completada" },
+  },
+};
+
+// PLANETA BIGBANG
+export const slidesBigbang = {
+  bigbang: {
+    0: { type: "intro", desc: "The Big Bang theory" },
+    1: {
+      desc: "Abrir la puerta siempre hacia afuera para dejar oculta las escaleras que bajan.",
+      imgSrc: "./img/planeta-bigbang/bigbang/puerta.webp",
+    },
+    2: {
+      desc: "Encender las luces con el interruptor que esta a la izquierda de la puerta de entrada.",
+      imgSrc: "./img/planeta-bigbang/bigbang/luz.webp",
+    },
+    3: {
+      desc: "Subir las pías que se encuentran detras de la cortina azul, dejarlas siempre ocultas.",
+      imgSrc: "./img/planeta-bigbang/bigbang/pias.webp",
+    },
+    4: {
+      desc: "Encender los ambos ordenadores.",
+      imgSrc: "./img/planeta-bigbang/bigbang/ordenadores.webp",
+    },
+    5: {
+      desc: "Comprobar todos los Ref-Id con luz verde debajo de cada libro que esta acostado.",
+      imgSrc: "./img/planeta-bigbang/bigbang/refid.webp",
+    },
+    6: {
+      desc: "Controlar el volumen de la pantalla con la barra de sonido que se encuentra sobre el ordenador.",
+      imgSrc: "./img/planeta-bigbang/bigbang/barra.webp",
+    },
+    7: {
+      desc: "Comprobar que funcione la detección de figuras en la base que se encuentra en el escritorio junto a la cámara.",
+      imgSrc: "./img/planeta-bigbang/bigbang/figuras.webp",
+    },
+    8: { type: "outro", desc: "Zona completada" },
+  },
+  baticueva: {
+    0: { type: "intro", desc: "Baticueva" },
+    1: {
+      desc: "Encender la luz con el interruptor de la derecha, el izquierdo siempre apagado cuando hay visitas.",
+      imgSrc: "./img/planeta-bigbang/batman/luz.webp",
+    },
+    2: {
+      desc: "Encender la figura del Joker con el boton que se encuentra en su parte trasera sobre el espejo.",
+      imgSrc: "./img/planeta-bigbang/batman/joker.webp",
+    },
+    3: {
+      desc: "Encender la luz de la moto con el interruptor rojo que se encuentra en el puño derecho de la moto. Dejar la luz de la moto siempre encendida.",
+      imgSrc: "./img/planeta-bigbang/batman/moto.webp",
+    },
+    4: {
+      desc: "Encender la pantalla de la cascada con el mando que se encuentra escondido tras la roca debajo de la pantalla.",
+      imgSrc: "./img/planeta-bigbang/batman/cascada.webp",
+    },
+    5: {
+      desc: "Encender el ordenador de la cueva desde el lado derecho del mismo con el botón START. Si no se encienden todas las pantallas, reiniciar el ordenador desde Windows, entrar en la BIOS presionando F2 y salir sin guardar cambios.",
+      imgSrc: "./img/planeta-bigbang/batman/ordenador.webp",
+    },
     6: { type: "outro", desc: "Zona completada" },
   },
 };

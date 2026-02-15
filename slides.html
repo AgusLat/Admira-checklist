@@ -59,10 +59,10 @@
       const sendIssueBtn = document.getElementById("sendIssueBtn");
       // PARAMS
       const oficina = new URLSearchParams(window.location.search).get(
-        "oficina"
+        "oficina",
       );
       const seccion = new URLSearchParams(window.location.search).get(
-        "seccion"
+        "seccion",
       );
 
       // VARIABLES
@@ -71,7 +71,7 @@
       // EVENTOS
       cancelIssueBtn.addEventListener("click", closeIssueModal);
       sendIssueBtn.addEventListener("click", () =>
-        confirmIssue(oficina, seccion)
+        confirmIssue(oficina, seccion),
       );
 
       onAuthStateChanged(auth, async (user) => {
