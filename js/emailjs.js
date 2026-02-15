@@ -2,9 +2,9 @@
 // CONFIGURACIÓN DE EMAILJS
 // ========================================
 const EMAILJS_CONFIG = {
-  SERVICE_ID: "service_cd8hga8",
-  TEMPLATE_ID: "template_tfbu0qd",
-  PUBLIC_KEY: "AOsFjcFh572HFsomg",
+  SERVICE_ID: "service_350ddsg",
+  TEMPLATE_ID: "template_zp1vmd4",
+  PUBLIC_KEY: "0U5R528btqZadZpxU",
 };
 
 /**

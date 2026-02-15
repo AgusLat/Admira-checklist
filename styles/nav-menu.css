@@ -17,6 +17,9 @@ body {
     background: linear-gradient(135deg, #689840, #8fbd64);
     min-height: 100dvh;
     width: 100%;
+    margin: 0px;
+    background-color: #689840;
+
 }
 
 main {
@@ -30,6 +33,10 @@ main {
 /* ─────────────────────────────────────────────
    LAYOUT PRINCIPAL
 ───────────────────────────────────────────── */
+button {
+    -webkit-tap-highlight-color: transparent;
+    font-family: "Nunito", system-ui, sans-serif;
+}
 
 .contenido {
     display: flex;
@@ -97,6 +104,8 @@ main {
 }
 
 .navMenu li a {
+    -webkit-tap-highlight-color: transparent;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
