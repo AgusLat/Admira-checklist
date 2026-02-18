@@ -6,7 +6,7 @@
 - **Planeta Terminator:** https://yokup.com/visitas/?oficina=planetaterminator
 - **Planeta Nave:** https://yokup.com/visitas/?oficina=planetanave
 - **Oasis (Santa Rosa):** https://yokup.com/visitas/?oficina=santarosa
-- - **Big Bang / BatCueva :** https://yokup.com/visitas/?oficina=bigbang
+- **Big Bang / BatCueva :** https://yokup.com/visitas/?oficina=bigbang
 
 ---
 
@@ -138,4 +138,5 @@ Faltan fotos de los pasos:
 
 Faltan fotos de los pasos:
 **1, 2**
+
 
