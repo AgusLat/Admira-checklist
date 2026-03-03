@@ -10,6 +10,7 @@ export let currentSlideIndex = 0;
 export let slides = [];
 let container = null;
 let currentSeccion = null;
+let helpActive = false;
 
 // ─────────────────────────────────────────────
 // HELPERS
@@ -99,13 +100,16 @@ function templateOutro(slide) {
 }
 
 function templateSlide(slide, index) {
-  const isFirst = index === 0;
+   const isFirst = index === 0;
   const isLast = index >= slides.length - 1;
 
   return `
     <div class="slide-content">
-      <p><strong>${index} - </strong>${slide.desc}</p>
-      ${slide.imgSrc ? `<img src="${slide.imgSrc}" alt="Paso ${index}">` : ""}
+      <p class="slide-desc"><strong>${index} - </strong>${slide.desc}</p>
+      <div class="img-container">
+        ${slide.imgSrc ? `<img src="${slide.imgSrc}" alt="Paso ${index}">` : ""}
+        ${slide.help ? `<button class="help-text" id="helpBtn" title="Mostrar ayuda">?</button>` : ""}
+      </div>
     </div>
     <div class="buttons">
       <div class="nav-buttons">
@@ -131,6 +135,52 @@ function templateFinish() {
       <button id="backToMenuBtn" class="btn--menu">🏠 Volver al Menú</button>
     </div>
   `;
+}
+
+
+// ─────────────────────────────────────────────
+// TOGGLE DE AYUDA
+// ─────────────────────────────────────────────
+
+function toggleHelp() {
+  const slide = slides[currentSlideIndex];
+  if (!slide?.help) return;
+
+  helpActive = !helpActive;
+
+  const img = container.querySelector("img");
+  const descEl = container.querySelector(".slide-desc");
+  const helpBtn = container.querySelector("#helpBtn");
+
+  if (helpActive) {
+    // Mostrar contenido de ayuda
+    if (img && slide.help.imgSrc) {
+      img.style.opacity = "0";
+      img.style.transition = "opacity 0.2s ease";
+      setTimeout(() => {
+        img.src = slide.help.imgSrc;
+        fadeInImage(img);
+      }, 200);
+    }
+    if (descEl && slide.help.desc) {
+      descEl.innerHTML = `<strong>${currentSlideIndex} - </strong>${slide.help.desc}`;
+    }
+    if (helpBtn) helpBtn.classList.add("help-text--active");
+  } else {
+    // Restaurar contenido original
+    if (img && slide.imgSrc) {
+      img.style.opacity = "0";
+      img.style.transition = "opacity 0.2s ease";
+      setTimeout(() => {
+        img.src = slide.imgSrc;
+        fadeInImage(img);
+      }, 200);
+    }
+    if (descEl) {
+      descEl.innerHTML = `<strong>${currentSlideIndex} - </strong>${slide.desc}`;
+    }
+    if (helpBtn) helpBtn.classList.remove("help-text--active");
+  }
 }
 
 // ─────────────────────────────────────────────
@@ -169,6 +219,9 @@ function bindSlideEvents() {
   document
     .getElementById("nextSectionBtn")
     ?.addEventListener("click", goToNextSection);
+  document
+    .getElementById("helpBtn")
+    ?.addEventListener("click", toggleHelp); 
 }
 
 // ─────────────────────────────────────────────
@@ -183,6 +236,7 @@ export function renderSlides(containerElement, slideArray, seccion) {
 }
 
 function showSlide(index) {
+  helpActive = false;
   const slide = slides[index];
 
   if (slide.type === "intro") {

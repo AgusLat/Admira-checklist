@@ -5,9 +5,10 @@ export const slidesSantaRosa = {
     1: {
       desc: "Encender el aire acondicionado de la sala 360 con el mando que hay en la estantería de Administración.",
       imgSrc: "./img/santa-rosa/sala360/360_1.webp",
+      
     },
     2: {
-      desc: "Encender PC en forma de cubo de la sala de Administración. Esperar a que arranque e inicie el software de la sala 360.",
+      desc: "Encender PC Blanco. Esperar a que arranque e inicie el software de la sala 360.",
       imgSrc: "./img/santa-rosa/sala360/360_2.webp",
     },
     3: {
@@ -15,8 +16,12 @@ export const slidesSantaRosa = {
       imgSrc: "./img/santa-rosa/sala360/360_3.webp",
     },
     4: {
-      desc: "Encender el portátil de la sala 360. Entrar con la contraseña: “admira123”. Dejar abierta la página del control del showroom colocando la URL: 192.168.1.82 en el navegador.",
+      desc: "Encender el portátil de la sala 360. Entrar con la contraseña: “admira123” y comprobar que se conecta al wifi SR2. Dejar abierta la página del control del showroom colocando la URL: 192.168.1.82 en el navegador.",
       imgSrc: "./img/santa-rosa/sala360/360_4.webp",
+      help: {
+       desc: "Si la URL no existe, el XAMPP no se ha iniciado correctamente. Reiniciar el PC blanco y esperar." ,
+       imgSrc:"./img/santa-rosa/sala360/360_2.webp"
+      }
     },
     5: {
       desc: "Cerrar la puerta de administración, de la sala 360 y apagar la luz con el interruptor que esta fuera.",
@@ -61,6 +66,10 @@ export const slidesSantaRosa = {
     9: {
       desc: "Encender cada máquina Viewlix (Arcades blancas) presionando el botón en la parte inferior izquierda del tablero de joysticks.",
       imgSrc: "./img/santa-rosa/arcade/arcade_8.webp",
+      help: {
+        desc: "Las 2 ultimas maquinas suelen tardar mas en iniciar (las que estan junto a los pinballs), esperar que se inicien correctamente.",
+        imgSrc: "./img/santa-rosa/arcade/arcade_8.webp"
+      }
     },
     10: {
       desc: "Encender cada máquina Pinball pulsando los botones de encendido que estan en la zona inferior derecha del cabezal.",
@@ -83,7 +92,7 @@ export const slidesSantaRosa = {
       imgSrc: "./img/santa-rosa/cafeteria/cafe_3.webp",
     },
     4: {
-      desc: "Comprobar que las 2 pantallas que simulan ventanas están encendidas.",
+      desc: "Comprobar que las 2 pantallas que simulan ventanas están encendidas. Asegurarse de que tengan sonido, utilizar el mando LG detras de la nevera.",
       imgSrc: "./img/santa-rosa/cafeteria/cafe_4.webp",
     },
     5: {
@@ -118,14 +127,10 @@ export const slidesSantaRosa = {
       imgSrc: "./img/santa-rosa/garaje/garaje_6.webp",
     },
     7: {
-      desc: "Verificar que la pantalla triángulo esta encendida, sino encenderla desde el cuartillo.",
+      desc: "Verificar que la pantalla triángulo esta encendida, sino revisar las pías de la entrada.",
       imgSrc: "./img/santa-rosa/garaje/garaje_7.webp",
     },
-    8: {
-      desc: "Cerrar las puertas de los cuartillos detrás de la furgoneta de las TMNT.",
-      imgSrc: "./img/santa-rosa/garaje/garaje_8.webp",
-    },
-    9: { type: "outro", desc: "Zona completada" },
+    8: { type: "outro", desc: "Zona completada" },
   },
 };
 
@@ -149,17 +154,22 @@ export const slidesStore = {
       desc: "Comprobar que el metahuman te sigue correctamente.",
       imgSrc: "./img/store/metahuman/meta_4.webp",
     },
-    5: { type: "outro", desc: "Zona completada" },
+    5: {
+      desc: "Encender los 2 interruptores negros debajo de caja del cuadro electrico. (ENTRADA A LA DERECHA)",
+      imgSrc: "./img/store/metahuman/PENDIENTE.webp",
+    },
+    6: { type: "outro", desc: "Zona completada" },
+
   },
 
   escritorio: {
     0: { type: "intro", desc: "Escritorio" },
     1: {
-      desc: "Encender la pantalla con el mando y poner música de los años 80 en YouTube.",
+      desc: "Encender la pantalla con el mando y poner música de los años 80 en YouTube, colocarlo en modo REPEAT.",
       imgSrc: "./img/store/escritorio/escritorio_1.webp",
     },
     2: {
-      desc: "Encender el portátil (código 0007) e iniciar la aplicación correspondiente (ROG Remix). ",
+      desc: "Encender el portátil (código 0007) e iniciar la aplicación correspondiente (ROG Remix) y comprobar que funcionan los botones de la caja. ",
       imgSrc: "./img/store/escritorio/escritorio_2.webp",
     },
     3: { type: "outro", desc: "Zona completada" },
@@ -171,10 +181,10 @@ export const slidesPlanetaTerminator = {
   terminator: {
     0: { type: "intro", desc: "Oficina Terminator" },
     1: {
-      desc: "No cerrar completamente la puerta, ya que luego resulta difícil abrirla.",
+      desc: "Cerrar completamente la puerta.",
     },
     2: {
-      desc: "Subir las pías generales.",
+      desc: "Subir todas las pías generales.",
       imgSrc: "./img/planeta-terminator/entrada_2.webp",
     },
     3: {
@@ -186,12 +196,21 @@ export const slidesPlanetaTerminator = {
       imgSrc: "./img/planeta-terminator/aire_1.webp",
     },
     5: {
-      desc: "Pantalla de la moto: encender con el botón situado a la derecha. Está conectada al PC de Joel.",
+      desc: "Pantalla de la moto: encender con el botón situado a la derecha. Está conectada al PC central y comprobar que este encendido.",
       imgSrc: "./img/planeta-terminator/pant_1.webp",
+      help: {
+        desc: "Si no hay señal, verificar el cable HDMI que esta conectado al PC por falso contacto.",
+        imgSrc: "./img/planeta-terminator/pant_1_help.webp"
+      }
+      
     },
     6: {
       desc: "Pantalla al lado de los terminators robots, sala de reunión: se enciende automáticamente.",
       imgSrc: "./img/planeta-terminator/pant_2.webp",
+      help: {
+        desc: "Si no hay señal, verificar el cable HDMI que esta conectado al PC nuc.",
+        imgSrc: "./img/planeta-terminator/pant_2_help.webp"
+      }
     },
     7: {
       desc: "Pantalla al lado de los terminators humanos, sala de reunión: abrir Admira y ponerlo en pantalla completa.",
@@ -227,31 +246,31 @@ export const slidesPlanetaNave = {
   entrada: {
     0: { type: "intro", desc: "Entrada" },
     1: {
-      desc: "Subir todas las Pias, especialmente las grises (son las principales). Primero subir la Pia de Pantallas Altas y su gris para que se conecten a internet.",
+      desc: "Subir todas las Pias, especialmente las grises (son las principales).",
       imgSrc: "./img/planeta-nave/entrada/entrada_1.webp",
     },
 
     // Holograma
     2: {
-      desc: "Asegurarse de que el PC del armario esté encendido.",
+      desc: "Asegurarse de que el PC nuc del armario esté encendido y que los altavoces tengan volumen. Controla el ventilador del holograma.",
       imgSrc: "./img/planeta-nave/entrada/entrada_2.webp",
+      help: {
+        desc: "Si el holograma no funciona, reiniciar el PC nuc.",
+        imgSrc: "./img/planeta-nave/entrada/entrada_2_.webp"
+      }
     },
     3: {
-      desc: "Revisar que el holograma funcione, sino reiniciarlo en las pías (debería estar siempre arriba).",
-      imgSrc: "./img/planeta-nave/entrada/entrada_3.webp",
-    },
-    4: {
-      desc: "La luz de la entrada debe estar apagada.",
+      desc: "La luz general de la entrada debe estar apagada.",
       imgSrc: "./img/planeta-nave/entrada/entrada_4.webp",
     },
 
     // Póster de tinta digital
-    5: {
-      desc: "Revisar que el póster de tinta digital esté encendido. Si no lo está, utilizar el mando de Samsung. ",
+    4: {
+      desc: "Revisar que el póster de tinta digital esté encendido. Si no lo está, utilizar el mando de Samsung que esta dentro del armario. ",
       imgSrc: "./img/planeta-nave/entrada/entrada_5.webp",
     },
 
-    6: { type: "outro", desc: "Zona completada" },
+    5: { type: "outro", desc: "Zona completada" },
   },
   // === NAVE ===
   nave: {
@@ -270,7 +289,7 @@ export const slidesPlanetaNave = {
       imgSrc: "./img/planeta-nave/nave/nave_3.webp",
     },
     4: {
-      desc: "A mano izquierda del ascensor, nada más entrar, encender el display con botones para que se enciendan las luces de colores.",
+      desc: "A mano izquierda del ascensor, nada más entrar, encender los 2 display con botones para que se enciendan las luces de colores.",
       imgSrc: "./img/planeta-nave/nave/nave_4.webp",
     },
 
@@ -288,50 +307,54 @@ export const slidesPlanetaNave = {
 
     // Tablet
     7: {
-      desc: "Si la tablet está apagada, tocar la pantalla.",
+      desc: "Si la tablet está apagada, retirarla del soporte y encenderla. Para retirarla, abrir la carcasa, separar la tablet, encenderla e iniciar Admira.",
       imgSrc: "./img/planeta-nave/nave/nave_7.webp",
-    },
-    8: {
-      desc: "Si no responde, retirarla del soporte y encenderla. Para retirarla, abrir la carcasa, separar la tablet, encenderla e iniciar Admira.",
-      imgSrc: "./img/planeta-nave/nave/nave_8.webp",
     },
 
     // Mesa reuniones
-    9: {
+    8: {
       desc: "Encender el astronauta que hay encima de la mesa.",
       imgSrc: "./img/planeta-nave/nave/nave_9.webp",
     },
 
     // Humo
-    10: {
-      desc: "Activar la máquina de humo durante 20 segundos cuando llegue la visita. Está sobre la entrada a la cantina. El mando está al lado del PC 1 (etiquetado 'Máquina Humo').",
+    9: {
+      desc: "Opcional. Activar la máquina de humo durante 20 segundos cuando llegue la visita. Está sobre la entrada a la cantina. El mando está al lado del PC 1 (etiquetado 'Máquina Humo').",
       imgSrc: "./img/planeta-nave/nave/nave_10.webp",
     },
 
     // R2D2
-    11: {
-      desc: "Enchufar R2D2 a la corriente si no lo esta. Abrir su cabeza, presionar el botón y colocar de nuevo su cabeza.",
+    10: {
+      desc: "Enchufar R2D2 a la corriente si no lo esta. Abrir su cabeza lo minimo posible, presionar el botón y colocar de nuevo su cabeza.",
       imgSrc: "./img/planeta-nave/nave/nave_11.webp",
     },
-    12: {
+    11: {
       desc: "Encender el mando de la play y presionar el botón R1 + direccional izquierda. Una vez funcione, apagar el mando.",
       imgSrc: "./img/planeta-nave/nave/nave_12.webp",
+      help:{
+        desc:"Si con el mando responde el ruido pero no hace luz, revisar que este enchufado el mini jack dentro en la cabeza.",
+        imgSrc:"./img/planeta-nave/nave/nave_12.webp"
+      }
     },
 
     // Simulador
-    13: {
+    12: {
       desc: "Verificar que la cabina está enchufada en el armario izquierdo y subir su diferencial para encenderla.",
       imgSrc: "./img/planeta-nave/nave/nave_13.webp",
     },
-    14: { type: "outro", desc: "Zona completada" },
+    13: { type: "outro", desc: "Zona completada" },
   },
 
   // === OFICINA (Despacho IT Crowd)===
   oficina: {
     0: { type: "intro", desc: "Oficina IT Crowd" },
     1: {
-      desc: "Encender el botón que se encuentra tras el televisor que hay al lado del sofá y seleccionar un juego para dejar de fondo.",
+      desc: "Encender el botón que se encuentra tras el spectrum en el lado izquierdo que hay al lado del sofá y seleccionar un juego para dejar de fondo. No tironear el spectrum, cable corto.",
       imgSrc: "./img/planeta-nave/oficina/ofi_1.webp",
+      help:{
+        desc:"Si el spectrum inicia preguntanto que frecuencia utilizar, elegir 60hz y arranca automaticamente el juego.",
+        imgSrc:"./img/planeta-nave/oficina/ofi_1_help.webp"
+      }
     },
     2: {
       desc: "Girar la rueda del televisor hasta que salgan “marcianitos”.",
@@ -349,8 +372,12 @@ export const slidesPlanetaNave = {
       desc: "La puerta debe estar cerrada. Si no lo está, entrar y usar el panel como el del ascensor para cerrarla. Para salir, hay un sensor (la puerta se abrirá sola).",
       imgSrc: "./img/planeta-nave/oficina/ofi_5.webp",
     },
+    6: {
+      desc: "Mantener cerrada la puerta de la cocina, la puerta falsa y la puerta del baño.",
+      imgSrc: "./img/planeta-nave/oficina/PENDIENTE.webp",
+    },
 
-    6: { type: "outro", desc: "Zona completada" },
+    7: { type: "outro", desc: "Zona completada" },
   },
 };
 
@@ -359,34 +386,46 @@ export const slidesBigbang = {
   bigbang: {
     0: { type: "intro", desc: "The Big Bang theory" },
     1: {
-      desc: "Abrir la puerta siempre hacia afuera para dejar oculta las escaleras que bajan.",
-      imgSrc: "./img/planeta-bigbang/bigbang/puerta.webp",
-    },
-    2: {
       desc: "Encender las luces con el interruptor que esta a la izquierda de la puerta de entrada.",
       imgSrc: "./img/planeta-bigbang/bigbang/luz.webp",
     },
-    3: {
+    2: {
       desc: "Subir las pías que se encuentran detras de la cortina azul, dejarlas siempre ocultas.",
       imgSrc: "./img/planeta-bigbang/bigbang/pias.webp",
     },
-    4: {
-      desc: "Encender los ambos ordenadores.",
+    3: {
+      desc: "Encender ambos ordenadores y mantenerlos ocultos tras la cortina.",
       imgSrc: "./img/planeta-bigbang/bigbang/ordenadores.webp",
     },
-    5: {
+    4: {
       desc: "Comprobar todos los Ref-Id con luz verde debajo de cada libro que esta acostado.",
       imgSrc: "./img/planeta-bigbang/bigbang/refid.webp",
     },
-    6: {
+    5: {
       desc: "Controlar el volumen de la pantalla con la barra de sonido que se encuentra sobre el ordenador.",
       imgSrc: "./img/planeta-bigbang/bigbang/barra.webp",
     },
-    7: {
+    6: {
       desc: "Comprobar que funcione la detección de figuras en la base que se encuentra en el escritorio junto a la cámara.",
       imgSrc: "./img/planeta-bigbang/bigbang/figuras.webp",
+      help:{
+        desc:"Si no funciona, reiniciar el PC Joker y esperar a que se inicie correctamente.",
+        imgSrc:"./img/planeta-bigbang/bigbang/figuras-help.webp"
+      }
     },
-    8: { type: "outro", desc: "Zona completada" },
+    7: {
+      desc: "Comprobar que funcione la detección de cajas de figuras con el lector de codigo de barras.",
+      imgSrc: "./img/planeta-bigbang/bigbang/figuras.webp",
+      help:{
+        desc:"Si no funciona, reiniciar el PC Joker y esperar a que se inicie correctamente.",
+        imgSrc:"./img/planeta-bigbang/bigbang/figuras-help.webp"
+      }
+    },
+    8: {
+      desc: "Dejar cerrada la puerta que comunica la cocina con Big Bang.",
+      imgSrc: "./img/planeta-bigbang/bigbang/puerta.webp",
+    },
+    9: { type: "outro", desc: "Zona completada" },
   },
   baticueva: {
     0: { type: "intro", desc: "Baticueva" },
@@ -403,12 +442,16 @@ export const slidesBigbang = {
       imgSrc: "./img/planeta-bigbang/batman/moto.webp",
     },
     4: {
-      desc: "Encender la pantalla de la cascada con el mando que se encuentra escondido tras la roca debajo de la pantalla.",
+      desc: "Encender la pantalla de la cascada con el mando que se encuentra escondido tras la roca debajo de la pantalla y comprobar que tiene sonido.",
       imgSrc: "./img/planeta-bigbang/batman/cascada.webp",
     },
     5: {
-      desc: "Encender el ordenador de la cueva desde el lado derecho del mismo con el botón START. Si no se encienden todas las pantallas, reiniciar el ordenador desde Windows, entrar en la BIOS presionando F2 y salir sin guardar cambios.",
+      desc: "Encender el ordenador de la cueva desde el lado derecho del mismo con el botón START.",
       imgSrc: "./img/planeta-bigbang/batman/ordenador.webp",
+      help:{
+        desc:"Si no se encienden todas las pantallas, reiniciar el ordenador desde Windows, entrar en la BIOS presionando F2 y salir sin guardar cambios.",
+        imgSrc:"./img/planeta-bigbang/batman/ordenador-help.webp"
+      }
     },
     6: { type: "outro", desc: "Zona completada" },
   },
