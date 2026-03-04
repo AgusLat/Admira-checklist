@@ -124,6 +124,7 @@ Faltan fotos de los pasos:
 #### Sala 360
 
 -Modificar: Cambiar foto pc paso 1
+- Añadir paso de como poner el texto 'Welcome + Cliente'
 
 #### Garaje
 
@@ -138,5 +139,6 @@ Faltan fotos de los pasos:
 
 Faltan fotos de los pasos:
 **1, 2**
+
 
 
