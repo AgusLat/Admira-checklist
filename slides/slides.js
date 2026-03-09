@@ -5,7 +5,6 @@ export const slidesSantaRosa = {
     1: {
       desc: "Encender el aire acondicionado de la sala 360 con el mando que hay en la estantería de Administración.",
       imgSrc: "./img/santa-rosa/sala360/360_1.webp",
-      
     },
     2: {
       desc: "Encender PC Blanco. Esperar a que arranque e inicie el software de la sala 360.",
@@ -19,9 +18,9 @@ export const slidesSantaRosa = {
       desc: "Encender el portátil de la sala 360. Entrar con la contraseña: “admira123” y comprobar que se conecta al wifi SR2. Dejar abierta la página del control del showroom colocando la URL: 192.168.1.82 en el navegador.",
       imgSrc: "./img/santa-rosa/sala360/360_4.webp",
       help: {
-       desc: "Si la URL no existe, el XAMPP no se ha iniciado correctamente. Reiniciar el PC blanco y esperar." ,
-       imgSrc:"./img/santa-rosa/sala360/360_2.webp"
-      }
+        desc: "Si la URL no existe, el XAMPP no se ha iniciado correctamente. Reiniciar el PC blanco y esperar.",
+        imgSrc: "./img/santa-rosa/sala360/360_2.webp",
+      },
     },
     5: {
       desc: "Cerrar la puerta de administración, de la sala 360 y apagar la luz con el interruptor que esta fuera.",
@@ -68,8 +67,8 @@ export const slidesSantaRosa = {
       imgSrc: "./img/santa-rosa/arcade/arcade_8.webp",
       help: {
         desc: "Las 2 ultimas maquinas suelen tardar mas en iniciar (las que estan junto a los pinballs), esperar que se inicien correctamente.",
-        imgSrc: "./img/santa-rosa/arcade/arcade_8.webp"
-      }
+        imgSrc: "./img/santa-rosa/arcade/arcade_8.webp",
+      },
     },
     10: {
       desc: "Encender cada máquina Pinball pulsando los botones de encendido que estan en la zona inferior derecha del cabezal.",
@@ -159,7 +158,6 @@ export const slidesStore = {
       imgSrc: "./img/store/metahuman/PENDIENTE.webp",
     },
     6: { type: "outro", desc: "Zona completada" },
-
   },
 
   escritorio: {
@@ -199,18 +197,17 @@ export const slidesPlanetaTerminator = {
       desc: "Pantalla de la moto: encender con el botón situado a la derecha. Está conectada al PC central y comprobar que este encendido.",
       imgSrc: "./img/planeta-terminator/pant_1.webp",
       help: {
-        desc: "Si no hay señal, verificar el cable HDMI que esta conectado al PC por falso contacto.",
-        imgSrc: "./img/planeta-terminator/pant_1_help.webp"
-      }
-      
+        desc: "Si no hay señal, verificar el cable HDMI que esta conectado al PC central por falso contacto.",
+        imgSrc: "./img/planeta-terminator/pant_1-help.webp",
+      },
     },
     6: {
       desc: "Pantalla al lado de los terminators robots, sala de reunión: se enciende automáticamente.",
       imgSrc: "./img/planeta-terminator/pant_2.webp",
       help: {
         desc: "Si no hay señal, verificar el cable HDMI que esta conectado al PC nuc.",
-        imgSrc: "./img/planeta-terminator/pant_2_help.webp"
-      }
+        imgSrc: "./img/planeta-terminator/pant_2-help.webp",
+      },
     },
     7: {
       desc: "Pantalla al lado de los terminators humanos, sala de reunión: abrir Admira y ponerlo en pantalla completa.",
@@ -256,8 +253,8 @@ export const slidesPlanetaNave = {
       imgSrc: "./img/planeta-nave/entrada/entrada_2.webp",
       help: {
         desc: "Si el holograma no funciona, reiniciar el PC nuc.",
-        imgSrc: "./img/planeta-nave/entrada/entrada_2_.webp"
-      }
+        imgSrc: "./img/planeta-nave/entrada/entrada_2_.webp",
+      },
     },
     3: {
       desc: "La luz general de la entrada debe estar apagada.",
@@ -270,7 +267,12 @@ export const slidesPlanetaNave = {
       imgSrc: "./img/planeta-nave/entrada/entrada_5.webp",
     },
 
-    5: { type: "outro", desc: "Zona completada" },
+    5: {
+      desc: "Antes de pasar al ascensor, cambiar la luz a color azul pulsando 2 veces el boton central. ",
+      imgSrc: "./img/planeta-nave/entrada/luz-ascensor.webp",
+    },
+
+    6: { type: "outro", desc: "Zona completada" },
   },
   // === NAVE ===
   nave: {
@@ -331,10 +333,10 @@ export const slidesPlanetaNave = {
     11: {
       desc: "Encender el mando de la play y presionar el botón R1 + direccional izquierda. Una vez funcione, apagar el mando.",
       imgSrc: "./img/planeta-nave/nave/nave_12.webp",
-      help:{
-        desc:"Si con el mando responde el ruido pero no hace luz, revisar que este enchufado el mini jack dentro en la cabeza.",
-        imgSrc:"./img/planeta-nave/nave/nave_12.webp"
-      }
+      help: {
+        desc: "Si con el mando responde el ruido pero no hace luz, revisar que este enchufado el mini jack dentro en la cabeza.",
+        imgSrc: "./img/planeta-nave/nave/r2d2-help.webp",
+      },
     },
 
     // Simulador
@@ -351,10 +353,10 @@ export const slidesPlanetaNave = {
     1: {
       desc: "Encender el botón que se encuentra tras el spectrum en el lado izquierdo que hay al lado del sofá y seleccionar un juego para dejar de fondo. No tironear el spectrum, cable corto.",
       imgSrc: "./img/planeta-nave/oficina/ofi_1.webp",
-      help:{
-        desc:"Si el spectrum inicia preguntanto que frecuencia utilizar, elegir 60hz y arranca automaticamente el juego.",
-        imgSrc:"./img/planeta-nave/oficina/ofi_1_help.webp"
-      }
+      help: {
+        desc: "Si el spectrum inicia preguntanto que frecuencia utilizar, elegir 60hz y arranca automaticamente el juego.",
+        imgSrc: "./img/planeta-nave/oficina/ofi_1_help.webp",
+      },
     },
     2: {
       desc: "Girar la rueda del televisor hasta que salgan “marcianitos”.",
@@ -408,18 +410,18 @@ export const slidesBigbang = {
     6: {
       desc: "Comprobar que funcione la detección de figuras en la base que se encuentra en el escritorio junto a la cámara.",
       imgSrc: "./img/planeta-bigbang/bigbang/figuras.webp",
-      help:{
-        desc:"Si no funciona, reiniciar el PC Joker y esperar a que se inicie correctamente.",
-        imgSrc:"./img/planeta-bigbang/bigbang/figuras-help.webp"
-      }
+      help: {
+        desc: "Si no funciona, reiniciar el PC Joker y esperar a que se inicie correctamente.",
+        imgSrc: "./img/planeta-bigbang/bigbang/pcjoker-help.webp",
+      },
     },
     7: {
       desc: "Comprobar que funcione la detección de cajas de figuras con el lector de codigo de barras.",
-      imgSrc: "./img/planeta-bigbang/bigbang/figuras.webp",
-      help:{
-        desc:"Si no funciona, reiniciar el PC Joker y esperar a que se inicie correctamente.",
-        imgSrc:"./img/planeta-bigbang/bigbang/figuras-help.webp"
-      }
+      imgSrc: "./img/planeta-bigbang/bigbang/figurasCajas.webp",
+      help: {
+        desc: "Si no funciona, reiniciar el PC Joker y esperar a que se inicie correctamente.",
+        imgSrc: "./img/planeta-bigbang/bigbang/pcjoker-help.webp",
+      },
     },
     8: {
       desc: "Dejar cerrada la puerta que comunica la cocina con Big Bang.",
@@ -448,10 +450,10 @@ export const slidesBigbang = {
     5: {
       desc: "Encender el ordenador de la cueva desde el lado derecho del mismo con el botón START.",
       imgSrc: "./img/planeta-bigbang/batman/ordenador.webp",
-      help:{
-        desc:"Si no se encienden todas las pantallas, reiniciar el ordenador desde Windows, entrar en la BIOS presionando F2 y salir sin guardar cambios.",
-        imgSrc:"./img/planeta-bigbang/batman/ordenador-help.webp"
-      }
+      help: {
+        desc: "Si no se encienden todas las pantallas, reiniciar el ordenador desde Windows, entrar en la BIOS presionando F2 y salir sin guardar cambios.",
+        imgSrc: "./img/planeta-bigbang/batman/ordenador-help.webp",
+      },
     },
     6: { type: "outro", desc: "Zona completada" },
   },

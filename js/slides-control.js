@@ -100,7 +100,7 @@ function templateOutro(slide) {
 }
 
 function templateSlide(slide, index) {
-   const isFirst = index === 0;
+  const isFirst = index === 0;
   const isLast = index >= slides.length - 1;
 
   return `
@@ -108,7 +108,7 @@ function templateSlide(slide, index) {
       <p class="slide-desc"><strong>${index} - </strong>${slide.desc}</p>
       <div class="img-container">
         ${slide.imgSrc ? `<img src="${slide.imgSrc}" alt="Paso ${index}">` : ""}
-        ${slide.help ? `<button class="help-text" id="helpBtn" title="Mostrar ayuda">?</button>` : ""}
+        ${slide.help ? `<button class="help-text" id="helpBtn" title="Mostrar ayuda">Problema frecuente</button>` : ""}
       </div>
     </div>
     <div class="buttons">
@@ -137,7 +137,6 @@ function templateFinish() {
   `;
 }
 
-
 // ─────────────────────────────────────────────
 // TOGGLE DE AYUDA
 // ─────────────────────────────────────────────
@@ -163,7 +162,7 @@ function toggleHelp() {
       }, 200);
     }
     if (descEl && slide.help.desc) {
-      descEl.innerHTML = `<strong>${currentSlideIndex} - </strong>${slide.help.desc}`;
+      descEl.innerHTML = `<strong>Solución: </strong>${slide.help.desc}`;
     }
     if (helpBtn) helpBtn.classList.add("help-text--active");
   } else {
@@ -219,9 +218,7 @@ function bindSlideEvents() {
   document
     .getElementById("nextSectionBtn")
     ?.addEventListener("click", goToNextSection);
-  document
-    .getElementById("helpBtn")
-    ?.addEventListener("click", toggleHelp); 
+  document.getElementById("helpBtn")?.addEventListener("click", toggleHelp);
 }
 
 // ─────────────────────────────────────────────
