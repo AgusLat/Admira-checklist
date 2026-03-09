@@ -12,7 +12,6 @@
 
 ## TODO: BUGS, CORRECCIONES, TESTING Y FUTURAS FEATURES
 
-- **EMAILJS(correccion):** Cambiar direccion de envio correo de confirmacion utilizando otra cuenta de emailjs, y utilizar el template ubicado en el fichero "email-template".
 - **FIREBASE(testing):** Control de acceso. Verificar acceso a la aplicación con emails @admira.com.
 - **INCIDENCIAS FRECUENTES(feature):** Opción para el usuario al abrir el modal de incidencias un boton que muestre una lista de incidencias frecuentas y su solución.
 - **CIERRE DE OFICINA(feature):** Opción para el usuario en el menú de navegacion para elegir entre el modo "APERTURA" o "CIERRE" de la oficina.
@@ -90,33 +89,23 @@ export const slidesMap = {
 
 #### Entrada
 
--Faltan fotos de los pasos:
-**11**
-
--Modificar: Codigo de cabina??
-
 ---
 
 ### PLANETA NAVE
 
 #### Entrada
 
--Faltan fotos de los pasos:
-**5**
-
--Modificar: Agregar paso luz azul
-
 #### Nave
 
+<<<<<<< HEAD
 -Faltan fotos de los pasos:
 **1, 3, 7, 11, 12, 16**
 -Modificar: Agregar paso luces azules
 
 - Añadir en el paso 3, que también hay que dejar la luz azul de la entrada sobre el ascensor.
+=======
+>>>>>>> helpFeature
 #### Oficina
-
-Faltan fotos de los pasos:
-**6, 7**
 
 ---
 
@@ -124,13 +113,16 @@ Faltan fotos de los pasos:
 
 #### Sala 360
 
+<<<<<<< HEAD
 -Modificar: Cambiar foto pc paso 1
 - Añadir paso de como poner el texto 'Welcome + Cliente'
+=======
+#### Arcade
+
+#### Cafeteria
+>>>>>>> helpFeature
 
 #### Garaje
-
--Faltan fotos de los pasos:
-**7**
 
 ---
 
@@ -138,9 +130,17 @@ Faltan fotos de los pasos:
 
 #### Metahuman
 
-Faltan fotos de los pasos:
-**1, 2**
+#### Escritorio
+
+---
+
+<<<<<<< HEAD
 
 
+=======
+### PLANETA BIG BANG
 
+#### Big Bang
 
+#### Baticueva
+>>>>>>> helpFeature

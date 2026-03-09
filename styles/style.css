@@ -103,10 +103,12 @@ body {
   padding: 1rem;
   border-radius: 1rem;
   width: 100%;
+  overflow-y: auto;
+  max-height: 13dvh;
 }
 
 .slide-content img {
-  max-width: 85dvw;
+  max-width: 90dvw;
   border-radius: 10px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
   margin-bottom: 10px;
@@ -210,6 +212,47 @@ button:disabled:hover {
   gap: 0.5rem;
   width: 100%;
 }
+
+/* ─────────────────────────────────────────────
+   CAMBIO DE ESTADO DE AYUDA
+───────────────────────────────────────────── */
+
+.img-container {
+  position: relative;
+}
+
+.help-text {
+  color: #2ecc70;
+  font-size: 0.5rem;
+  padding: 0.5rem;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  margin: 0;
+  cursor: pointer;
+  font-size: 0.8rem;
+  line-height: 1;
+  user-select: none;
+  /* opcional: sombra para que se vea bien sobre cualquier imagen */
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.4));
+  transition: transform 0.15s ease, filter 0.15s ease;
+  z-index: 1;
+}
+
+/* .help-text:hover {
+  transform: scale(1.15);
+} */
+
+
+.help-text--active {
+  filter: drop-shadow(0 1px 3px #2ecc70);
+  outline: 1px solid #2ecc70;
+
+
+}
+
+
+
 
 /* ─────────────────────────────────────────────
    MODAL DE INCIDENCIA
