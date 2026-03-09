@@ -112,6 +112,7 @@ export const slidesMap = {
 **1, 3, 7, 11, 12, 16**
 -Modificar: Agregar paso luces azules
 
+- Añadir en el paso 3, que también hay que dejar la luz azul de la entrada sobre el ascensor.
 #### Oficina
 
 Faltan fotos de los pasos:
@@ -139,6 +140,7 @@ Faltan fotos de los pasos:
 
 Faltan fotos de los pasos:
 **1, 2**
+
 
 
 
