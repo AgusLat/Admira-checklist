@@ -170,7 +170,11 @@ export const slidesStore = {
       desc: "Encender el portátil (código 0007) e iniciar la aplicación correspondiente (ROG Remix) y comprobar que funcionan los botones de la caja. ",
       imgSrc: "./img/store/escritorio/escritorio_2.webp",
     },
-    3: { type: "outro", desc: "Zona completada" },
+    3: {
+      desc: "Al salir de la Store, asegurarse de cerrar la persiana. ",
+      imgSrc: "./img/store/escritorio/pendiente.webp",
+    },
+    4: { type: "outro", desc: "Zona completada" },
   },
 };
 

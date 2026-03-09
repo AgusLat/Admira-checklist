@@ -97,14 +97,6 @@ export const slidesMap = {
 
 #### Nave
 
-<<<<<<< HEAD
--Faltan fotos de los pasos:
-**1, 3, 7, 11, 12, 16**
--Modificar: Agregar paso luces azules
-
-- Añadir en el paso 3, que también hay que dejar la luz azul de la entrada sobre el ascensor.
-=======
->>>>>>> helpFeature
 #### Oficina
 
 ---
@@ -113,14 +105,9 @@ export const slidesMap = {
 
 #### Sala 360
 
-<<<<<<< HEAD
--Modificar: Cambiar foto pc paso 1
-- Añadir paso de como poner el texto 'Welcome + Cliente'
-=======
 #### Arcade
 
 #### Cafeteria
->>>>>>> helpFeature
 
 #### Garaje
 
@@ -134,13 +121,8 @@ export const slidesMap = {
 
 ---
 
-<<<<<<< HEAD
-
-
-=======
 ### PLANETA BIG BANG
 
 #### Big Bang
 
 #### Baticueva
->>>>>>> helpFeature
