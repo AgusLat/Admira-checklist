@@ -38,19 +38,21 @@ main {
     align-items: center;
     gap: 1rem;
     padding: 0.75rem 1.75rem;
-    border-radius: 10px;
+    border-radius: 3rem;
     border: none;
     font-size: 1rem;
     cursor: pointer;
     background-color: rgb(255, 255, 255);
-    box-shadow: 3px 3px 10px 0.5px rgba(59, 59, 59, 0.662);
+    box-shadow: 3px 3px 10px 0.5px rgba(59, 59, 59, 0.623);
     font-family: "Nunito", system-ui, sans-serif;
+    font-weight: 600;
+    color: #4a524a;
 
 
 }
 
 .google-icon {
-    max-width: 50px;
+    max-width: 40px;
 }
 
 #logo-admira {

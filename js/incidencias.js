@@ -62,10 +62,10 @@ export const processPendingIncidencia = async () => {
         pendingIncidencia.paso,
         pendingIncidencia.descripcionIncidencia,
         true,
-        pendingIncidencia.descripcionPaso
+        pendingIncidencia.descripcionPaso,
       );
       console.log(
-        `⚠️ Incidencia procesada para paso ${pendingIncidencia.paso} de ${pendingIncidencia.seccion}`
+        `⚠️ Incidencia procesada para paso ${pendingIncidencia.paso} de ${pendingIncidencia.seccion}`,
       );
       pendingIncidencia = null;
       return true;
@@ -105,6 +105,6 @@ export const confirmIssue = async (oficina, seccion) => {
   };
 
   await reportIssue(issue);
-  await nextSlide();
   closeIssueModal();
+  await nextSlide();
 };

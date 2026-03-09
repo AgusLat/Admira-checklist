@@ -8,7 +8,15 @@ export const openIssueModal = () => {
 };
 
 export const closeIssueModal = () => {
-  document.getElementById("issueModal").style.display = "none";
-  document.getElementById("issueDesc").value = "";
-  document.getElementById("issueFile").value = "";
+  const modal = document.getElementById("issueModal");
+  if (modal) modal.style.display = "none";
+
+  const desc = document.getElementById("issueDesc");
+  if (desc) desc.value = "";
+
+  const file = document.getElementById("issueFile");
+  if (file) file.value = "";
+
+  const sendBtn = document.getElementById("sendIssueBtn");
+  if (sendBtn) sendBtn.disabled = false;
 };

@@ -33,12 +33,12 @@ qr_data = {
     #      "background": "#171717",
     #      "logo": "logos/rebel.png",               
     #  },
-      "Nuevo_QR": {
-          "url": "https://yokup.com/visitas/?oficina=nuevaoficina",
-          "color": "#CD2E2E",
-          "background": "#171717",
-          "logo": "logos/nuevaoficina.png",               
-      },
+    #   "Oficina_BigBang": {
+    #       "url": "https://yokup.com/visitas/?oficina=bigbang",
+    #       "color": "#FF0000",
+    #       "background": "#FFEB43",
+    #       "logo": "logos/tbbt.png",               
+    #   },
 }
 
 # Ruta absoluta del script (por si ejecutas desde otra carpeta)
@@ -74,7 +74,7 @@ for nombre, info in qr_data.items():
 
         # Aseguramos que tiene un tamaño razonable (25% del ancho del QR)
         qr_width, qr_height = img_qr.size
-        logo_max_size = qr_width // 3  # logo = 1/4 del ancho del QR
+        logo_max_size = qr_width // 2  # logo = 1/4 del ancho del QR
 
         # Convertimos a RGBA para obtener el canal alfa si existe
         logo = logo.convert("RGBA")
