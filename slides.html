@@ -42,13 +42,20 @@
       } from "./js/slides-control.js";
       import { reportIssue, confirmIssue } from "./js/incidencias.js";
       import { openIssueModal, closeIssueModal } from "./js/modal.js";
-      import { slidesMap } from "./slides/slides-template.js";
+      import { slidesMap, slidesMapCierre } from "./slides/slides-template.js";
       import {
         slidesSantaRosa,
         slidesPlanetaNave,
         slidesPlanetaTerminator,
         slidesStore,
       } from "./slides/slides.js";
+      import {
+        slidesSantaRosaCierre,
+        slidesStoreCierre,
+        slidesPlanetaTerminatorCierre,
+        slidesPlanetaNaveCierre,
+        slidesBigbangCierre,
+      } from "./slides/slidesCierre.js";
 
       // Iniciar Firebase
       startGlobalFirebase();
@@ -66,7 +73,12 @@
       );
 
       // VARIABLES
-      const slidesArray = Object.values(slidesMap[oficina][seccion]);
+      const mode = localStorage.getItem("checkListMode");
+      const slidesArray = Object.values(
+        mode === "CERRAR"
+          ? slidesMapCierre[oficina][seccion]
+          : slidesMap[oficina][seccion],
+      );
 
       // EVENTOS
       cancelIssueBtn.addEventListener("click", closeIssueModal);

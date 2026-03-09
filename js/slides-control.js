@@ -1,6 +1,6 @@
 import { openIssueModal } from "./modal.js";
 import { markStepAsOK, processPendingIncidencia } from "./incidencias.js";
-import { slidesMap } from "../slides/slides-template.js";
+import { slidesMap, slidesMapCierre } from "../slides/slides-template.js";
 
 // ─────────────────────────────────────────────
 // ESTADO
@@ -302,6 +302,7 @@ async function prevSlide() {
 
 function goToNextSection() {
   const { oficina, seccion } = getUrlParams();
+  const mode = localStorage.getItem("checkListMode");
 
   if (!oficina || !seccion) {
     console.error("❌ Faltan parámetros en la URL");
@@ -309,7 +310,8 @@ function goToNextSection() {
     return;
   }
 
-  const slidesOficina = slidesMap[oficina];
+  const slidesOficina =
+    mode === "CERRAR" ? slidesMapCierre[oficina] : slidesMap[oficina];
 
   if (!slidesOficina) {
     console.error("❌ Oficina inexistente:", oficina);

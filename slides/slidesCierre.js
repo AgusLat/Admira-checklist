@@ -1,7 +1,7 @@
 //SANTA ROSA - CIERRE
 export const slidesSantaRosaCierre = {
-  sala360: {
-    0: { type: "intro", desc: "Sala360 - Cierre" },
+  garaje: {
+    0: { type: "intro", desc: "Cierre Garaje" },
     1: {
       desc: "Apagar el portátil de la sala 360.",
       imgSrc: "./img/santa-rosa/sala360/360_2.webp",
@@ -21,8 +21,8 @@ export const slidesSantaRosaCierre = {
     5: { desc: "Verificar que la puerta de administración esté cerrada." },
     6: { type: "outro", desc: "Zona completada" },
   },
-  arcade: {
-    0: { type: "intro", desc: "Arcade - Cierre" },
+  cafeteria: {
+    0: { type: "intro", desc: "Cierre Cafetería" },
     1: {
       desc: "Apagar todas las máquinas Pinball.",
       imgSrc: "./img/santa-rosa/arcade/arcade_9.webp",
@@ -61,8 +61,8 @@ export const slidesSantaRosaCierre = {
     },
     10: { type: "outro", desc: "Zona completada" },
   },
-  cafeteria: {
-    0: { type: "intro", desc: "Cafetería - Cierre" },
+  arcade: {
+    0: { type: "intro", desc: "Cierre Arcade" },
     1: {
       desc: "Verificar que la puerta de acceso a los baños está cerrada.",
       imgSrc: "./img/santa-rosa/cafeteria/cafe_5.webp",
@@ -85,8 +85,8 @@ export const slidesSantaRosaCierre = {
     },
     6: { type: "outro", desc: "Zona completada" },
   },
-  garaje: {
-    0: { type: "intro", desc: "Garaje - Cierre" },
+  sala360: {
+    0: { type: "intro", desc: "Cierre Sala 360" },
     1: {
       desc: "Cerrar las puertas de los cuartillos detrás de la furgoneta de las TNT.",
       imgSrc: "./img/santa-rosa/garaje/garaje_8.webp",
@@ -125,185 +125,145 @@ export const slidesSantaRosaCierre = {
 
 //STORE - CIERRE
 export const slidesStoreCierre = {
-  metahuman: {
-    0: { type: "intro", desc: "Metahuman - Cierre" },
+  store: {
+    0: { type: "intro", desc: "Cierre de la oficina" },
     1: {
-      desc: "Cerrar la aplicación del iPad.",
-      imgSrc: "./img/store/metahuman/meta_3.webp",
+      desc: "Apagar toda la Store pulsando los dos interruptores blancos del cuadro eléctrico.",
+      imgSrc: "./img/store/metahuman/PENDIENTE.webp",
     },
     2: {
-      desc: "Apagar el iPad.",
-      imgSrc: "./img/store/metahuman/meta_3.webp",
+      desc: "Activar la alarma pulsando el botón “Home” y acercando el llavero al panel.",
+      imgSrc: "./img/store/metahuman/PENDIENTE.webp",
     },
     3: {
-      desc: "Apagar el interruptor de las luces.",
-      imgSrc: "./img/store/metahuman/placeholder.webp",
+      desc: "Abrir la puerta de cristal y volver a dejar la llave en posición de cierre.",
+      imgSrc: "./img/store/metahuman/PENDIENTE.webp",
     },
     4: {
-      desc: "Apagar el aire acondicionado.",
-      imgSrc: "./img/store/metahuman/placeholder.webp",
+      desc: "Salir y cerrar la persiana.",
+      imgSrc: "./img/store/metahuman/PENDIENTE.webp",
     },
     5: { type: "outro", desc: "Zona completada" },
-  },
-
-  escritorio: {
-    0: { type: "intro", desc: "Escritorio - Cierre" },
-    1: {
-      desc: "Cerrar la aplicación del portátil (ROG Remix).",
-      imgSrc: "./img/store/escritorio/escritorio_2.webp",
-    },
-    2: {
-      desc: "Apagar el portátil.",
-      imgSrc: "./img/store/escritorio/escritorio_2.webp",
-    },
-    3: {
-      desc: "Apagar la pantalla con el mando.",
-      imgSrc: "./img/store/escritorio/escritorio_1.webp",
-    },
-    4: { type: "outro", desc: "Zona completada" },
   },
 };
 
 //PLANETA SALA REUNIONES/CLASE - CIERRE
 export const slidesPlanetaTerminatorCierre = {
   terminator: {
-    0: { type: "intro", desc: "Oficina Terminator - Cierre" },
+    0: { type: "intro", desc: "Cierre Oficina Terminator" },
     1: {
-      desc: "Verificar que la cabina esté cerrada correctamente.",
-      imgSrc: "./img/planeta-terminator/cabina_2.webp",
+      desc: "Comprobar que la puerta y las ventanas de la terraza están cerradas.",
+      imgSrc: "./img/planeta-terminator/pendiente.webp",
     },
     2: {
-      desc: "Cerrar sesión en el PC izquierdo.",
-      imgSrc: "./img/planeta-terminator/pant_6.webp",
+      desc: "Apagar manualmente el PC de la pantalla horizontal antes de llegar a la cocina.",
+      imgSrc: "./img/planeta-terminator/pendiente.webp",
     },
     3: {
-      desc: "Cerrar sesión en el PC derecho.",
-      imgSrc: "./img/planeta-terminator/pant_5.webp",
+      desc: "Bajar todas las pías del cuadro eléctrico, excepto las que tengan pegatina roja.",
+      imgSrc: "./img/planeta-terminator/pendiente.webp",
     },
-    4: {
-      desc: "Apagar las pantallas de la zona de PC con el mando.",
-      imgSrc: "./img/planeta-terminator/pant_4.webp",
-    },
-    5: {
-      desc: "Cerrar Admira en la pantalla al lado de los terminators humanos.",
-      imgSrc: "./img/planeta-terminator/pant_3.webp",
-    },
-    6: {
-      desc: "Apagar la pantalla de la moto.",
-      imgSrc: "./img/planeta-terminator/pant_1.webp",
-    },
-    7: { desc: "Apagar el aire acondicionado con el mando." },
-    8: {
-      desc: "Bajar las pías del aire acondicionado.",
-      imgSrc: "./img/planeta-terminator/entrada_3.webp",
-    },
-    9: {
-      desc: "Bajar las pías generales.",
-      imgSrc: "./img/planeta-terminator/entrada_2.webp",
-    },
-    10: {
-      desc: "Verificar que la puerta quede correctamente cerrada.",
-    },
-    11: { type: "outro", desc: "Zona completada" },
+
+    4: { type: "outro", desc: "Zona completada" },
   },
 };
 
 //NAVE PLANETA - CIERRE
 export const slidesPlanetaNaveCierre = {
-  entrada: {
-    0: { type: "intro", desc: "Entrada - Cierre" },
-    1: { desc: "Encender la luz de la entrada." },
-    2: {
-      desc: "Apagar la pantalla 'frame' con el mando del armario.",
-      imgSrc: "/img/planeta-nave/entrada/entrada_7.webp",
-    },
-    3: {
-      desc: "Bajar el interruptor del holograma.",
-      imgSrc: "/img/planeta-nave/entrada/entrada_3.webp",
-    },
-    4: {
-      desc: "Apagar el PC del armario.",
-      imgSrc: "/img/planeta-nave/entrada/entrada_2.webp",
-    },
-    5: {
-      desc: "Bajar todas las Pias, especialmente las grises (principales).",
-      imgSrc: "/img/planeta-nave/entrada/entrada_1.webp",
-    },
-    6: { type: "outro", desc: "Zona completada" },
-  },
-
   nave: {
-    0: { type: "intro", desc: "Nave - Cierre" },
+    0: { type: "intro", desc: "Cierre sección Nave" },
     1: {
-      desc: "Verificar que el simulador esté desenchufado y su diferencial bajado.",
-      imgSrc: "./img/planeta-nave/nave/placeholder.webp",
+      desc: "Cerrar desde dentro la puerta de madera de las escaleras que dan a la calle (cerradura + pestillo).",
+      imgSrc: "./img/planeta-nave/nave/pendiente.webp",
     },
     2: {
-      desc: "Apagar el mando y desenchufar R2D2.",
-      imgSrc: "./img/planeta-nave/nave/nave_15.webp",
+      desc: "Desenchufar el robot R2D2 y comprobar que el mando está apagado.",
+      imgSrc: "./img/planeta-nave/nave/pendiente.webp",
     },
     3: {
-      desc: "Encender todas las luces blancas del techo en la cantina.",
-      imgSrc: "./img/planeta-nave/nave/placeholder.webp",
+      desc: "Bajar la pía de la zona del simulador.",
+      imgSrc: "./img/planeta-nave/nave/pendiente.webp",
     },
-    4: {
-      desc: "Apagar el astronauta de la mesa de reuniones.",
-      imgSrc: "./img/planeta-nave/nave/nave_10.webp",
-    },
-    5: {
-      desc: "Cerrar Admira en la tablet.",
-      imgSrc: "./img/planeta-nave/nave/nave_9.webp",
-    },
-    6: {
-      desc: "Colocar la tablet en su soporte.",
-      imgSrc: "./img/planeta-nave/nave/nave_8.webp",
-    },
-    7: {
-      desc: "Apagar el PC de tres pantallas (se apaga con la luz).",
-    },
-    8: {
-      desc: "Cerrar los videos que estén reproduciendo en las pantallas.",
-    },
-    9: {
-      desc: "Apagar las luces (volverán a color blanco). Dejar en blanca la del baño (Hans Solo).",
-      imgSrc: "./img/planeta-nave/nave/nave_4.webp",
-    },
-    10: {
-      desc: "Apagar el display con botones a mano izquierda del ascensor.",
-      imgSrc: "./img/planeta-nave/nave/nave_2.webp",
-    },
-    11: {
-      desc: "Cerrar la puerta del ascensor.",
-      imgSrc: "./img/planeta-nave/nave/placeholder.webp",
-    },
-    12: { type: "outro", desc: "Zona completada" },
+
+    4: { type: "outro", desc: "Zona completada" },
   },
 
   oficina: {
-    0: { type: "intro", desc: "Oficina IT Crowd - Cierre" },
+    0: { type: "intro", desc: "Cierre Oficina IT Crowd" },
     1: {
-      desc: "Apagar Divoom Time Gate desde la app.",
-      imgSrc: "./img/planeta-nave/oficina/placeholder.webp",
+      desc: "En la zona IT Crowd, apagar el Next pulsando el botón Power del teclado y después la tecla “Y”.",
+      imgSrc: "./img/planeta-nave/oficina/pendiente.webp",
     },
     2: {
-      desc: "Apagar Divoom PixelArt desde la app.",
-      imgSrc: "./img/planeta-nave/oficina/placeholder.webp",
+      desc: "Apagar el Spectrum pulsando el botón trasero izquierdo. No tirar demasiado del equipo para evitar que se desenchufe.",
+      imgSrc: "./img/planeta-nave/oficina/pendiente.webp",
     },
     3: {
-      desc: "Verificar que la puerta esté cerrada.",
+      desc: "Apagar las luces de la zona IT Crowd.",
+      imgSrc: "./img/planeta-nave/oficina/pendiente.webp",
+    },
+
+    4: { type: "outro", desc: "Zona completada" },
+  },
+
+  entrada: {
+    0: { type: "intro", desc: "Cierre Entrada" },
+    1: {
+      desc: "Bajar todas las pías del cuadro eléctrico, excepto las que tengan pegatina roja.",
+      imgSrc: "./img/planeta-nave/entrada/pendiente.webp",
+    },
+    2: {
+      desc: "Activar la alarma con el llavero.",
+      imgSrc: "./img/planeta-nave/entrada/pendiente.webp",
+    },
+    3: {
+      desc: "Salir a la calle con la alarma activada y bajar la persiana.",
+      imgSrc: "./img/planeta-nave/entrada/pendiente.webp",
+    },
+    4: { type: "outro", desc: "Zona completada" },
+  },
+};
+
+// PLANETA BIGBANG
+export const slidesBigbangCierre = {
+  baticueva: {
+    0: { type: "intro", desc: "Cierre sección Baticueva" },
+    1: {
+      desc: "Apagar manualmente el Batcomputer.",
+      imgSrc: "./img/planeta-bigbang/batman/ordenador.webp",
+    },
+    2: {
+      desc: "Apagar la luz de la moto con el interruptor del puño si estuviese encendida",
+      imgSrc: "./img/planeta-bigbang/batman/moto.webp",
+    },
+    3: {
+      desc: "Apagar la pantalla de la cascada con el mando que está detrás de la piedra que sobresale.",
+      imgSrc: "./img/planeta-bigbang/batman/cascada.webp",
     },
     4: {
-      desc: "Presionar el power del teclado en la pared.",
-      imgSrc: "./img/planeta-nave/oficina/ofi_4.webp",
+      desc: "Apagar la luz de la figura del Joker.",
+      imgSrc: "./img/planeta-bigbang/batman/joker.webp",
     },
     5: {
-      desc: "Apagar el alargue de la estantería del fondo.",
-      imgSrc: "./img/planeta-nave/oficina/ofi_3.webp",
+      desc: "Apagar la luz de la cueva con el interruptor del techo donde comienzan las escaleras mecánicas.",
+      imgSrc: "./img/planeta-bigbang/batman/luz.webp",
     },
-    6: {
-      desc: "Apagar el televisor junto al sofá.",
-      imgSrc: "./img/planeta-nave/oficina/ofi_1.webp",
+    6: { type: "outro", desc: "Zona completada" },
+  },
+  bigbang: {
+    0: { type: "intro", desc: "Cierre sección The Big Bang theory" },
+    1: {
+      desc: "Bajar la pía del cuadro eléctrico de “Iluminación” de la zona de Superman.",
+      imgSrc: "./img/planeta-bigbang/bigbang/pias.webp",
     },
-    7: { type: "outro", desc: "Zona completada" },
+    2: {
+      desc: "Apagar manualmente los PC de Batman y Joker situados bajo la pantalla de la ventana.",
+      imgSrc: "./img/planeta-bigbang/bigbang/ordenadores.webp",
+    },
+    3: {
+      desc: "Apagar la luz desde el interruptor situado junto a la puerta de la cocina (IT Crowd).",
+      imgSrc: "./img/planeta-bigbang/bigbang/luz.webp",
+    },
+    4: { type: "outro", desc: "Zona completada" },
   },
 };

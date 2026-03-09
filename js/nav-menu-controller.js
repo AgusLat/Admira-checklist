@@ -1,5 +1,5 @@
 import { createChecklistDocument } from "./checklist-manager.js";
-import { slidesMap } from "../slides/slides-template.js";
+import { slidesMap, slidesMapCierre } from "../slides/slides-template.js";
 
 //Detecta el parámetro "oficina" en la URL y lo guarda en localStorage
 export const setOficina = () => {
@@ -86,7 +86,7 @@ export const ensureChecklist = async (user, oficina) => {
 
     const q = window.firebaseQuery(
       checklistRef,
-      window.firebaseWhere("id", "==", checklistId)
+      window.firebaseWhere("id", "==", checklistId),
     );
 
     const snapshot = await window.firebaseGetDocs(q);
@@ -105,7 +105,7 @@ export const ensureChecklist = async (user, oficina) => {
           const continuar = confirm(
             "⚠️ Tenés un checklist iniciado anteriormente.\n\n" +
               "Para continuar con ese checklist, presiona ACEPTAR.\n" +
-              "Para abortar ese checklist y crear uno nuevo, presiona CANCELAR."
+              "Para abortar ese checklist y crear uno nuevo, presiona CANCELAR.",
           );
 
           if (!continuar) {
@@ -147,7 +147,10 @@ export const renderNavMenu = (oficina, menu, mode, stats = {}) => {
   let seccionData = [];
 
   // Obtener las slides correspondientes a la oficina
-  const slidesOficina = slidesMap[oficina?.toLowerCase()] || null;
+  const slidesOficina =
+    mode === "CERRAR"
+      ? slidesMapCierre[oficina?.toLowerCase()]
+      : slidesMap[oficina?.toLowerCase()] || null;
 
   if (!slidesOficina) {
     seccionData = [{ seccion: "OFICINA NO IDENTIFICADA", href: "" }];
@@ -172,7 +175,7 @@ export const renderNavMenu = (oficina, menu, mode, stats = {}) => {
         ${seccionData
           .map(
             (opt) =>
-              `<li id="${opt.titulo}" ><a href="${opt.href}">${opt.titulo} <span class="progreso-seccion">${opt.progresoTexto}</span></a></li>`
+              `<li id="${opt.titulo}" ><a href="${opt.href}">${opt.titulo} <span class="progreso-seccion">${opt.progresoTexto}</span></a></li>`,
           )
           .join("")}
       </ul>

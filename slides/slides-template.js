@@ -6,6 +6,14 @@ import {
   slidesBigbang,
 } from "./slides.js";
 
+import {
+  slidesSantaRosaCierre,
+  slidesStoreCierre,
+  slidesPlanetaTerminatorCierre,
+  slidesPlanetaNaveCierre,
+  slidesBigbangCierre,
+} from "./slidesCierre.js";
+
 // Mapeo de oficinas a sus slides correspondientes
 export const slidesMap = {
   santarosa: slidesSantaRosa,
@@ -17,13 +25,27 @@ export const slidesMap = {
   //"nombreoficina": slidesNombreOficina
 };
 
+export const slidesMapCierre = {
+  santarosa: slidesSantaRosaCierre,
+  store: slidesStoreCierre,
+  planetaterminator: slidesPlanetaTerminatorCierre,
+  planetanave: slidesPlanetaNaveCierre,
+  bigbang: slidesBigbangCierre,
+  //NUEVAS OFICINAS AQUÍ (IMPORTAR LAS SLIDES DE CIERRE) :
+  //"nombreoficina": slidesNombreOficinaCierre
+};
+
 /**
  * Genera el template del checklist basándose en las slides
  * OMITE los pasos tipo "intro" y "outro"
  */
 export const generateChecklistTemplate = (oficina) => {
   const oficinaNormalizada = oficina.toLowerCase();
-  const slidesOficina = slidesMap[oficinaNormalizada];
+  const mode = localStorage.getItem("checkListMode");
+  const slidesOficina =
+    mode === "CERRAR"
+      ? slidesMapCierre[oficinaNormalizada]
+      : slidesMap[oficinaNormalizada];
 
   if (!slidesOficina) {
     console.error(`No se encontraron slides para la oficina: ${oficina}`);
