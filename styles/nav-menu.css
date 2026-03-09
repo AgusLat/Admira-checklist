@@ -100,7 +100,6 @@ a.disabled {
     width: 100px;
 }
 
-<<<<<<< HEAD
 .modeSelector {
     display: none;
     flex-direction: column;
@@ -133,11 +132,10 @@ a.disabled {
     background-color: #deffd1;
     color: #496b2d;
 }
-=======
+
 /* ─────────────────────────────────────────────
    MENÚ DE NAVEGACIÓN
 ───────────────────────────────────────────── */
->>>>>>> 0d5cf1ce401c594794e07272c22ca4266ac22ab2
 
 .navMenu {
     display: flex;

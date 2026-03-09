@@ -26,15 +26,9 @@ body {
   padding: 1rem;
 }
 
-<<<<<<< HEAD
-
-
-/* === SLIDE CARD === */
-=======
 /* ─────────────────────────────────────────────
    SLIDE
 ───────────────────────────────────────────── */
->>>>>>> 0d5cf1ce401c594794e07272c22ca4266ac22ab2
 
 .slides {
   display: flex;
@@ -236,17 +230,6 @@ button:disabled:hover {
   right: 20px;
   margin: 0;
   cursor: pointer;
-<<<<<<< HEAD
-  font-weight: 600;
-  color: #fff;
-  font-size: 1rem;
-  transition: all 0.2s ease;
-  width: 47%;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.322);
-  font-family: "Nunito", system-ui, sans-serif;
-  -webkit-tap-highlight-color: transparent;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-=======
   font-size: 0.8rem;
   line-height: 1;
   user-select: none;
@@ -265,7 +248,6 @@ button:disabled:hover {
   filter: drop-shadow(0 1px 3px #2ecc70);
   outline: 1px solid #2ecc70;
 
->>>>>>> 0d5cf1ce401c594794e07272c22ca4266ac22ab2
 
 }
 
