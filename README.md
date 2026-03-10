@@ -12,9 +12,10 @@
 
 ## TODO: BUGS, CORRECCIONES, TESTING Y FUTURAS FEATURES
 
-- **FIREBASE(testing):** Control de acceso. Verificar acceso a la aplicación con emails @admira.com.
-- **INCIDENCIAS FRECUENTES(feature):** Opción para el usuario al abrir el modal de incidencias un boton que muestre una lista de incidencias frecuentas y su solución.
-- **CIERRE DE OFICINA(feature):** Opción para el usuario en el menú de navegacion para elegir entre el modo "APERTURA" o "CIERRE" de la oficina.
+- **AUTH(testing):** Control de acceso. Verificar acceso a la aplicación con emails @admira.com.
+- **FIREBASE:** Cambiar IDS de db por timestamps para mejor visibilidad.
+- **INCIDENCIAS FRECUENTES(feature):** Mejorar UX/UI
+- **CIERRE DE OFICINA(feature):** Pasos de cierre de santa rosa.
 
 ---
 
